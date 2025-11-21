@@ -214,7 +214,8 @@
             <h2>Gallery</h2>
         </div>
         <div class="media-grid">
-            <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?q=80&w=2070" class="media-item" onclick="openImage(this.src)" loading="lazy">
+            <!-- GALLERY FIXED: No building sites, only beautiful Georgian views -->
+            <img src="https://images.unsplash.com/photo-1538370965046-79c0d6907d47?q=80&w=2069" class="media-item" onclick="openImage(this.src)" loading="lazy">
             <img src="https://images.unsplash.com/photo-1603002730629-64df815039c5?q=80&w=2070" class="media-item" onclick="openImage(this.src)" loading="lazy">
             <img src="https://images.unsplash.com/photo-1517404217591-aa07270428e1?q=80&w=2070" class="media-item" onclick="openImage(this.src)" loading="lazy">
             <img src="https://images.unsplash.com/photo-1628174780645-0d2979207860?q=80&w=2070" class="media-item" onclick="openImage(this.src)" loading="lazy">
@@ -267,7 +268,7 @@
 
     <script>
         /* ============================================================
-           --- YOUR CONTROL PANEL (EDIT CONTENT BELOW) ---
+           --- YOUR CONTROL PANEL (EDIT HERE) ---
            ============================================================ */
         const config = {
             whatsapp: "995591705710", 
@@ -277,20 +278,19 @@
                 { 
                     title: "The Heart of the Caucasus", 
                     desc: "Discover 8,000 years of history and hospitality.",
-                    // IMAGE: Beautiful Kazbegi Mountain View (Valley)
-                    img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?q=80&w=2070", 
+                    img: "https://images.unsplash.com/photo-1565118531796-763e5082d113?q=80&w=2070", 
                     fullText: "Experience the full breadth of Georgia. From the ancient streets of Tbilisi to the high peaks of Kazbegi."
                 },
                 { 
                     title: "Winter in Gudauri", 
                     desc: "Premium Ski Packages | 5 Days All Inclusive",
-                    img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2070", // Skiing
+                    img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2070",
                     fullText: "Our Gudauri ski package includes airport transfers, 5-star accommodation, ski pass, and equipment rental."
                 },
                 { 
                     title: "VIP Lifestyle", 
                     desc: "Yachts, Casinos & Private Jets",
-                    img: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=2070", // Luxury Yacht
+                    img: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=2070",
                     fullText: "Join our exclusive Junket program. Qualified players receive complimentary flights, luxury accommodation, and VIP hosting."
                 }
             ],
@@ -307,34 +307,34 @@
                 { 
                     title: "Luxury & Leisure", 
                     desc: "5-Star Resorts", 
-                    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", // Luxury Pool
+                    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", 
                     tag: "Relax", 
                     text: "Stay in Georgia's finest hotels with private pools and spas." 
                 },
                 { 
                     title: "Wine Route", 
                     desc: "Qvevri Tastings", 
-                    img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", // Vineyard
+                    img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", 
                     tag: "Culture", 
                     text: "Visit the cradle of wine in Kakheti. Private tastings." 
                 },
                 { 
                     title: "Casino & Nightlife", 
                     desc: "VIP Access", 
-                    // IMAGE: Poker Table / Dark Moody Casino
-                    img: "https://images.unsplash.com/photo-1605870445919-838d190e8e1b?q=80&w=2070", 
+                    // CHANGED: Poker Table / Chips (Dark Luxury)
+                    img: "https://images.unsplash.com/photo-1518893063132-36e465be7788?q=80&w=2070", 
                     tag: "VIP", 
                     text: "Experience the vibrant nightlife with exclusive club access." 
                 }
             ],
 
-            // 3. SERVICES GRID (UPDATED: Business, Transport, Guides, Medical)
+            // 3. SERVICES GRID
             servicesCards: [
                 { 
                     title: "Medical Tourism", 
                     desc: "Wellbeing & Health", 
-                    // IMAGE: Bright, Sunny Luxury Recovery/Spa
-                    img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070", 
+                    // CHANGED: Luxury Recovery Room / Sunny Breakfast
+                    img: "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?q=80&w=2070", 
                     text: "Top clinics for Hair Transplants and Dental work with spa-like recovery." 
                 },
                 { 
@@ -346,44 +346,80 @@
                 { 
                     title: "Business Opportunities", 
                     desc: "Investment & Partners", 
-                    // IMAGE: Handshake / Deal
-                    img: "https://images.unsplash.com/photo-1565514020176-dbf2277f8322?q=80&w=2070", 
+                    // CHANGED: High-Rise Handshake / Deal
+                    img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070", 
                     text: "We facilitate B2B introductions, arrange high-level meetings, and help you find reliable local partners for your ventures in Georgia." 
                 },
                 { 
                     title: "Guides & Transport", 
                     desc: "Logistics & Experts", 
-                    // IMAGE: Chauffeur/Valet opening door
+                    // CHANGED: Chauffeur opening luxury car door
                     img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", 
                     text: "Seamless travel logistics with luxury vehicles, professional drivers, and certified multilingual guides to ensure a smooth journey." 
                 }
             ],
 
-            // 4. BLOG POSTS (IMAGES FIXED)
+            // 4. BLOG POSTS (10 REAL POSTS)
             blogPosts: [
                 { 
-                    title: "Vineyards of Kakheti", 
+                    title: "Tbilisi Old Town", 
                     date: "Oct 2025", 
-                    img: "https://images.unsplash.com/photo-1566346547477-173084076792?q=80&w=2070", // Real Vineyard
-                    text: "A journey through the ancient wine region." 
+                    img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?q=80&w=2070", 
+                    text: "Wander through the maze of colorful balconies and sulfur baths in the historic heart of Tbilisi." 
                 },
                 { 
-                    title: "Medical Excellence", 
+                    title: "Svaneti Towers", 
                     date: "Sep 2025", 
-                    img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053", // Modern Medical
-                    text: "Why Georgia is the top choice for medical procedures." 
+                    img: "https://images.unsplash.com/photo-1571258267881-5d6929516187?q=80&w=2070", 
+                    text: "Visit the UNESCO heritage site of Ushguli and the ancient defense towers of Mestia." 
                 },
                 { 
-                    title: "Ski Season Guide", 
+                    title: "Batumi Boulevard", 
                     date: "Aug 2025", 
-                    img: "https://images.unsplash.com/photo-1610198871574-53537a702467?q=80&w=2070", // Snowy Ski Resort
-                    text: "Everything you need to know about Gudauri this winter." 
+                    img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?q=80&w=2070", 
+                    text: "Stroll along the Black Sea coast and enjoy the modern architecture of Batumi." 
                 },
                 { 
-                    title: "Tbilisi Nightlife", 
-                    date: "July 2025", 
-                    img: "https://images.unsplash.com/photo-1555992336-03a2316dbbb3?q=80&w=2064", // Nightclub vibe
-                    text: "Best clubs and bars in the capital." 
+                    title: "Kazbegi & Gergeti", 
+                    date: "Jul 2025", 
+                    img: "https://images.unsplash.com/photo-1565118531796-763e5082d113?q=80&w=2070", 
+                    text: "The most iconic view in the Caucasus. A church above the clouds." 
+                },
+                { 
+                    title: "Kakheti Wine", 
+                    date: "Jun 2025", 
+                    img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", 
+                    text: "Taste the amber wine made in traditional Qvevri clay pots." 
+                },
+                { 
+                    title: "Martvili Canyon", 
+                    date: "May 2025", 
+                    img: "https://images.unsplash.com/photo-1604918363094-587689290516?q=80&w=2070", 
+                    text: "Boat through the emerald green waters of this natural wonder." 
+                },
+                { 
+                    title: "Vardzia Cave City", 
+                    date: "Apr 2025", 
+                    img: "https://images.unsplash.com/photo-1600742533089-a2e6e3c0b11b?q=80&w=2070", 
+                    text: "Explore a city carved into the rock face by Queen Tamar." 
+                },
+                { 
+                    title: "Georgian Cuisine", 
+                    date: "Mar 2025", 
+                    img: "https://images.unsplash.com/photo-1603002730629-64df815039c5?q=80&w=2070", 
+                    text: "Master the art of eating Khinkali and breaking Khachapuri bread." 
+                },
+                { 
+                    title: "Prometheus Cave", 
+                    date: "Feb 2025", 
+                    img: "https://images.unsplash.com/photo-1597166567079-189725761f37?q=80&w=2070", 
+                    text: "Journey underground into a world of stalactites and stalagmites." 
+                },
+                { 
+                    title: "Tusheti National Park", 
+                    date: "Jan 2025", 
+                    img: "https://images.unsplash.com/photo-1533552362494-90a889b471bc?q=80&w=2070", 
+                    text: "The most remote and untouched region of the high Caucasus mountains." 
                 }
             ]
         };
