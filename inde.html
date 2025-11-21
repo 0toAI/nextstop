@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Stop: Georgia | Premium Travel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 1. DESIGN VARIABLES --- */
+        :root {
+            --bg-warm: #fdfbf7;         
+            --charcoal: #1a1a1a;        /* Deepest Grey */
+            --terracotta: #a84a32;      /* Accent Color */
+            --gold: #c5a059;            /* Luxury Accent */
+            --green: #25D366;           /* WhatsApp */
+            --gray-light: #f4f4f4;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { color: var(--charcoal); background-color: var(--bg-warm); line-height: 1.6; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        button { cursor: pointer; border: none; outline: none; }
+
+        /* --- 2. HEADER --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 12px 5%;
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .header-left { display: flex; align-items: center; gap: 30px; }
+        
+        /* PREMIUM LOGO */
+        .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: pointer; }
+        .logo-main { 
+            font-family: 'Montserrat', sans-serif; 
+            font-size: 1.4rem; 
+            font-weight: 800; 
+            color: var(--charcoal); 
+            letter-spacing: -1px; 
+        }
+        .logo-sub { 
+            font-family: 'Cinzel', serif; 
+            font-size: 0.7rem; 
+            font-weight: 700; 
+            color: var(--terracotta); 
+            letter-spacing: 4px; 
+            text-transform: uppercase; 
+            margin-left: 2px; 
+        }
+
+        /* Toggle */
+        .site-toggle {
+            display: flex; background: var(--gray-light); padding: 4px;
+            border-radius: 30px; border: 1px solid rgba(0,0,0,0.05);
+        }
+        .toggle-btn {
+            padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700;
+            display: flex; align-items: center; gap: 6px; color: #999;
+        }
+        .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .dot { color: var(--green); font-size: 0.8rem; animation: pulse 2s infinite; }
+
+        /* Nav */
+        .nav-links { display: flex; gap: 30px; }
+        .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
+        .nav-item:hover { color: var(--terracotta); }
+
+        /* --- 3. HERO WHEEL --- */
+        .hero-wheel { height: 95vh; width: 100%; overflow: hidden; margin-top: 0; background: #000; position: relative; }
+        .wheel-track { display: flex; width: 100%; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .wheel-track::-webkit-scrollbar { display: none; }
+        
+        .hero-slide { 
+            flex: 0 0 100%; height: 100%; position: relative; scroll-snap-align: start;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            text-align: center; color: white; padding: 20px;
+        }
+        .slide-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.6; z-index: 1; transition: 1s; }
+        .slide-content { position: relative; z-index: 2; max-width: 800px; animation: fadeUp 1s ease-out; }
+        .slide-title { font-size: 4rem; font-family: 'Cinzel', serif; margin-bottom: 15px; text-shadow: 0 5px 20px rgba(0,0,0,0.5); }
+        .slide-desc { font-size: 1.2rem; opacity: 0.9; margin-bottom: 25px; font-weight: 300; letter-spacing: 1px; }
+        .slide-btn { 
+            border: 2px solid white; color: white; padding: 15px 45px; 
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; display: inline-block;
+            background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); transition: 0.3s;
+        }
+        .slide-btn:hover { background: white; color: black; }
+
+        /* Arrows */
+        .wheel-arrows { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; z-index: 10; pointer-events: none; }
+        .arrow { pointer-events: auto; cursor: pointer; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; backdrop-filter: blur(5px); transition: 0.3s; border: 1px solid rgba(255,255,255,0.3); }
+        .arrow:hover { background: white; color: black; }
+
+        /* --- 4. GENERAL SECTIONS --- */
+        .section { padding: 100px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
+        .section-title { text-align: center; margin-bottom: 60px; }
+        .section-title h2 { font-size: 2.5rem; font-family: 'Cinzel', serif; color: var(--charcoal); margin-bottom: 15px; }
+        .section-title p { color: #777; font-size: 1rem; max-width: 600px; margin: 0 auto; }
+
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
+
+        /* --- 5. IMAGE CARDS (For Tours & Services) --- */
+        .card { 
+            background: white; border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); 
+            transition: 0.4s; height: 350px; position: relative; cursor: pointer;
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        
+        .card-bg { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover .card-bg { transform: scale(1.1); }
+        
+        .card-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2), transparent);
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 30px;
+            color: white;
+        }
+        
+        .card h3 { font-family: 'Cinzel', serif; font-size: 1.4rem; margin-bottom: 8px; color: var(--gold); }
+        .card p { font-size: 0.9rem; opacity: 0.8; font-weight: 300; }
+        .card-tag { 
+            position: absolute; top: 20px; right: 20px; background: var(--terracotta); color: white; 
+            padding: 5px 12px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; 
+        }
+
+        /* --- 6. BLOG (Horizontal Scroll) --- */
+        .blog-scroller { 
+            display: flex; overflow-x: auto; gap: 30px; padding: 20px 5px; 
+            scroll-snap-type: x mandatory; scrollbar-width: none; 
+        }
+        .blog-scroller::-webkit-scrollbar { display: none; }
+        
+        .blog-card { 
+            flex: 0 0 350px; scroll-snap-align: center; background: white; 
+            border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); 
+            transition: 0.3s; cursor: pointer;
+        }
+        .blog-card:hover { transform: translateY(-5px); }
+        .blog-img-box { height: 200px; overflow: hidden; }
+        .blog-content { padding: 25px; }
+        .blog-date { font-size: 0.7rem; color: var(--terracotta); font-weight: 700; text-transform: uppercase; }
+        .blog-title { font-size: 1.2rem; margin: 10px 0; color: var(--charcoal); font-family: 'Cinzel', serif; }
+        .blog-link { font-size: 0.8rem; text-decoration: underline; color: #888; }
+
+        /* --- 7. MEDIA GRID --- */
+        .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .media-item { height: 250px; width: 100%; object-fit: cover; border-radius: 4px; transition: 0.3s; cursor: pointer; }
+        .media-item:hover { filter: brightness(0.7); transform: scale(0.98); }
+
+        /* --- 8. SUB-PAGE MODAL (THE MAGIC TRICK) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 2000;
+            display: none; justify-content: center; align-items: center;
+            backdrop-filter: blur(10px); opacity: 0; transition: 0.3s;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        
+        .modal-content {
+            background: white; width: 90%; max-width: 800px; max-height: 90vh;
+            overflow-y: auto; border-radius: 8px; position: relative;
+            animation: slideUp 0.4s ease;
+        }
+        .modal-header-img { height: 300px; width: 100%; object-fit: cover; }
+        .modal-body { padding: 40px; }
+        .modal-close {
+            position: absolute; top: 20px; right: 20px; background: white; color: black;
+            width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 1.2rem;
+            display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .modal-title { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 20px; color: var(--charcoal); }
+        .modal-text { font-size: 1rem; color: #555; margin-bottom: 30px; line-height: 1.8; }
+        .modal-btn {
+            background: var(--terracotta); color: white; padding: 15px 30px; 
+            font-weight: bold; text-transform: uppercase; display: inline-block;
+        }
+
+        /* FOOTER */
+        footer { background: #111; color: #777; padding: 80px 5%; text-align: center; font-size: 0.9rem; border-top: 5px solid var(--terracotta); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .slide-title { font-size: 2.5rem; }
+            .section { padding: 60px 5%; min-height: auto; }
+            .wheel-arrows { display: none; }
+        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <div class="logo-container" onclick="window.scrollTo(0,0)">
+                <span class="logo-main">NEXT STOP</span>
+                <span class="logo-sub">GEORGIA</span>
+            </div>
+            <div class="site-toggle">
+                <div class="toggle-btn active"><span class="dot">●</span> GEORGIA</div>
+                <a href="https://nextstop.world" class="toggle-btn">WORLD</a>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="#travel" class="nav-item">Tours</a>
+            <a href="#services" class="nav-item">Services</a>
+            <a href="#blog" class="nav-item">Blog</a>
+            <a href="#footer" class="nav-item">About</a>
+        </nav>
+    </header>
+
+    <div class="hero-wheel">
+        <div class="wheel-track" id="heroTrack"></div>
+        <div class="wheel-arrows">
+            <div class="arrow" onclick="scrollTrack('heroTrack', -1)">&#10094;</div>
+            <div class="arrow" onclick="scrollTrack('heroTrack', 1)">&#10095;</div>
+        </div>
+    </div>
+
+    <section id="travel" class="section">
+        <div class="section-title">
+            <h2>Curated Experiences</h2>
+            <p>Explore the distinct regions of the Caucasus through our specialized itineraries.</p>
+        </div>
+        <div class="grid-4" id="travelGrid"></div>
+    </section>
+
+    <section id="services" class="section" style="background-color: #f0f0f0;">
+        <div class="section-title">
+            <h2>Our Services</h2>
+            <p>Professional logistical support for medical, corporate, and VIP clients.</p>
+        </div>
+        <div class="grid-4" id="servicesGrid"></div>
+    </section>
+
+    <section id="blog" class="section" style="background: white;">
+        <div class="section-title">
+            <h2>Journal</h2>
+            <p>Latest updates, guides, and news from the team.</p>
+        </div>
+        <div class="blog-scroller" id="blogTrack"></div>
+    </section>
+
+    <section class="section" style="min-height: auto; padding-bottom: 100px;">
+        <div class="section-title">
+            <h2>Gallery</h2>
+        </div>
+        <div class="media-grid">
+            <img src="https://images.unsplash.com/photo-1579203611311-6677f24ddb59?q=80&w=2070" class="media-item" onclick="openImage(this.src)"> <img src="https://images.unsplash.com/photo-1620242232353-3b1a20b7f8c0?q=80&w=2070" class="media-item" onclick="openImage(this.src)"> <img src="https://images.unsplash.com/photo-1563227926-2581699f8d1e?q=80&w=2070" class="media-item" onclick="openImage(this.src)"> <img src="https://images.unsplash.com/photo-1616781290113-1f3b3b2b4d1b?q=80&w=2070" class="media-item" onclick="openImage(this.src)"> <img src="https://images.unsplash.com/photo-1594957973719-2169b18d2f1f?q=80&w=2070" class="media-item" onclick="openImage(this.src)"> <img src="https://images.unsplash.com/photo-1603002730629-64df815039c5?q=80&w=2070" class="media-item" onclick="openImage(this.src)"> </div>
+    </section>
+
+    <footer id="footer">
+        <div class="logo-container" style="align-items: center; margin-bottom: 30px; filter: invert(1);">
+            <span class="logo-main">NEXT STOP</span>
+            <span class="logo-sub">GEORGIA</span>
+        </div>
+        <p>Tbilisi, Georgia | +995 500 00 00 00</p>
+        <br>
+        <a href="#" class="wa-link">Contact Us</a> | <a href="#">About Us</a> | <a href="#">Policies</a>
+        <br><br>
+        <p style="opacity: 0.5; font-size: 0.7rem;">&copy; 2025 Next Stop Group. All rights reserved.</p>
+    </footer>
+
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal()">×</div>
+            <img src="" class="modal-header-img" id="modalImg">
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle">Title</h2>
+                <div class="modal-text" id="modalText">Description</div>
+                <a href="#" class="modal-btn wa-link">Book This Now</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ============================================================
+           --- YOUR CONTROL PANEL (EDIT CONTENT BELOW) ---
+           ============================================================ */
+        const config = {
+            whatsapp: "995500000000", // YOUR NUMBER
+
+            // 1. HERO SLIDES
+            heroSlides: [
+                { 
+                    title: "The Heart of the Caucasus", 
+                    desc: "Discover 8,000 years of history and hospitality.",
+                    img: "https://images.unsplash.com/photo-1565118531796-763e5082d113?q=80&w=2070", // Stunning Mountain View (Kazbegi)
+                    fullText: "Experience the full breadth of Georgia. From the ancient streets of Tbilisi to the high peaks of Kazbegi."
+                },
+                { 
+                    title: "Winter in Gudauri", 
+                    desc: "Premium Ski Packages | 5 Days All Inclusive",
+                    img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2070", // Real Skiing Image
+                    fullText: "Our Gudauri ski package includes airport transfers, 5-star accommodation, ski pass, and equipment rental."
+                },
+                { 
+                    title: "VIP Casino Tours", 
+                    desc: "Flight + Hotel Free for Players",
+                    img: "https://images.unsplash.com/photo-1596306499317-849aa5dd3396?q=80&w=2071", // Luxury Casino Interior
+                    fullText: "Join our exclusive Junket program. Qualified players receive complimentary flights, luxury accommodation, and VIP hosting."
+                }
+            ],
+
+            // 2. TRAVEL GRID - IMAGES UPDATED
+            travelCards: [
+                { 
+                    title: "Adventure", 
+                    desc: "Hiking, Rafting, Paragliding", 
+                    img: "https://images.unsplash.com/photo-1502691079331-cf1993414571?q=80&w=2070", // Person hiking at sunset with amazing view
+                    tag: "Active", 
+                    text: "Explore the untamed wilderness of Svaneti and Kazbegi. Our guides are certified professionals." 
+                },
+                { 
+                    title: "Luxury & Leisure", 
+                    desc: "5-Star Resorts & Spas", 
+                    img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070", 
+                    tag: "Relax", 
+                    text: "Stay in Georgia's finest hotels. From Radisson Tsinandali to Rooms Kazbegi, we secure the best suites." 
+                },
+                { 
+                    title: "Wine Route", 
+                    desc: "Qvevri Tastings in Kakheti", 
+                    img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", 
+                    tag: "Culture", 
+                    text: "Visit the cradle of wine. 8,000 years of tradition. Private tastings with award-winning winemakers." 
+                },
+                { 
+                    title: "Casino & Nightlife", 
+                    desc: "VIP Access & Hosting", 
+                    img: "https://images.unsplash.com/photo-1582192131238-72d8e4042890?q=80&w=2070", // Casino with gaming tables, lively nightlife feel
+                    tag: "VIP", 
+                    text: "Experience the vibrant nightlife of Tbilisi. Private tables, security detail, and club reservations." 
+                }
+            ],
+
+            // 3. SERVICES GRID - IMAGES UPDATED
+            servicesCards: [
+                { 
+                    title: "Medical Tourism", 
+                    desc: "Luxury Wellness & Spa", 
+                    img: "https://images.unsplash.com/photo-1600334089600-394464525890?q=80&w=2070", // Luxury spa interior with pool/treatment
+                    text: "Indulge in rejuvenating spa treatments and wellness programs at Georgia's finest luxury resorts." 
+                },
+                { 
+                    title: "MICE & Corporate", 
+                    desc: "Events & Conferences", 
+                    img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069", 
+                    text: "Full logistical support for business delegations. Conference halls, simultaneous translation, and VAT-free invoicing." 
+                },
+                { 
+                    title: "Guides & Interpreters", 
+                    desc: "Multilingual Professionals", 
+                    img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070", 
+                    text: "Our guides speak English, Russian, Arabic, and Hebrew. They are knowledgeable historians and fixers." 
+                },
+                { 
+                    title: "Transport & Security", 
+                    desc: "Premium Fleet", 
+                    img: "https://images.unsplash.com/photo-1616896200236-4d788398e859?q=80&w=2070", // Valet opening luxury car door
+                    text: "From Mercedes S-Class to Sprinter Vans. We also offer armed or unarmed security details for VIPs." 
+                }
+            ],
+
+            // 4. BLOG POSTS - IMAGES & TEXT UPDATED for more realism
+            blogPosts: [
+                { 
+                    title: "Journey Through Kakheti's Vineyards", 
+                    date: "Oct 2025", 
+                    img: "https://images.unsplash.com/photo-1507963286071-968987b7a70a?q=80&w=2070", // Vineyard view in Kakheti
+                    text: "Explore the ancient traditions of Georgian winemaking in the heart of Kakheti. Discover family cellars and modern wineries." 
+                },
+                { 
+                    title: "The Ancient Caves of Uplistsikhe", 
+                    date: "Sep 2025", 
+                    img: "https://images.unsplash.com/photo-1600742533089-a2e6e3c0b11b?q=80&w=2070", // Uplistsikhe caves
+                    text: "Step back in time at Uplistsikhe, an ancient rock-hewn town. A must-see for history enthusiasts." 
+                },
+                { 
+                    title: "Gudauri: Georgia's Premier Ski Destination", 
+                    date: "Aug 2025", 
+                    img: "https://images.unsplash.com/photo-1547476839-4aa8447814b7?q=80&w=2070", // Skiing in Gudauri
+                    text: "Discover the slopes of Gudauri, offering pristine powder and breathtaking mountain vistas for all skill levels." 
+                },
+                { 
+                    title: "Tbilisi's Vibrant Sulphur Baths", 
+                    date: "July 2025", 
+                    img: "https://images.unsplash.com/photo-1589133887968-07f9c8d1e227?q=80&w=2070", // Tbilisi baths exterior
+                    text: "Experience a unique Georgian tradition in Tbilisi's historic Abanotubani district. Rejuvenate in mineral-rich waters." 
+                }
+            ]
+        };
+
+        /* --- RENDER LOGIC (DO NOT TOUCH) --- */
+        function createCard(item, type) {
+            const div = document.createElement('div');
+            div.className = type === 'blog' ? 'blog-card' : 'card';
+            div.onclick = () => openModal(item.title, item.text, item.img);
+            if (type === 'blog') {
+                div.innerHTML = `<div class="blog-img-box"><img src="${item.img}"></div><div class="blog-content"><div class="blog-date">${item.date}</div><h4 class="blog-title">${item.title}</h4><span class="blog-link">Read Article &rarr;</span></div>`;
+            } else {
+                div.innerHTML = `<img src="${item.img}" class="card-bg"><div class="card-overlay">${item.tag ? `<span class="card-tag">${item.tag}</span>` : ''}<h3>${item.title}</h3><p>${item.desc}</p></div>`;
+            }
+            return div;
+        }
+        function init() {
+            document.querySelectorAll('.wa-link').forEach(a => a.href = `https://wa.me/${config.whatsapp}`);
+            const heroTrack = document.getElementById('heroTrack');
+            config.heroSlides.forEach(slide => {
+                const div = document.createElement('div'); div.className = 'hero-slide';
+                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title}</h2><p class="slide-desc">${slide.desc}</p><button class="slide-btn" onclick="openModal('${slide.title}', '${slide.fullText}', '${slide.img}')">View Details</button></div>`;
+                heroTrack.appendChild(div);
+            });
+            const travelGrid = document.getElementById('travelGrid'); config.travelCards.forEach(item => travelGrid.appendChild(createCard(item, 'card')));
+            const servicesGrid = document.getElementById('servicesGrid'); config.servicesCards.forEach(item => servicesGrid.appendChild(createCard(item, 'card')));
+            const blogTrack = document.getElementById('blogTrack'); config.blogPosts.forEach(item => blogTrack.appendChild(createCard(item, 'blog')));
+        }
+        function scrollTrack(id, dir) { const track = document.getElementById(id); track.scrollBy({ left: track.clientWidth * dir, behavior: 'smooth' }); }
+        const modal = document.getElementById('detailModal'); const modalImg = document.getElementById('modalImg'); const modalTitle = document.getElementById('modalTitle'); const modalText = document.getElementById('modalText');
+        function openModal(title, text, img) { modalTitle.innerText = title; modalText.innerText = text; modalImg.src = img; modal.classList.add('active'); }
+        function closeModal() { modal.classList.remove('active'); }
+        modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+        function openImage(src) { openModal("Gallery Image", "Next Stop Georgia Gallery", src); }
+        init();
+    </script>
+</body>
+</html>
+```http://googleusercontent.com/image_generation_content/0
