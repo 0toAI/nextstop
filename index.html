@@ -16,16 +16,22 @@
         /* --- 1. DESIGN VARIABLES --- */
         :root {
             --bg-warm: #fdfbf7;         
-            --charcoal: #1a1a1a;
-            --terracotta: #a84a32;
-            --gold: #c5a059;
-            --green: #25D366;
+            --charcoal: #1a1a1a;        /* Deepest Grey */
+            --terracotta: #a84a32;      /* Accent Color */
+            --gold: #c5a059;            /* Luxury Accent */
+            --green: #25D366;           /* WhatsApp */
             --gray-light: #f4f4f4;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
-        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        
+        /* SMOOTH SCROLLING FIX */
+        html { 
+            scroll-behavior: smooth; 
+            scroll-padding-top: 80px; /* Prevents header from covering section titles */
+        }
+        
         body { color: var(--charcoal); background-color: var(--bg-warm); line-height: 1.6; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -79,10 +85,12 @@
         }
         .slide-btn:hover { background: white; color: black; }
 
+        /* PROGRESS BARS */
         .progress-container { position: absolute; bottom: 40px; left: 0; width: 100%; display: flex; justify-content: center; gap: 8px; z-index: 10; padding: 0 10%; }
         .progress-bar { height: 4px; background: rgba(255,255,255,0.3); flex: 1; max-width: 120px; border-radius: 2px; overflow: hidden; }
         .progress-fill { height: 100%; width: 0%; background: white; transition: width 0ms linear; }
 
+        /* ARROWS */
         .wheel-arrows { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; z-index: 10; pointer-events: none; }
         .arrow { pointer-events: auto; cursor: pointer; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; backdrop-filter: blur(5px); transition: 0.3s; border: 1px solid rgba(255,255,255,0.3); }
         .arrow:hover { background: white; color: black; }
@@ -245,7 +253,8 @@
                 { 
                     title: "The Heart of the Caucasus", 
                     desc: "Discover 8,000 years of history and hospitality.",
-                    img: "https://unsplash.com/photos/green-mountain-across-body-of-water-Bkci_8qcdvQ", 
+                    // IMAGE: Beautiful Kazbegi Mountain View (Valley)
+                    img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?q=80&w=2070", 
                     fullText: "Experience the full breadth of Georgia. From the ancient streets of Tbilisi to the high peaks of Kazbegi."
                 },
                 { 
@@ -288,8 +297,8 @@
                 { 
                     title: "Casino & Nightlife", 
                     desc: "VIP Access", 
-                    // IMAGE: Poker Table / Chips (Dark Luxury)
-                    img: "https://unsplash.com/photos/a-person-sitting-at-a-table-with-cards-and-chips-LDkm0b4fh48", 
+                    // CHANGED: Poker Table / Chips (Dark Luxury)
+                    img: "https://images.unsplash.com/photo-1518893063132-36e465be7788?q=80&w=2070", 
                     tag: "VIP", 
                     text: "Experience the vibrant nightlife with exclusive club access." 
                 }
@@ -300,7 +309,7 @@
                 { 
                     title: "Medical Tourism", 
                     desc: "Wellbeing & Health", 
-                    // IMAGE: Bright, Sunny Luxury Recovery/Spa
+                    // CHANGED: Luxury Recovery Room / Sunny Breakfast
                     img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070", 
                     text: "Top clinics for Hair Transplants and Dental work with spa-like recovery." 
                 },
@@ -313,14 +322,14 @@
                 { 
                     title: "Guides & Interpreters", 
                     desc: "Local Experts", 
-                    // IMAGE: Guide telling stories
+                    // CHANGED: Guide telling stories
                     img: "https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?q=80&w=2070", 
                     text: "Our friendly, certified guides will show you the real Georgia." 
                 },
                 { 
                     title: "Transport & Security", 
                     desc: "Premium Chauffeur", 
-                    // IMAGE: Chauffeur opening luxury car door
+                    // CHANGED: Chauffeur opening luxury car door
                     img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", 
                     text: "Luxury vehicles with professional drivers opening doors for you." 
                 }
@@ -355,7 +364,7 @@
             ]
         };
 
-        /* --- RENDER LOGIC --- */
+        /* --- RENDER LOGIC (DO NOT TOUCH) --- */
         let currentSlide = 0;
         let autoPlayTimer;
         let barAnimTimer;
