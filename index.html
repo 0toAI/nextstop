@@ -122,11 +122,6 @@
         .blog-title { font-size: 1.2rem; margin: 10px 0; color: var(--charcoal); font-family: 'Cinzel', serif; }
         .blog-link { font-size: 0.8rem; text-decoration: underline; color: #888; }
 
-        /* MEDIA GRID */
-        .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
-        .media-item { height: 250px; width: 100%; object-fit: cover; border-radius: 4px; transition: 0.3s; cursor: pointer; }
-        .media-item:hover { filter: brightness(0.7); transform: scale(0.98); }
-
         /* MODAL */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); opacity: 0; transition: 0.3s; }
         .modal-overlay.active { display: flex; opacity: 1; }
@@ -209,21 +204,6 @@
         <div class="blog-scroller" id="blogTrack"></div>
     </section>
 
-    <section class="section" style="min-height: auto; padding-bottom: 100px;">
-        <div class="section-title">
-            <h2>Gallery</h2>
-        </div>
-        <div class="media-grid">
-            <!-- GALLERY FIXED: No building sites, only beautiful Georgian views -->
-            <img src="https://images.unsplash.com/photo-1538370965046-79c0d6907d47?q=80&w=2069" class="media-item" onclick="openImage(this.src)" loading="lazy">
-            <img src="https://images.unsplash.com/photo-1603002730629-64df815039c5?q=80&w=2070" class="media-item" onclick="openImage(this.src)" loading="lazy">
-            <img src="https://images.unsplash.com/photo-1517404217591-aa07270428e1?q=80&w=2070" class="media-item" onclick="openImage(this.src)" loading="lazy">
-            <img src="https://images.unsplash.com/photo-1628174780645-0d2979207860?q=80&w=2070" class="media-item" onclick="openImage(this.src)" loading="lazy">
-            <img src="https://images.unsplash.com/photo-1569932063260-393b1986a781?q=80&w=2070" class="media-item" onclick="openImage(this.src)" loading="lazy">
-            <img src="https://images.unsplash.com/photo-1585553616435-2dc0a54e271d?q=80&w=1000" class="media-item" onclick="openImage(this.src)" loading="lazy">
-        </div>
-    </section>
-
     <footer id="footer">
         <div class="logo-container" style="align-items: center; margin-bottom: 30px; filter: invert(1);">
             <span class="logo-main">NEXT STOP</span>
@@ -258,17 +238,14 @@
             <div class="modal-body">
                 <h2 class="modal-title" id="modalTitle">Title</h2>
                 <div class="modal-text" id="modalText">Description</div>
-                <a href="#" class="modal-btn wa-link">
-                    <svg style="width:20px;height:20px;fill:white;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                    Book This Now
-                </a>
+                <a href="#" class="modal-btn wa-link">Book This Now</a>
             </div>
         </div>
     </div>
 
     <script>
         /* ============================================================
-           --- YOUR CONTROL PANEL (EDIT HERE) ---
+           --- YOUR CONTROL PANEL (EDIT CONTENT BELOW) ---
            ============================================================ */
         const config = {
             whatsapp: "995591705710", 
@@ -278,19 +255,20 @@
                 { 
                     title: "The Heart of the Caucasus", 
                     desc: "Discover 8,000 years of history and hospitality.",
-                    img: "https://images.unsplash.com/photo-1565118531796-763e5082d113?q=80&w=2070", 
+                    // IMAGE: Beautiful Kazbegi Mountain View (Valley)
+                    img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?q=80&w=2070", 
                     fullText: "Experience the full breadth of Georgia. From the ancient streets of Tbilisi to the high peaks of Kazbegi."
                 },
                 { 
                     title: "Winter in Gudauri", 
                     desc: "Premium Ski Packages | 5 Days All Inclusive",
-                    img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2070",
+                    img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2070", // Skiing
                     fullText: "Our Gudauri ski package includes airport transfers, 5-star accommodation, ski pass, and equipment rental."
                 },
                 { 
                     title: "VIP Lifestyle", 
                     desc: "Yachts, Casinos & Private Jets",
-                    img: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=2070",
+                    img: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=2070", // Luxury Yacht
                     fullText: "Join our exclusive Junket program. Qualified players receive complimentary flights, luxury accommodation, and VIP hosting."
                 }
             ],
@@ -307,14 +285,14 @@
                 { 
                     title: "Luxury & Leisure", 
                     desc: "5-Star Resorts", 
-                    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", 
+                    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", // Luxury Pool
                     tag: "Relax", 
                     text: "Stay in Georgia's finest hotels with private pools and spas." 
                 },
                 { 
                     title: "Wine Route", 
                     desc: "Qvevri Tastings", 
-                    img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", 
+                    img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", // Vineyard
                     tag: "Culture", 
                     text: "Visit the cradle of wine in Kakheti. Private tastings." 
                 },
@@ -322,7 +300,7 @@
                     title: "Casino & Nightlife", 
                     desc: "VIP Access", 
                     // CHANGED: Poker Table / Chips (Dark Luxury)
-                    img: "https://images.unsplash.com/photo-1518893063132-36e465be7788?q=80&w=2070", 
+                    img: "https://images.unsplash.com/photo-1511193311914-0346f16efe90?q=80&w=2070", 
                     tag: "VIP", 
                     text: "Experience the vibrant nightlife with exclusive club access." 
                 }
@@ -334,7 +312,7 @@
                     title: "Medical Tourism", 
                     desc: "Wellbeing & Health", 
                     // CHANGED: Luxury Recovery Room / Sunny Breakfast
-                    img: "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?q=80&w=2070", 
+                    img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070", 
                     text: "Top clinics for Hair Transplants and Dental work with spa-like recovery." 
                 },
                 { 
@@ -359,67 +337,31 @@
                 }
             ],
 
-            // 4. BLOG POSTS (10 REAL POSTS)
+            // 4. BLOG POSTS
             blogPosts: [
                 { 
-                    title: "Tbilisi Old Town", 
+                    title: "Vineyards of Kakheti", 
                     date: "Oct 2025", 
-                    img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?q=80&w=2070", 
-                    text: "Wander through the maze of colorful balconies and sulfur baths in the historic heart of Tbilisi." 
+                    img: "https://images.unsplash.com/photo-1566346547477-173084076792?q=80&w=2070", // Real Vineyard
+                    text: "A journey through the ancient wine region." 
                 },
                 { 
-                    title: "Svaneti Towers", 
+                    title: "Medical Excellence", 
                     date: "Sep 2025", 
-                    img: "https://images.unsplash.com/photo-1571258267881-5d6929516187?q=80&w=2070", 
-                    text: "Visit the UNESCO heritage site of Ushguli and the ancient defense towers of Mestia." 
+                    img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053", // Modern Medical
+                    text: "Why Georgia is the top choice for medical procedures." 
                 },
                 { 
-                    title: "Batumi Boulevard", 
+                    title: "Ski Season Guide", 
                     date: "Aug 2025", 
-                    img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?q=80&w=2070", 
-                    text: "Stroll along the Black Sea coast and enjoy the modern architecture of Batumi." 
+                    img: "https://images.unsplash.com/photo-1610198871574-53537a702467?q=80&w=2070", // Snowy Ski Resort
+                    text: "Everything you need to know about Gudauri this winter." 
                 },
                 { 
-                    title: "Kazbegi & Gergeti", 
-                    date: "Jul 2025", 
-                    img: "https://images.unsplash.com/photo-1565118531796-763e5082d113?q=80&w=2070", 
-                    text: "The most iconic view in the Caucasus. A church above the clouds." 
-                },
-                { 
-                    title: "Kakheti Wine", 
-                    date: "Jun 2025", 
-                    img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", 
-                    text: "Taste the amber wine made in traditional Qvevri clay pots." 
-                },
-                { 
-                    title: "Martvili Canyon", 
-                    date: "May 2025", 
-                    img: "https://images.unsplash.com/photo-1604918363094-587689290516?q=80&w=2070", 
-                    text: "Boat through the emerald green waters of this natural wonder." 
-                },
-                { 
-                    title: "Vardzia Cave City", 
-                    date: "Apr 2025", 
-                    img: "https://images.unsplash.com/photo-1600742533089-a2e6e3c0b11b?q=80&w=2070", 
-                    text: "Explore a city carved into the rock face by Queen Tamar." 
-                },
-                { 
-                    title: "Georgian Cuisine", 
-                    date: "Mar 2025", 
-                    img: "https://images.unsplash.com/photo-1603002730629-64df815039c5?q=80&w=2070", 
-                    text: "Master the art of eating Khinkali and breaking Khachapuri bread." 
-                },
-                { 
-                    title: "Prometheus Cave", 
-                    date: "Feb 2025", 
-                    img: "https://images.unsplash.com/photo-1597166567079-189725761f37?q=80&w=2070", 
-                    text: "Journey underground into a world of stalactites and stalagmites." 
-                },
-                { 
-                    title: "Tusheti National Park", 
-                    date: "Jan 2025", 
-                    img: "https://images.unsplash.com/photo-1533552362494-90a889b471bc?q=80&w=2070", 
-                    text: "The most remote and untouched region of the high Caucasus mountains." 
+                    title: "Tbilisi Nightlife", 
+                    date: "July 2025", 
+                    img: "https://images.unsplash.com/photo-1555992336-03a2316dbbb3?q=80&w=2064", // Nightclub vibe
+                    text: "Best clubs and bars in the capital." 
                 }
             ]
         };
