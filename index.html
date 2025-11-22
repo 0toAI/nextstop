@@ -9,14 +9,13 @@
     <meta name="description" content="Next Stop: Georgia. Premium travel agency in Tbilisi offering VIP casino tours, medical tourism, ski packages in Gudauri, and exclusive wine tours in Kakheti.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🇬🇪</text></svg>">
 
-    <!-- PREMIUM FONTS -->
+    <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
         /* --- 1. DESIGN VARIABLES --- */
         :root {
             --bg-warm: #fdfbf7;         
-            --bg-cream: #f4f1ea;        /* New Journal Background */
             --charcoal: #1a1a1a;
             --terracotta: #a84a32;
             --gold: #c5a059;
@@ -29,10 +28,7 @@
         html { scroll-behavior: smooth; scroll-padding-top: 80px; }
         body { color: var(--charcoal); background-color: var(--bg-warm); line-height: 1.6; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
-        
-        /* IMAGE FILTER: Makes all photos look consistent/branded */
-        img { width: 100%; height: 100%; object-fit: cover; display: block; filter: sepia(0.05) contrast(1.05); transition: 0.5s; }
-        
+        img { width: 100%; height: 100%; object-fit: cover; display: block; }
         button { cursor: pointer; border: none; outline: none; }
 
         /* --- 2. HEADER --- */
@@ -46,61 +42,73 @@
         }
 
         .header-left { display: flex; align-items: center; gap: 30px; }
-        
-        /* LOGO */
-        .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: pointer; z-index: 1001; }
+        .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: pointer; }
         .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; }
         .logo-sub { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--terracotta); letter-spacing: 4px; text-transform: uppercase; margin-left: 2px; }
 
-        /* TOGGLE */
-        .site-toggle { display: flex; background: var(--gray-light); padding: 4px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); z-index: 1001; }
-        .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; }
-        .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .site-toggle { display: flex; background: var(--gray-light); padding: 4px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); }
+        .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none; }
+        .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default; }
+        .toggle-btn.inactive:hover { color: var(--terracotta); }
         .dot { color: var(--green); font-size: 0.8rem; animation: pulse 2s infinite; }
 
-        /* DESKTOP NAV */
-        .nav-links { display: flex; gap: 30px; align-items: center; }
-        .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; cursor: pointer; }
+        .header-right { display: flex; align-items: center; gap: 25px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
         .nav-item:hover { color: var(--terracotta); }
 
-        /* MOBILE HAMBURGER */
-        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; z-index: 1002; color: var(--charcoal); }
+        /* --- FANCY LANGUAGE DROPDOWN --- */
+        .lang-container { position: relative; }
         
-        /* MOBILE MENU DRAWER */
-        .mobile-menu {
-            position: fixed; top: 0; right: -100%; width: 80%; height: 100vh;
-            background: white; box-shadow: -5px 0 20px rgba(0,0,0,0.1);
-            z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 40px;
-            transition: 0.4s ease-in-out;
+        .lang-btn {
+            width: 36px; height: 36px; border-radius: 50%; 
+            border: 1px solid rgba(0,0,0,0.1); background: white;
+            display: flex; justify-content: center; align-items: center;
+            transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-        .mobile-menu.active { right: 0; }
-        .mobile-link { font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--charcoal); }
+        .lang-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-color: var(--terracotta); }
+        .lang-icon { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; }
+        
+        .lang-dropdown {
+            position: absolute; top: 140%; right: -10px;
+            background: white; width: 160px; border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            opacity: 0; visibility: hidden; transform: translateY(10px);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0,0,0,0.05); overflow: hidden;
+        }
+        
+        /* Show on hover of container */
+        .lang-container:hover .lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+        
+        .lang-opt {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 15px; width: 100%; text-align: left;
+            background: transparent; border-bottom: 1px solid rgba(0,0,0,0.03);
+            font-size: 0.85rem; font-weight: 600; color: #555; transition: 0.2s;
+        }
+        .lang-opt:last-child { border-bottom: none; }
+        .lang-opt:hover { background: var(--bg-warm); color: var(--terracotta); padding-left: 20px; }
+        .lang-opt-icon { width: 20px; height: 20px; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+
 
         /* --- 3. HERO WHEEL --- */
         .hero-wheel { height: 95vh; width: 100%; overflow: hidden; margin-top: 0; background: #000; position: relative; }
         .wheel-track { display: flex; width: 100%; height: 100%; overflow: hidden; }
-        
-        .hero-slide { 
-            flex: 0 0 100%; height: 100%; position: relative;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            text-align: center; color: white; padding: 20px;
-        }
+        .hero-slide { flex: 0 0 100%; height: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; }
         .slide-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.65; z-index: 1; transition: transform 10s linear; }
         .hero-slide.active .slide-bg { transform: scale(1.1); }
         .slide-content { position: relative; z-index: 2; max-width: 800px; opacity: 0; transform: translateY(30px); transition: 1s; }
         .hero-slide.active .slide-content { opacity: 1; transform: translateY(0); }
         .slide-title { font-size: 4rem; font-family: 'Cinzel', serif; margin-bottom: 15px; text-shadow: 0 5px 20px rgba(0,0,0,0.5); }
         .slide-desc { font-size: 1.2rem; opacity: 0.9; margin-bottom: 25px; font-weight: 300; letter-spacing: 1px; }
-        .slide-btn { 
-            border: 2px solid white; color: white; padding: 15px 45px; 
-            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; display: inline-block;
-            background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); transition: 0.3s;
-        }
+        .slide-btn { border: 2px solid white; color: white; padding: 15px 45px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; display: inline-block; background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); transition: 0.3s; }
         .slide-btn:hover { background: white; color: black; }
 
         .progress-container { position: absolute; bottom: 40px; left: 0; width: 100%; display: flex; justify-content: center; gap: 8px; z-index: 10; padding: 0 10%; }
         .progress-bar { height: 4px; background: rgba(255,255,255,0.3); flex: 1; max-width: 120px; border-radius: 2px; overflow: hidden; }
         .progress-fill { height: 100%; width: 0%; background: white; transition: width 0ms linear; }
+
         .wheel-arrows { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; z-index: 10; pointer-events: none; }
         .arrow { pointer-events: auto; cursor: pointer; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; backdrop-filter: blur(5px); transition: 0.3s; border: 1px solid rgba(255,255,255,0.3); }
         .arrow:hover { background: white; color: black; }
@@ -121,7 +129,7 @@
         .card p { font-size: 0.9rem; opacity: 0.8; font-weight: 300; }
         .card-tag { position: absolute; top: 20px; right: 20px; background: var(--terracotta); color: white; padding: 5px 12px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
 
-        /* BLOG (New Warm Background) */
+        /* BLOG */
         .blog-scroller { display: flex; overflow-x: auto; gap: 30px; padding: 20px 5px; scroll-snap-type: x mandatory; scrollbar-width: none; }
         .blog-scroller::-webkit-scrollbar { display: none; }
         .blog-card { flex: 0 0 350px; scroll-snap-align: center; background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); transition: 0.3s; cursor: pointer; }
@@ -143,25 +151,15 @@
         .modal-text { font-size: 1rem; color: #555; margin-bottom: 30px; line-height: 1.8; }
         .modal-btn { background: var(--terracotta); color: white; padding: 15px 30px; font-weight: bold; text-transform: uppercase; display: inline-block; display: flex; align-items: center; justify-content: center; gap: 10px; width: fit-content; }
         
-        /* FOOTER & TRUST BADGES */
+        /* FOOTER ICONS & LAYOUT */
         footer { background: #111; color: #777; padding: 80px 5%; text-align: center; font-size: 0.9rem; border-top: 5px solid var(--terracotta); }
-        
-        .trust-badges {
-            display: flex; justify-content: center; gap: 40px; margin-bottom: 40px; flex-wrap: wrap;
-            border-bottom: 1px solid #333; padding-bottom: 40px;
-        }
-        .trust-item { display: flex; align-items: center; gap: 10px; color: #ccc; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
-        .trust-icon { width: 24px; height: 24px; fill: var(--gold); }
-
         .footer-social { display: flex; justify-content: center; gap: 25px; margin-bottom: 30px; }
         .social-btn { display: flex; align-items: center; gap: 8px; color: white; font-weight: 600; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 30px; }
         .social-btn:hover { color: var(--terracotta); border-color: var(--terracotta); background: rgba(255,255,255,0.05); }
         .social-icon { width: 20px; height: 20px; fill: currentColor; }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; } /* Hide Desktop Nav */
-            .hamburger { display: block; } /* Show Mobile Btn */
-            .slide-title { font-size: 2.5rem; } .section { padding: 60px 5%; min-height: auto; } .wheel-arrows { display: none; }
+            .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .section { padding: 60px 5%; min-height: auto; } .wheel-arrows { display: none; }
             .footer-social { flex-direction: column; align-items: center; }
         }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -179,36 +177,48 @@
             </div>
             <div class="site-toggle">
                 <div class="toggle-btn active"><span class="dot">●</span> GEORGIA</div>
-                <a href="https://nextstop.com.ge" class="toggle-btn">WORLD</a>
+                <a href="https://nextstop.com.ge" class="toggle-btn inactive">WORLD</a>
             </div>
         </div>
         
-        <!-- DESKTOP NAV -->
-        <nav class="nav-links">
-            <a href="#travel" class="nav-item">Tours</a>
-            <a href="#services" class="nav-item">Services</a>
-            <a href="#blog" class="nav-item">Blog</a>
-            <a href="#" onclick="openAboutModal()" class="nav-item">About</a>
-        </nav>
-
-        <!-- MOBILE HAMBURGER -->
-        <div class="hamburger" onclick="toggleMobileMenu()">☰</div>
+        <div class="header-right">
+            <nav class="nav-links">
+                <a href="#travel" class="nav-item" data-key="nav_tours">Tours</a>
+                <a href="#services" class="nav-item" data-key="nav_services">Services</a>
+                <a href="#blog" class="nav-item" data-key="nav_blog">Blog</a>
+                <a href="#footer" class="nav-item" data-key="nav_about">About</a>
+            </nav>
+            
+            <!-- FANCY LANGUAGE DROPDOWN -->
+            <div class="lang-container">
+                <button class="lang-btn" id="langBtn">
+                    <!-- SVG flag will be injected here -->
+                </button>
+                <div class="lang-dropdown">
+                    <button class="lang-opt" onclick="setLanguage('en')">
+                        <!-- USA SVG -->
+                        <svg class="lang-opt-icon" viewBox="0 0 640 480"><path fill="#bd3d44" d="M0 0h640v480H0"/><path stroke="#fff" stroke-width="37" d="M0 55.3h640M0 129h640M0 202.8h640M0 276.5h640M0 350.2h640M0 423.9h640"/><path fill="#192f5d" d="M0 0h296.4v258.5H0"/><path fill="#fff" d="M17.5 15h260v230h-260z"/><path fill="#192f5d" d="M17.5 15h260v230h-260z"/></svg>
+                        English
+                    </button>
+                    <button class="lang-opt" onclick="setLanguage('ka')">
+                        <!-- GEO SVG -->
+                        <svg class="lang-opt-icon" viewBox="0 0 640 480"><path fill="#fff" d="M0 0h640v480H0z"/><path fill="#f00" d="M280 0h80v480h-80z"/><path fill="#f00" d="M0 200h640v80H0z"/><path fill="#f00" d="M100 60h40v40h40v40h-40v40h-40v-40H60v-40h40zM460 60h40v40h40v40h-40v40h-40v-40h-40v-40h40zM100 340h40v40h40v40h-40v40h-40v-40H60v-40h40zM460 340h40v40h40v40h-40v40h-40v-40h-40v-40h40z"/></svg>
+                        ქართული
+                    </button>
+                    <button class="lang-opt" onclick="setLanguage('ru')">
+                        <!-- RUS SVG -->
+                        <svg class="lang-opt-icon" viewBox="0 0 640 480"><path fill="#fff" d="M0 0h640v160H0z"/><path fill="#0039a6" d="M0 160h640v160H0z"/><path fill="#d52b1e" d="M0 320h640v160H0z"/></svg>
+                        Русский
+                    </button>
+                    <button class="lang-opt" onclick="setLanguage('ar')">
+                        <!-- UAE SVG (Arabic) -->
+                        <svg class="lang-opt-icon" viewBox="0 0 640 480"><path fill="#00732f" d="M0 0h640v160H0z"/><path fill="#fff" d="M0 160h640v160H0z"/><path fill="#000" d="M0 320h640v160H0z"/><path fill="red" d="M0 0h220v480H0z"/></svg>
+                        العربية
+                    </button>
+                </div>
+            </div>
+        </div>
     </header>
-
-    <!-- MOBILE MENU OVERLAY -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="logo-container" onclick="toggleMobileMenu()">
-            <span class="logo-main">NEXT STOP</span>
-            <span class="logo-sub">GEORGIA</span>
-        </div>
-        <a href="#travel" class="mobile-link" onclick="toggleMobileMenu()">Tours</a>
-        <a href="#services" class="mobile-link" onclick="toggleMobileMenu()">Services</a>
-        <a href="#blog" class="mobile-link" onclick="toggleMobileMenu()">Blog</a>
-        <a href="#" onclick="toggleMobileMenu(); openAboutModal()" class="mobile-link">About Us</a>
-        <div class="footer-social" style="margin-top: 20px;">
-             <a href="#" class="social-btn wa-link">WhatsApp</a>
-        </div>
-    </div>
 
     <!-- HERO WHEEL -->
     <div class="hero-wheel">
@@ -222,47 +232,29 @@
 
     <section id="travel" class="section">
         <div class="section-title">
-            <h2>Curated Experiences</h2>
-            <p>Explore the distinct regions of the Caucasus through our specialized itineraries.</p>
+            <h2 data-key="section_travel_title">Curated Experiences</h2>
+            <p data-key="section_travel_desc">Explore the distinct regions of the Caucasus through our specialized itineraries.</p>
         </div>
         <div class="grid-4" id="travelGrid"></div>
     </section>
 
     <section id="services" class="section" style="background-color: #f0f0f0;">
         <div class="section-title">
-            <h2>Our Services</h2>
-            <p>Professional logistical support for medical, corporate, and VIP clients.</p>
+            <h2 data-key="section_services_title">Our Services</h2>
+            <p data-key="section_services_desc">Professional logistical support for medical, corporate, and VIP clients.</p>
         </div>
         <div class="grid-4" id="servicesGrid"></div>
     </section>
 
-    <!-- JOURNAL SECTION (NEW WARM COLOR) -->
-    <section id="blog" class="section" style="background: var(--bg-cream);">
+    <section id="blog" class="section" style="background: white;">
         <div class="section-title">
-            <h2>Journal</h2>
-            <p>Latest updates, guides, and news from the team.</p>
+            <h2 data-key="section_blog_title">Journal</h2>
+            <p data-key="section_blog_desc">Latest updates, guides, and news from the team.</p>
         </div>
         <div class="blog-scroller" id="blogTrack"></div>
     </section>
 
     <footer id="footer">
-        
-        <!-- TRUST BADGES -->
-        <div class="trust-badges">
-            <div class="trust-item">
-                <svg class="trust-icon" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-                Verified Operator
-            </div>
-            <div class="trust-item">
-                <svg class="trust-icon" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                24/7 Support
-            </div>
-            <div class="trust-item">
-                <svg class="trust-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                Secure & Private
-            </div>
-        </div>
-
         <div class="logo-container" style="align-items: center; margin-bottom: 30px; filter: invert(1);">
             <span class="logo-main">NEXT STOP</span>
             <span class="logo-sub">GEORGIA</span>
@@ -300,245 +292,212 @@
 
     <script>
         /* ============================================================
-           --- YOUR CONTROL PANEL (EDIT HERE) ---
+           --- CONTROL PANEL (MULTI-LANGUAGE SUPPORT) ---
            ============================================================ */
+        
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        // SVG FLAGS
+        const flags = {
+            en: `<svg class="lang-icon" viewBox="0 0 640 480"><path fill="#bd3d44" d="M0 0h640v480H0"/><path stroke="#fff" stroke-width="37" d="M0 55.3h640M0 129h640M0 202.8h640M0 276.5h640M0 350.2h640M0 423.9h640"/><path fill="#192f5d" d="M0 0h296.4v258.5H0"/><path fill="#fff" d="M17.5 15h260v230h-260z"/><path fill="#192f5d" d="M17.5 15h260v230h-260z"/></svg>`,
+            ka: `<svg class="lang-icon" viewBox="0 0 640 480"><path fill="#fff" d="M0 0h640v480H0z"/><path fill="#f00" d="M280 0h80v480h-80z"/><path fill="#f00" d="M0 200h640v80H0z"/><path fill="#f00" d="M100 60h40v40h40v40h-40v40h-40v-40H60v-40h40zM460 60h40v40h40v40h-40v40h-40v-40h-40v-40h40zM100 340h40v40h40v40h-40v40h-40v-40H60v-40h40zM460 340h40v40h40v40h-40v40h-40v-40h-40v-40h40z"/></svg>`,
+            ru: `<svg class="lang-icon" viewBox="0 0 640 480"><path fill="#fff" d="M0 0h640v160H0z"/><path fill="#0039a6" d="M0 160h640v160H0z"/><path fill="#d52b1e" d="M0 320h640v160H0z"/></svg>`,
+            ar: `<svg class="lang-icon" viewBox="0 0 640 480"><path fill="#00732f" d="M0 0h640v160H0z"/><path fill="#fff" d="M0 160h640v160H0z"/><path fill="#000" d="M0 320h640v160H0z"/><path fill="red" d="M0 0h220v480H0z"/></svg>`
+        };
+
+        const translations = {
+            en: {
+                nav_tours: "Tours",
+                nav_services: "Services",
+                nav_blog: "Blog",
+                nav_about: "About",
+                section_travel_title: "Curated Experiences",
+                section_travel_desc: "Explore the distinct regions of the Caucasus through our specialized itineraries.",
+                section_services_title: "Our Services",
+                section_services_desc: "Professional logistical support for medical, corporate, and VIP clients.",
+                section_blog_title: "Journal",
+                section_blog_desc: "Latest updates, guides, and news from the team.",
+                btn_details: "View Details",
+                btn_read: "Read Article",
+                btn_book: "Book This Now"
+            },
+            ka: {
+                nav_tours: "ტურები",
+                nav_services: "სერვისები",
+                nav_blog: "ბლოგი",
+                nav_about: "ჩვენ შესახებ",
+                section_travel_title: "გამორჩეული გამოცდილება",
+                section_travel_desc: "აღმოაჩინეთ კავკასიის უნიკალური რეგიონები ჩვენი სპეციალური მარშრუტებით.",
+                section_services_title: "ჩვენი სერვისები",
+                section_services_desc: "პროფესიონალური ლოჯისტიკური მხარდაჭერა სამედიცინო, კორპორატიული და VIP კლიენტებისთვის.",
+                section_blog_title: "ჟურნალი",
+                section_blog_desc: "სიახლეები, გიდები და ამბები ჩვენი გუნდისგან.",
+                btn_details: "დეტალების ნახვა",
+                btn_read: "სტატიის წაკითხვა",
+                btn_book: "დაჯავშნა"
+            },
+            ru: {
+                nav_tours: "Туры",
+                nav_services: "Услуги",
+                nav_blog: "Блог",
+                nav_about: "О нас",
+                section_travel_title: "Избранные Впечатления",
+                section_travel_desc: "Исследуйте уникальные регионы Кавказа с нашими специальными маршрутами.",
+                section_services_title: "Наши Услуги",
+                section_services_desc: "Профессиональная логистическая поддержка для медицинских, корпоративных и VIP клиентов.",
+                section_blog_title: "Журнал",
+                section_blog_desc: "Последние обновления и гиды от нашей команды.",
+                btn_details: "Подробнее",
+                btn_read: "Читать",
+                btn_book: "Забронировать"
+            },
+            ar: {
+                nav_tours: "الجولات",
+                nav_services: "الخدمات",
+                nav_blog: "المدونة",
+                nav_about: "عنا",
+                section_travel_title: "تجربة مميزة",
+                section_travel_desc: "استكشف مناطق القوقاز المتميزة من خلال مساراتنا المتخصصة.",
+                section_services_title: "خدماتنا",
+                section_services_desc: "دعم لوجستي احترافي للعملاء الطبيين والشركات وكبار الشخصيات.",
+                section_blog_title: "المجلة",
+                section_blog_desc: "آخر التحديثات والأدلة والأخبار من الفريق.",
+                btn_details: "عرض التفاصيل",
+                btn_read: "اقرأ المقال",
+                btn_book: "احجز الآن"
+            }
+        };
+
         const config = {
             whatsapp: "995591705710", 
 
             // 1. HERO SLIDES
             heroSlides: [
                 { 
-                    title: "The Heart of the Caucasus", 
-                    desc: "Discover 8,000 years of history and hospitality.",
-                    // Fixed: Mountain Valley (Kazbegi/Gergeti)
+                    title: { en: "The Heart of the Caucasus", ka: "კავკასიის გული", ru: "Сердце Кавказа", ar: "قلب القوقاز" },
+                    desc: { en: "Discover 8,000 years of history.", ka: "აღმოაჩინეთ 8,000 წლოვანი ისტორია.", ru: "Откройте 8000 лет истории.", ar: "اكتشف 8000 عام من التاريخ." },
                     img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?q=80&w=2070", 
-                    fullText: "Experience the full breadth of Georgia. From the ancient streets of Tbilisi to the high peaks of Kazbegi."
+                    fullText: { en: "Experience the full breadth of Georgia...", ka: "გამოიცანით საქართველოს სრული მშვენება...", ru: "Ощутите всю широту Грузии...", ar: "جرب اتساع جورجيا الكامل..." }
                 },
                 { 
-                    title: "Winter in Gudauri", 
-                    desc: "Premium Ski Packages | 5 Days All Inclusive",
-                    img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2070", // Skiing
-                    fullText: "Our Gudauri ski package includes airport transfers, 5-star accommodation, ski pass, and equipment rental."
+                    title: { en: "Winter in Gudauri", ka: "ზამთარი გუდაურში", ru: "Зима в Гудаури", ar: "الشتاء في غوداوري" },
+                    desc: { en: "Premium Ski Packages", ka: "პრემიუმ სათხილამურო პაკეტები", ru: "Премиум лыжные пакеты", ar: "باقات تزلج مميزة" },
+                    img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2070",
+                    fullText: { en: "Our Gudauri ski package...", ka: "ჩვენი გუდაურის სათხილამურო პაკეტი...", ru: "Наш лыжный пакет в Гудаури...", ar: "باقة التزلج الخاصة بنا في غوداوري..." }
                 },
                 { 
-                    title: "VIP Lifestyle", 
-                    desc: "Yachts, Casinos & Private Jets",
-                    img: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=2070", // Luxury Yacht
-                    fullText: "Join our exclusive Junket program. Qualified players receive complimentary flights, luxury accommodation, and VIP hosting."
+                    title: { en: "VIP Lifestyle", ka: "VIP ცხოვრების სტილი", ru: "VIP Стиль Жизни", ar: "نمط حياة كبار الشخصيات" },
+                    desc: { en: "Yachts, Casinos & Private Jets", ka: "იახტები, კაზინოები და კერძო თვითმფრინავები", ru: "Яхты, Казино и Частные Джеты", ar: "اليخوت والكازينوهات والطائرات الخاصة" },
+                    img: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=2070",
+                    fullText: { en: "Join our exclusive Junket...", ka: "შემოუერთდით ჩვენს ექსკლუზიურ ჯანკეტ...", ru: "Присоединяйтесь к нашему эксклюзивному джанкет-туру...", ar: "انضم إلى رحلة الجانكيت الحصرية..." }
                 }
             ],
 
             // 2. TRAVEL GRID
             travelCards: [
-                { 
-                    title: "Adventure", 
-                    desc: "Hiking & Rafting", 
-                    img: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2073", // Hiker at sunset
-                    tag: "Active", 
-                    text: "Explore the untamed wilderness of Svaneti and Kazbegi with sunset hikes." 
-                },
-                { 
-                    title: "Luxury & Leisure", 
-                    desc: "5-Star Resorts", 
-                    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", // Luxury Pool
-                    tag: "Relax", 
-                    text: "Stay in Georgia's finest hotels with private pools and spas." 
-                },
-                { 
-                    title: "Wine Route", 
-                    desc: "Qvevri Tastings", 
-                    img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", // Vineyard
-                    tag: "Culture", 
-                    text: "Visit the cradle of wine in Kakheti. Private tastings." 
-                },
-                { 
-                    title: "Casino & Nightlife", 
-                    desc: "VIP Access", 
-                    // FIXED: High-End Poker Table/Cards (Red/Black vibe)
-                    img: "https://images.unsplash.com/photo-1605870445919-838d190e8e1b?q=80&w=2070", 
-                    tag: "VIP", 
-                    text: "Experience the vibrant nightlife with exclusive club access." 
-                }
+                { title: { en: "Adventure", ka: "თავგადასავალი", ru: "Приключение", ar: "مغامرة" }, desc: { en: "Hiking & Rafting", ka: "ლაშქრობა და რაფტინგი", ru: "Походы и Рафтинг", ar: "المشي لمسافات طويلة والتجديف" }, img: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2073", tag: { en: "Active", ka: "აქტიური", ru: "Активный", ar: "نشيط" }, text: { en: "Explore the untamed wilderness...", ka: "გამოიკვლიეთ ველური ბუნება...", ru: "Исследуйте дикую природу...", ar: "استكشف البرية الجامحة..." } },
+                { title: { en: "Luxury & Leisure", ka: "ფუფუნება და დასვენება", ru: "Роскошь и Отдых", ar: "الفخامة والترفيه" }, desc: { en: "5-Star Resorts", ka: "5-ვარსკვლავიანი კურორტები", ru: "5-Звездочные Курорты", ar: "منتجعات 5 نجوم" }, img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", tag: { en: "Relax", ka: "რელაქსი", ru: "Релакс", ar: "استرخاء" }, text: { en: "Stay in Georgia's finest...", ka: "დაისვენეთ საქართველოს საუკეთესო...", ru: "Отдыхайте в лучших отелях Грузии...", ar: "إقامة في أرقى فنادق جورجيا..." } },
+                { title: { en: "Wine Route", ka: "ღვინის გზა", ru: "Винный Маршрут", ar: "طريق النبيذ" }, desc: { en: "Qvevri Tastings", ka: "ქვევრის დეგუსტაცია", ru: "Дегустация Квеври", ar: "تذوق قفبري" }, img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", tag: { en: "Culture", ka: "კულტურა", ru: "Культура", ar: "ثقافة" }, text: { en: "Visit the cradle of wine...", ka: "ეწვიეთ ღვინის სამშობლოს...", ru: "Посетите колыбель вина...", ar: "قم بزيارة مهد النبيذ..." } },
+                { title: { en: "Casino & Nightlife", ka: "კაზინო და ღამის ცხოვრება", ru: "Казино и Ночная Жизнь", ar: "الكازينو والحياة الليلية" }, desc: { en: "VIP Access", ka: "VIP წვდომა", ru: "VIP Доступ", ar: "وصول كبار الشخصيات" }, img: "https://images.unsplash.com/photo-1518893063132-36e465be7788?q=80&w=2070", tag: { en: "VIP", ka: "VIP", ru: "VIP", ar: "VIP" }, text: { en: "Experience the vibrant nightlife...", ka: "გამოიცანით ღამის ცხოვრება...", ru: "Окунитесь в яркую ночную жизнь...", ar: "جرب الحياة الليلية النابضة بالحياة..." } }
             ],
 
             // 3. SERVICES GRID
             servicesCards: [
-                { 
-                    title: "Medical Tourism", 
-                    desc: "Wellbeing & Health", 
-                    // FIXED: Luxury Hospital/Spa Room with Breakfast/Sun
-                    img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070", 
-                    text: "Top clinics for Hair Transplants and Dental work with spa-like recovery." 
-                },
-                { 
-                    title: "MICE & Corporate", 
-                    desc: "Events & Conferences", 
-                    img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069", 
-                    text: "Full logistical support for business delegations." 
-                },
-                { 
-                    title: "Business Opportunities", 
-                    desc: "Investment & Partners", 
-                    // FIXED: Corporate Dealing/Skyscraper vibe
-                    img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070", 
-                    text: "We facilitate B2B introductions, arrange high-level meetings, and help you find reliable local partners for your ventures in Georgia." 
-                },
-                { 
-                    title: "Guides & Transport", 
-                    desc: "Logistics & Experts", 
-                    // FIXED: Chauffeur Opening Car Door
-                    img: "https://images.unsplash.com/photo-1562426522-4617992eb634?q=80&w=2070", 
-                    text: "Seamless travel logistics with luxury vehicles, professional drivers, and certified multilingual guides to ensure a smooth journey." 
-                }
+                { title: { en: "Medical Tourism", ka: "სამედიცინო ტურიზმი", ru: "Медицинский Туризм", ar: "السياحة العلاجية" }, desc: { en: "Wellbeing & Health", ka: "ჯანმრთელობა", ru: "Здоровье", ar: "الرفاهية والصحة" }, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070", text: { en: "Top clinics...", ka: "საუკეთესო კლინიკები...", ru: "Лучшие клиники...", ar: "أفضل العيادات..." } },
+                { title: { en: "MICE & Corporate", ka: "MICE და კორპორატიული", ru: "MICE и Корпоратив", ar: "الاجتماعات والمؤتمرات" }, desc: { en: "Events & Conferences", ka: "ღონისძიებები", ru: "События", ar: "الفعاليات والمؤتمرات" }, img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069", text: { en: "Full logistical support...", ka: "სრული ლოჯისტიკური მხარდაჭერა...", ru: "Полная логистическая поддержка...", ar: "دعم لوجستي كامل..." } },
+                { title: { en: "Business Opportunities", ka: "ბიზნეს შესაძლებლობები", ru: "Бизнес Возможности", ar: "فرص العمل" }, desc: { en: "Investment & Partners", ka: "ინვესტიციები", ru: "Инвестиции", ar: "الاستثمار والشركاء" }, img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070", text: { en: "We facilitate B2B...", ka: "ჩვენ ვუზრუნველყოფთ B2B კავშირებს...", ru: "Мы обеспечиваем B2B...", ar: "نحن نسهل B2B..." } },
+                { title: { en: "Guides & Transport", ka: "გიდები და ტრანსპორტი", ru: "Гиды и Транспорт", ar: "المرشدون والنقل" }, desc: { en: "Logistics", ka: "ლოჯისტიკა", ru: "Логистика", ar: "اللوجستيات" }, img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", text: { en: "Seamless logistics...", ka: "შეუფერხებელი ლოჯისტიკა...", ru: "Бесперебойная логистика...", ar: "لوجستيات سلسة..." } }
             ],
 
             // 4. BLOG POSTS
             blogPosts: [
-                { 
-                    title: "Vineyards of Kakheti", 
-                    date: "Oct 2025", 
-                    img: "https://images.unsplash.com/photo-1566346547477-173084076792?q=80&w=2070", // Real Vineyard
-                    text: "A journey through the ancient wine region." 
-                },
-                { 
-                    title: "Medical Excellence", 
-                    date: "Sep 2025", 
-                    img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053", // Modern Medical
-                    text: "Why Georgia is the top choice for medical procedures." 
-                },
-                { 
-                    title: "Ski Season Guide", 
-                    date: "Aug 2025", 
-                    img: "https://images.unsplash.com/photo-1610198871574-53537a702467?q=80&w=2070", // Snowy Ski Resort
-                    text: "Everything you need to know about Gudauri this winter." 
-                },
-                { 
-                    title: "Tbilisi Nightlife", 
-                    date: "July 2025", 
-                    img: "https://images.unsplash.com/photo-1555992336-03a2316dbbb3?q=80&w=2064", // Nightclub vibe
-                    text: "Best clubs and bars in the capital." 
-                }
+                { title: { en: "Vineyards of Kakheti", ka: "კახეთის ვენახები", ru: "Виноградники Кахетии", ar: "كروم كاخيتي" }, date: { en: "Oct 2025", ka: "ოქტ 2025", ru: "Окт 2025", ar: "أكتوبر 2025" }, img: "https://images.unsplash.com/photo-1566346547477-173084076792?q=80&w=2070", text: { en: "A journey...", ka: "მოგზაურობა...", ru: "Путешествие...", ar: "رحلة..." } },
+                { title: { en: "Medical Excellence", ka: "სამედიცინო ხარისხი", ru: "Медицинское Совершенство", ar: "التميز الطبي" }, date: { en: "Sep 2025", ka: "სექ 2025", ru: "Сен 2025", ar: "سبتمبر 2025" }, img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053", text: { en: "Why Georgia...", ka: "რატომ საქართველო...", ru: "Почему Грузия...", ar: "لماذا جورجيا..." } },
+                { title: { en: "Ski Season Guide", ka: "სათხილამურო სეზონი", ru: "Гид по Лыжному Сезону", ar: "دليل موسم التزلج" }, date: { en: "Aug 2025", ka: "აგვ 2025", ru: "Авг 2025", ar: "أغسطس 2025" }, img: "https://images.unsplash.com/photo-1610198871574-53537a702467?q=80&w=2070", text: { en: "Everything you need...", ka: "ყველაფერი რაც გჭირდებათ...", ru: "Все, что вам нужно...", ar: "كل ما تحتاجه..." } },
+                { title: { en: "Tbilisi Nightlife", ka: "თბილისის ღამის ცხოვრება", ru: "Ночная Жизнь Тбилиси", ar: "الحياة الليلية في تبليسي" }, date: { en: "July 2025", ka: "ივლისი 2025", ru: "Июль 2025", ar: "يوليو 2025" }, img: "https://images.unsplash.com/photo-1555992336-03a2316dbbb3?q=80&w=2064", text: { en: "Best clubs...", ka: "საუკეთესო კლუბები...", ru: "Лучшие клубы...", ar: "أفضل النوادي..." } }
             ]
         };
 
-        /* --- RENDER LOGIC --- */
+        /* --- LOGIC ENGINE --- */
+        function toggleLang() {
+            setLanguage(currentLang === 'en' ? 'ka' : 'en');
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            document.getElementById('langBtn').innerHTML = flags[lang]; // Updates Main Button
+            
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if(translations[lang][key]) el.innerText = translations[lang][key];
+            });
+
+            init(); // Re-render dynamic content
+        }
+
         let currentSlide = 0;
         let autoPlayTimer;
         let barAnimTimer;
         const SLIDE_DURATION = 10000; 
 
         function init() {
-            updateWaLinks(config.whatsapp);
-            
-            // Render Hero
+            document.querySelectorAll('.wa-link').forEach(a => { if(!a.classList.contains('modal-btn')) a.href = `https://wa.me/${config.whatsapp}`; });
             const heroTrack = document.getElementById('heroTrack');
             const progContainer = document.getElementById('progressContainer');
-            
+            heroTrack.innerHTML = ''; progContainer.innerHTML = '';
             config.heroSlides.forEach((slide, index) => {
-                const div = document.createElement('div');
-                div.className = 'hero-slide';
+                const div = document.createElement('div'); div.className = 'hero-slide';
                 if(index === 0) div.classList.add('active');
-                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title}</h2><p class="slide-desc">${slide.desc}</p><button class="slide-btn" onclick="openModal('${slide.title}', '${slide.fullText}', '${slide.img}')">View Details</button></div>`;
+                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title[currentLang]}</h2><p class="slide-desc">${slide.desc[currentLang]}</p><button class="slide-btn" onclick="openModal('${slide.title[currentLang]}', '${slide.fullText[currentLang]}', '${slide.img}')">${translations[currentLang].btn_details}</button></div>`;
                 heroTrack.appendChild(div);
-
-                const bar = document.createElement('div');
-                bar.className = 'progress-bar';
+                const bar = document.createElement('div'); bar.className = 'progress-bar';
                 bar.innerHTML = `<div class="progress-fill" id="bar-${index}"></div>`;
                 progContainer.appendChild(bar);
             });
-
-            // Render Grids
-            const travelGrid = document.getElementById('travelGrid'); config.travelCards.forEach(item => travelGrid.appendChild(createCard(item, 'card')));
-            const servicesGrid = document.getElementById('servicesGrid'); config.servicesCards.forEach(item => servicesGrid.appendChild(createCard(item, 'card')));
-            const blogTrack = document.getElementById('blogTrack'); config.blogPosts.forEach(item => blogTrack.appendChild(createCard(item, 'blog')));
-
+            const travelGrid = document.getElementById('travelGrid'); travelGrid.innerHTML = ''; config.travelCards.forEach(item => travelGrid.appendChild(createCard(item, 'card')));
+            const servicesGrid = document.getElementById('servicesGrid'); servicesGrid.innerHTML = ''; config.servicesCards.forEach(item => servicesGrid.appendChild(createCard(item, 'card')));
+            const blogTrack = document.getElementById('blogTrack'); blogTrack.innerHTML = ''; config.blogPosts.forEach(item => blogTrack.appendChild(createCard(item, 'blog')));
+            
+            clearTimeout(autoPlayTimer);
             startStoryMode();
-        }
-
-        function updateWaLinks(number) {
-            document.querySelectorAll('.wa-link').forEach(a => {
-                if(!a.classList.contains('modal-btn')) { 
-                    a.href = `https://wa.me/${number}`;
-                }
-            });
         }
 
         function createCard(item, type) {
             const div = document.createElement('div');
             div.className = type === 'blog' ? 'blog-card' : 'card';
-            div.onclick = () => openModal(item.title, item.text, item.img);
+            div.onclick = () => openModal(item.title[currentLang], item.text[currentLang], item.img);
+            const title = item.title[currentLang];
+            const desc = type === 'blog' ? item.date[currentLang] : item.desc[currentLang];
+            const tag = item.tag ? item.tag[currentLang] : '';
             if (type === 'blog') {
-                div.innerHTML = `<div class="blog-img-box"><img src="${item.img}" loading="lazy"></div><div class="blog-content"><div class="blog-date">${item.date}</div><h4 class="blog-title">${item.title}</h4><span class="blog-link">Read Article &rarr;</span></div>`;
+                div.innerHTML = `<div class="blog-img-box"><img src="${item.img}" loading="lazy"></div><div class="blog-content"><div class="blog-date">${desc}</div><h4 class="blog-title">${title}</h4><span class="blog-link">${translations[currentLang].btn_read} &rarr;</span></div>`;
             } else {
-                div.innerHTML = `<img src="${item.img}" class="card-bg" loading="lazy"><div class="card-overlay">${item.tag ? `<span class="card-tag">${item.tag}</span>` : ''}<h3>${item.title}</h3><p>${item.desc}</p></div>`;
+                div.innerHTML = `<img src="${item.img}" class="card-bg" loading="lazy"><div class="card-overlay">${tag ? `<span class="card-tag">${tag}</span>` : ''}<h3>${title}</h3><p>${desc}</p></div>`;
             }
             return div;
         }
 
         function startStoryMode() { showSlide(currentSlide); }
-
         function showSlide(index) {
-            const track = document.getElementById('heroTrack');
-            const slides = document.querySelectorAll('.hero-slide');
-            const bars = document.querySelectorAll('.progress-fill');
-            
+            const track = document.getElementById('heroTrack'); const slides = track.getElementsByClassName('hero-slide'); const bars = document.querySelectorAll('.progress-fill');
+            if(!slides.length) return;
             if (index >= slides.length) { currentSlide = 0; resetBars(); index = 0; }
-            if (index < 0) { currentSlide = slides.length - 1; resetBars(); index = slides.length - 1; }
-
             track.scrollTo({ left: track.clientWidth * index, behavior: 'smooth' });
-
-            slides.forEach(s => s.classList.remove('active'));
-            slides[index].classList.add('active');
-
+            Array.from(slides).forEach(s => s.classList.remove('active')); slides[index].classList.add('active');
             bars.forEach((bar, idx) => {
-                bar.classList.remove('active');
-                if (idx < index) { bar.style.width = '100%'; bar.style.transition = 'none'; } 
-                else if (idx === index) { bar.style.width = '0%'; setTimeout(() => { bar.style.transition = `width ${SLIDE_DURATION}ms linear`; bar.style.width = '100%'; }, 50); } 
-                else { bar.style.width = '0%'; bar.style.transition = 'none'; }
+                bar.classList.remove('active'); bar.style.transition = 'none';
+                if (idx < index) { bar.style.width = '100%'; } else if (idx === index) { bar.style.width = '0%'; setTimeout(() => { bar.style.transition = `width 5000ms linear`; bar.style.width = '100%'; }, 50); } else { bar.style.width = '0%'; }
             });
-
-            clearTimeout(autoPlayTimer);
-            autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, SLIDE_DURATION);
+            clearTimeout(autoPlayTimer); autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, 5000);
         }
-
-        function resetBars() {
-            document.querySelectorAll('.progress-fill').forEach(bar => { bar.style.transition = 'none'; bar.style.width = '0%'; });
-        }
-
+        function resetBars() { document.querySelectorAll('.progress-fill').forEach(bar => { bar.style.transition = 'none'; bar.style.width = '0%'; }); }
         function manualSlide(dir) { currentSlide += dir; showSlide(currentSlide); }
-
-        /* OPEN MODAL & ABOUT US */
-        const modal = document.getElementById('detailModal'); 
-        const modalImg = document.getElementById('modalImg'); 
-        const modalTitle = document.getElementById('modalTitle'); 
-        const modalText = document.getElementById('modalText');
-        const modalBtn = document.querySelector('.modal-btn');
-
-        function openModal(title, text, img) { 
-            modalTitle.innerText = title; 
-            modalText.innerText = text; 
-            modalImg.src = img; 
-            modalBtn.href = `https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${title}`;
-            modal.classList.add('active'); 
-        }
-
-        function openAboutModal() {
-            openModal(
-                "About Next Stop Georgia",
-                "We are a premium travel agency dedicated to showing you the true soul of the Caucasus. Unlike mass tourism, we focus on curated, authentic experiences—from private Qvevri wine tastings in Kakheti to high-security VIP casino tours in Tbilisi.\n\nOur team consists of certified local guides, professional drivers, and medical tourism experts who ensure your journey is seamless, safe, and unforgettable.",
-                "https://images.unsplash.com/photo-1565118531796-763e5082d113?q=80&w=2070"
-            );
-        }
-        
+        const modal = document.getElementById('detailModal'); const modalImg = document.getElementById('modalImg'); const modalTitle = document.getElementById('modalTitle'); const modalText = document.getElementById('modalText'); const modalBtn = document.querySelector('.modal-btn');
+        function openModal(title, text, img) { modalTitle.innerText = title; modalText.innerText = text; modalImg.src = img; modalBtn.innerText = translations[currentLang].btn_book; modalBtn.href = `https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${title}`; modal.classList.add('active'); }
         function closeModal() { modal.classList.remove('active'); }
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
-
-        // TOGGLE MOBILE MENU
-        function toggleMobileMenu() {
-            document.getElementById('mobileMenu').classList.toggle('active');
-        }
-        
-        init();
+        setLanguage(currentLang);
     </script>
 </body>
 </html>
