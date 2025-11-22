@@ -49,21 +49,24 @@
         /* TWIN TOGGLE */
         .site-toggle { display: flex; background: var(--gray-light); padding: 4px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); }
         .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none; }
-        
-        /* GEORGIA is ACTIVE */
         .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default; }
-        /* WORLD is LINK */
         .toggle-btn.inactive:hover { color: var(--terracotta); }
         .dot { color: var(--green); font-size: 0.8rem; animation: pulse 2s infinite; }
 
-        /* LANG PICKER */
-        .nav-right { display: flex; gap: 20px; align-items: center; }
-        .lang-btn { font-size: 1.2rem; background: none; padding: 5px; border-radius: 4px; }
-        .lang-btn:hover { background: rgba(0,0,0,0.05); }
-
-        .nav-links { display: flex; gap: 30px; }
+        /* NAV & LANG */
+        .header-right { display: flex; align-items: center; gap: 30px; }
+        .nav-links { display: flex; gap: 25px; }
         .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
         .nav-item:hover { color: var(--terracotta); }
+
+        /* LANGUAGE BUTTON (SVG BASED) */
+        .lang-switch {
+            width: 32px; height: 32px; border-radius: 50%; overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.1); transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .lang-switch:hover { transform: scale(1.1); border-color: var(--terracotta); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .lang-svg { width: 100%; height: 100%; object-fit: cover; }
 
         /* HERO WHEEL */
         .hero-wheel { height: 95vh; width: 100%; overflow: hidden; margin-top: 0; background: #000; position: relative; }
@@ -120,10 +123,10 @@
         .modal-body { padding: 40px; }
         .modal-close { position: absolute; top: 20px; right: 20px; background: white; color: black; width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .modal-title { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 20px; color: var(--charcoal); }
-        .modal-text { font-size: 1rem; color: #555; margin-bottom: 30px; line-height: 1.8; white-space: pre-wrap; }
+        .modal-text { font-size: 1rem; color: #555; margin-bottom: 30px; line-height: 1.8; }
         .modal-btn { background: var(--terracotta); color: white; padding: 15px 30px; font-weight: bold; text-transform: uppercase; display: inline-block; display: flex; align-items: center; justify-content: center; gap: 10px; width: fit-content; }
-        .modal-btn.hidden { display: none; }
         
+        /* FOOTER */
         footer { background: #111; color: #777; padding: 80px 5%; text-align: center; font-size: 0.9rem; border-top: 5px solid var(--terracotta); }
         .footer-social { display: flex; justify-content: center; gap: 25px; margin-bottom: 30px; }
         .social-btn { display: flex; align-items: center; gap: 8px; color: white; font-weight: 600; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 30px; }
@@ -132,7 +135,6 @@
 
         @media (max-width: 768px) {
             .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .section { padding: 60px 5%; min-height: auto; } .wheel-arrows { display: none; }
-            .header-left { width: 100%; justify-content: space-between; }
             .footer-social { flex-direction: column; align-items: center; }
         }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -144,23 +146,28 @@
 
     <header>
         <div class="header-left">
-            <div class="logo-container" onclick="location.reload()">
+            <div class="logo-container" onclick="window.scrollTo(0,0)">
                 <span class="logo-main">NEXT STOP</span>
                 <span class="logo-sub">GEORGIA</span>
             </div>
             <div class="site-toggle">
                 <div class="toggle-btn active"><span class="dot">●</span> GEORGIA</div>
-                <a href="https://nextstop.com.ge" class="toggle-btn inactive">WORLD</a>
+                <a href="https://nextstop.com.ge" class="toggle-btn">WORLD</a>
             </div>
         </div>
-        <div class="nav-right">
+        
+        <div class="header-right">
             <nav class="nav-links">
                 <a href="#travel" class="nav-item" data-key="nav_tours">Tours</a>
                 <a href="#services" class="nav-item" data-key="nav_services">Services</a>
                 <a href="#blog" class="nav-item" data-key="nav_blog">Blog</a>
                 <a href="#footer" class="nav-item" data-key="nav_about">About</a>
             </nav>
-            <button class="lang-btn" id="langBtn" onclick="toggleLang()">🇺🇸</button>
+            
+            <!-- BEAUTIFUL LANGUAGE TOGGLE -->
+            <button class="lang-switch" id="langBtn" onclick="toggleLang()" title="Switch Language">
+                <!-- SVG WILL BE INJECTED HERE -->
+            </button>
         </div>
     </header>
 
@@ -214,9 +221,12 @@
                 WhatsApp
             </a>
         </div>
+        
+        <a href="#" class="wa-link">Contact Us</a> | <a href="#">About Us</a> | <a href="#">Policies</a>
+        <br><br>
+        <p style="opacity: 0.5; font-size: 0.7rem;">&copy; 2025 Next Stop Group. All rights reserved.</p>
     </footer>
 
-    <!-- MODAL -->
     <div class="modal-overlay" id="detailModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeModal()">×</div>
@@ -231,6 +241,13 @@
 
     <script>
         let currentLang = localStorage.getItem('lang') || 'en';
+
+        // SVG FLAGS FOR TOGGLE BUTTON
+        // US Flag (for EN)
+        const flagUS = `<svg viewBox="0 0 640 480" class="lang-svg"><path fill="#bd3d44" d="M0 0h640v480H0"/><path stroke="#fff" stroke-width="37" d="M0 55.3h640M0 129h640M0 202.8h640M0 276.5h640M0 350.2h640M0 423.9h640"/><path fill="#192f5d" d="M0 0h296.4v258.5H0"/><path fill="#fff" d="M17.5 15h260v230h-260z"/><path fill="#192f5d" d="M17.5 15h260v230h-260z"/></svg>`;
+        
+        // Georgia Flag (for KA)
+        const flagGE = `<svg viewBox="0 0 640 480" class="lang-svg"><path fill="#fff" d="M0 0h640v480H0z"/><path fill="#f00" d="M280 0h80v480h-80z"/><path fill="#f00" d="M0 200h640v80H0z"/><path fill="#f00" d="M100 60h40v40h40v40h-40v40h-40v-40H60v-40h40zM460 60h40v40h40v40h-40v40h-40v-40h-40v-40h40zM100 340h40v40h40v40h-40v40h-40v-40H60v-40h40zM460 340h40v40h40v40h-40v40h-40v-40h-40v-40h40z"/></svg>`;
 
         const translations = {
             en: {
@@ -288,24 +305,21 @@
                     fullText: { en: "Join our exclusive Junket...", ka: "შემოუერთდით ჩვენს ექსკლუზიურ ჯანკეტ..." }
                 }
             ],
-
             travelCards: [
                 { title: { en: "Adventure", ka: "თავგადასავალი" }, desc: { en: "Hiking & Rafting", ka: "ლაშქრობა და რაფტინგი" }, img: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2073", tag: { en: "Active", ka: "აქტიური" }, text: { en: "Explore the untamed wilderness...", ka: "გამოიკვლიეთ ველური ბუნება..." } },
-                { title: { en: "Luxury & Leisure", ka: "ფუფუნება და დასვენება" }, desc: { en: "5-Star Resorts", ka: "5-ვარსკვლავიანი კურორტები" }, img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", tag: { en: "Relax", ka: "რელაქსი" }, text: { en: "Stay in Georgia's finest...", ka: "დაისვენეთ საქართველოს საუკეთესო..." } },
-                { title: { en: "Wine Route", ka: "ღვინის გზა" }, desc: { en: "Qvevri Tastings", ka: "ქვევრის ღვინის დეგუსტაცია" }, img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", tag: { en: "Culture", ka: "კულტურა" }, text: { en: "Visit the cradle of wine...", ka: "ეწვიეთ ღვინის სამშობლოს..." } },
-                { title: { en: "Casino & Nightlife", ka: "კაზინო და ღამის ცხოვრება" }, desc: { en: "VIP Access", ka: "VIP წვდომა" }, img: "https://images.unsplash.com/photo-1605870445919-838d190e8e1b?q=80&w=2070", tag: { en: "VIP", ka: "VIP" }, text: { en: "Experience the vibrant nightlife...", ka: "გამოიცანით ღამის ცხოვრება..." } }
+                { title: { en: "Luxury & Leisure", ka: "ფუფუნება" }, desc: { en: "5-Star Resorts", ka: "5-ვარსკვლავიანი კურორტები" }, img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", tag: { en: "Relax", ka: "რელაქსი" }, text: { en: "Stay in Georgia's finest...", ka: "დაისვენეთ..." } },
+                { title: { en: "Wine Route", ka: "ღვინის გზა" }, desc: { en: "Qvevri Tastings", ka: "ქვევრის დეგუსტაცია" }, img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", tag: { en: "Culture", ka: "კულტურა" }, text: { en: "Visit the cradle of wine...", ka: "ეწვიეთ ღვინის სამშობლოს..." } },
+                { title: { en: "Casino & Nightlife", ka: "კაზინო" }, desc: { en: "VIP Access", ka: "VIP წვდომა" }, img: "https://images.unsplash.com/photo-1605870445919-838d190e8e1b?q=80&w=2070", tag: { en: "VIP", ka: "VIP" }, text: { en: "Experience the vibrant nightlife...", ka: "გამოიცანით ღამის ცხოვრება..." } }
             ],
-
             servicesCards: [
-                { title: { en: "Medical Tourism", ka: "სამედიცინო ტურიზმი" }, desc: { en: "Wellbeing & Health", ka: "ჯანმრთელობა და კეთილდღეობა" }, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070", text: { en: "Top clinics for Hair Transplants...", ka: "საუკეთესო კლინიკები..." } },
-                { title: { en: "MICE & Corporate", ka: "MICE და კორპორატიული" }, desc: { en: "Events & Conferences", ka: "ღონისძიებები და კონფერენციები" }, img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069", text: { en: "Full logistical support...", ka: "სრული ლოჯისტიკური მხარდაჭერა..." } },
-                { title: { en: "Business Opportunities", ka: "ბიზნეს შესაძლებლობები" }, desc: { en: "Investment & Partners", ka: "ინვესტიციები და პარტნიორები" }, img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070", text: { en: "We facilitate B2B introductions...", ka: "ჩვენ ვუზრუნველყოფთ B2B კავშირებს..." } },
-                { title: { en: "Guides & Transport", ka: "გიდები და ტრანსპორტი" }, desc: { en: "Logistics & Experts", ka: "ლოჯისტიკა და ექსპერტები" }, img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", text: { en: "Seamless travel logistics...", ka: "შეუფერხებელი მოგზაურობის ლოჯისტიკა..." } }
+                { title: { en: "Medical Tourism", ka: "სამედიცინო" }, desc: { en: "Wellbeing & Health", ka: "ჯანმრთელობა" }, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070", text: { en: "Top clinics...", ka: "საუკეთესო კლინიკები..." } },
+                { title: { en: "MICE & Corporate", ka: "MICE" }, desc: { en: "Events & Conferences", ka: "კონფერენციები" }, img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069", text: { en: "Full logistical support...", ka: "ლოჯისტიკური მხარდაჭერა..." } },
+                { title: { en: "Business Opportunities", ka: "ბიზნეს შესაძლებლობები" }, desc: { en: "Investment & Partners", ka: "ინვესტიციები" }, img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070", text: { en: "We facilitate B2B...", ka: "B2B კავშირები..." } },
+                { title: { en: "Guides & Transport", ka: "გიდები და ტრანსპორტი" }, desc: { en: "Logistics", ka: "ლოჯისტიკა" }, img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", text: { en: "Seamless logistics...", ka: "შეუფერხებელი ლოჯისტიკა..." } }
             ],
-
             blogPosts: [
-                { title: { en: "Vineyards of Kakheti", ka: "კახეთის ვენახები" }, date: { en: "Oct 2025", ka: "ოქტ 2025" }, img: "https://images.unsplash.com/photo-1566346547477-173084076792?q=80&w=2070", text: { en: "A journey through...", ka: "მოგზაურობა..." } },
-                { title: { en: "Medical Excellence", ka: "სამედიცინო ხარისხი" }, date: { en: "Sep 2025", ka: "სექ 2025" }, img: "https://images.unsplash.com/photo-1516549655169-df83a0925727?q=80&w=2070", text: { en: "Why Georgia...", ka: "რატომ არის საქართველო..." } },
+                { title: { en: "Vineyards of Kakheti", ka: "კახეთის ვენახები" }, date: { en: "Oct 2025", ka: "ოქტ 2025" }, img: "https://images.unsplash.com/photo-1566346547477-173084076792?q=80&w=2070", text: { en: "A journey...", ka: "მოგზაურობა..." } },
+                { title: { en: "Medical Excellence", ka: "სამედიცინო ხარისხი" }, date: { en: "Sep 2025", ka: "სექ 2025" }, img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053", text: { en: "Why Georgia...", ka: "რატომ არის საქართველო..." } },
                 { title: { en: "Ski Season Guide", ka: "სათხილამურო სეზონი" }, date: { en: "Aug 2025", ka: "აგვ 2025" }, img: "https://images.unsplash.com/photo-1610198871574-53537a702467?q=80&w=2070", text: { en: "Everything you need...", ka: "ყველაფერი რაც გჭირდებათ..." } },
                 { title: { en: "Tbilisi Nightlife", ka: "თბილისის ღამის ცხოვრება" }, date: { en: "July 2025", ka: "ივლისი 2025" }, img: "https://images.unsplash.com/photo-1555992336-03a2316dbbb3?q=80&w=2064", text: { en: "Best clubs...", ka: "საუკეთესო კლუბები..." } }
             ]
@@ -318,8 +332,12 @@
         function setLanguage(lang) {
             currentLang = lang;
             localStorage.setItem('lang', lang);
-            document.getElementById('langBtn').innerText = lang === 'en' ? '🇺🇸' : '🇬🇪';
             
+            const langBtn = document.getElementById('langBtn');
+            // Set SVG flag based on current lang
+            langBtn.innerHTML = lang === 'en' ? flagUS : flagGE;
+            langBtn.title = lang === 'en' ? "Switch to Georgian" : "Switch to English";
+
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
                 if(translations[lang][key]) el.innerText = translations[lang][key];
@@ -334,42 +352,21 @@
         const SLIDE_DURATION = 10000; 
 
         function init() {
-            document.querySelectorAll('.wa-link').forEach(a => {
-                if(!a.classList.contains('modal-btn')) { 
-                    a.href = `https://wa.me/${config.whatsapp}`;
-                }
-            });
-            
+            document.querySelectorAll('.wa-link').forEach(a => { if(!a.classList.contains('modal-btn')) a.href = `https://wa.me/${config.whatsapp}`; });
             const heroTrack = document.getElementById('heroTrack');
             const progContainer = document.getElementById('progressContainer');
-            
-            heroTrack.innerHTML = ''; 
-            progContainer.innerHTML = '';
-
+            heroTrack.innerHTML = ''; progContainer.innerHTML = '';
             config.heroSlides.forEach((slide, index) => {
-                const div = document.createElement('div');
-                div.className = 'hero-slide';
+                const div = document.createElement('div'); div.className = 'hero-slide';
                 if(index === 0) div.classList.add('active');
-                div.innerHTML = `
-                    <img src="${slide.img}" class="slide-bg">
-                    <div class="slide-content">
-                        <h2 class="slide-title">${slide.title[currentLang]}</h2>
-                        <p class="slide-desc">${slide.desc[currentLang]}</p>
-                        <button class="slide-btn" onclick="openModal('${slide.title[currentLang]}', '${slide.fullText[currentLang]}', '${slide.img}')">${translations[currentLang].btn_details}</button>
-                    </div>
-                `;
+                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title[currentLang]}</h2><p class="slide-desc">${slide.desc[currentLang]}</p><button class="slide-btn" onclick="openModal('${slide.title[currentLang]}', '${slide.fullText[currentLang]}', '${slide.img}')">${translations[currentLang].btn_details}</button></div>`;
                 heroTrack.appendChild(div);
-
-                const bar = document.createElement('div');
-                bar.className = 'progress-bar';
+                const bar = document.createElement('div'); bar.className = 'progress-bar';
                 bar.innerHTML = `<div class="progress-fill" id="bar-${index}"></div>`;
                 progContainer.appendChild(bar);
             });
-
             const travelGrid = document.getElementById('travelGrid'); travelGrid.innerHTML = ''; config.travelCards.forEach(item => travelGrid.appendChild(createCard(item, 'card')));
-
             const servicesGrid = document.getElementById('servicesGrid'); servicesGrid.innerHTML = ''; config.servicesCards.forEach(item => servicesGrid.appendChild(createCard(item, 'card')));
-
             const blogTrack = document.getElementById('blogTrack'); blogTrack.innerHTML = ''; config.blogPosts.forEach(item => blogTrack.appendChild(createCard(item, 'blog')));
             
             clearTimeout(autoPlayTimer);
@@ -380,11 +377,9 @@
             const div = document.createElement('div');
             div.className = type === 'blog' ? 'blog-card' : 'card';
             div.onclick = () => openModal(item.title[currentLang], item.text[currentLang], item.img);
-            
             const title = item.title[currentLang];
             const desc = type === 'blog' ? item.date[currentLang] : item.desc[currentLang];
             const tag = item.tag ? item.tag[currentLang] : '';
-            
             if (type === 'blog') {
                 div.innerHTML = `<div class="blog-img-box"><img src="${item.img}" loading="lazy"></div><div class="blog-content"><div class="blog-date">${desc}</div><h4 class="blog-title">${title}</h4><span class="blog-link">${translations[currentLang].btn_read} &rarr;</span></div>`;
             } else {
@@ -394,56 +389,25 @@
         }
 
         function startStoryMode() { showSlide(currentSlide); }
-
         function showSlide(index) {
-            const track = document.getElementById('heroTrack');
-            const slides = document.querySelectorAll('.hero-slide');
-            const bars = document.querySelectorAll('.progress-fill');
-            
+            const track = document.getElementById('heroTrack'); const slides = track.getElementsByClassName('hero-slide'); const bars = document.querySelectorAll('.progress-fill');
+            if(!slides.length) return;
             if (index >= slides.length) { currentSlide = 0; resetBars(); index = 0; }
             if (index < 0) { currentSlide = slides.length - 1; resetBars(); index = slides.length - 1; }
-
             track.scrollTo({ left: track.clientWidth * index, behavior: 'smooth' });
-
-            slides.forEach(s => s.classList.remove('active'));
-            slides[index].classList.add('active');
-
+            Array.from(slides).forEach(s => s.classList.remove('active')); slides[index].classList.add('active');
             bars.forEach((bar, idx) => {
-                bar.classList.remove('active');
-                if (idx < index) { bar.style.width = '100%'; bar.style.transition = 'none'; } 
-                else if (idx === index) { bar.style.width = '0%'; setTimeout(() => { bar.style.transition = `width ${SLIDE_DURATION}ms linear`; bar.style.width = '100%'; }, 50); } 
-                else { bar.style.width = '0%'; bar.style.transition = 'none'; }
+                bar.classList.remove('active'); bar.style.transition = 'none';
+                if (idx < index) { bar.style.width = '100%'; } else if (idx === index) { bar.style.width = '0%'; setTimeout(() => { bar.style.transition = `width 5000ms linear`; bar.style.width = '100%'; }, 50); } else { bar.style.width = '0%'; }
             });
-
-            clearTimeout(autoPlayTimer);
-            autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, SLIDE_DURATION);
+            clearTimeout(autoPlayTimer); autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, 5000);
         }
-
-        function resetBars() {
-            document.querySelectorAll('.progress-fill').forEach(bar => { bar.style.transition = 'none'; bar.style.width = '0%'; });
-        }
-
+        function resetBars() { document.querySelectorAll('.progress-fill').forEach(bar => { bar.style.transition = 'none'; bar.style.width = '0%'; }); }
         function manualSlide(dir) { currentSlide += dir; showSlide(currentSlide); }
-
-        const modal = document.getElementById('detailModal'); 
-        const modalImg = document.getElementById('modalImg'); 
-        const modalTitle = document.getElementById('modalTitle'); 
-        const modalText = document.getElementById('modalText');
-        const modalBtn = document.querySelector('.modal-btn');
-
-        function openModal(title, text, img) { 
-            modalTitle.innerText = title; 
-            modalText.innerText = text; 
-            modalImg.src = img; 
-            modalBtn.innerText = translations[currentLang].btn_book;
-            modalBtn.href = `https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${title}`;
-            modal.classList.add('active'); 
-        }
-        
+        const modal = document.getElementById('detailModal'); const modalImg = document.getElementById('modalImg'); const modalTitle = document.getElementById('modalTitle'); const modalText = document.getElementById('modalText'); const modalBtn = document.querySelector('.modal-btn');
+        function openModal(title, text, img) { modalTitle.innerText = title; modalText.innerText = text; modalImg.src = img; modalBtn.innerText = translations[currentLang].btn_book; modalBtn.href = `https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${title}`; modal.classList.add('active'); }
         function closeModal() { modal.classList.remove('active'); }
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
-        
-        // Start with saved language or default
         setLanguage(currentLang);
     </script>
 </body>
