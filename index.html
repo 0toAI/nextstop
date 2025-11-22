@@ -13,11 +13,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 1. DESIGN VARIABLES --- */
+        /* --- 1. DESIGN VARIABLES (WARM THEME) --- */
         :root {
             --bg-warm: #fdfbf7;         
             --charcoal: #1a1a1a;        /* Deepest Grey */
-            --terracotta: #a84a32;      /* Accent Color */
+            --terracotta: #a84a32;      /* ACCENT COLOR */
             --gold: #c5a059;            /* Luxury Accent */
             --green: #25D366;           /* WhatsApp */
             --gray-light: #f4f4f4;
@@ -25,78 +25,69 @@
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
-        
-        /* SMOOTH SCROLLING FIX */
-        html { 
-            scroll-behavior: smooth; 
-            scroll-padding-top: 80px; /* Prevents header from covering section titles */
-        }
-        
-        body { color: var(--charcoal); background-color: var(--bg-warm); line-height: 1.6; overflow-x: hidden; }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        body { color: var(--charcoal); background-color: var(--bg-warm); line-height: 1.6; overflow-x: hidden; transition: background 0.5s; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         img { width: 100%; height: 100%; object-fit: cover; display: block; }
         button { cursor: pointer; border: none; outline: none; }
 
-        /* --- 2. HEADER --- */
+        /* HEADER */
         header {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(12px);
-            padding: 12px 5%;
-            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px);
+            padding: 12px 5%; position: fixed; top: 0; width: 100%; z-index: 1000;
             display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
         .header-left { display: flex; align-items: center; gap: 30px; }
+        
+        /* LOGO */
         .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: pointer; }
         .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; }
         .logo-sub { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--terracotta); letter-spacing: 4px; text-transform: uppercase; margin-left: 2px; }
 
+        /* TWIN TOGGLE */
         .site-toggle { display: flex; background: var(--gray-light); padding: 4px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); }
-        .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; }
-        .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none; }
+        
+        /* GEORGIA is ACTIVE */
+        .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default; }
+        /* WORLD is LINK */
+        .toggle-btn.inactive:hover { color: var(--terracotta); }
         .dot { color: var(--green); font-size: 0.8rem; animation: pulse 2s infinite; }
+
+        /* LANG PICKER */
+        .nav-right { display: flex; gap: 20px; align-items: center; }
+        .lang-btn { font-size: 1.2rem; background: none; padding: 5px; border-radius: 4px; }
+        .lang-btn:hover { background: rgba(0,0,0,0.05); }
 
         .nav-links { display: flex; gap: 30px; }
         .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
         .nav-item:hover { color: var(--terracotta); }
 
-        /* --- 3. HERO WHEEL (STORY MODE) --- */
+        /* HERO WHEEL */
         .hero-wheel { height: 95vh; width: 100%; overflow: hidden; margin-top: 0; background: #000; position: relative; }
         .wheel-track { display: flex; width: 100%; height: 100%; overflow: hidden; }
-        
-        .hero-slide { 
-            flex: 0 0 100%; height: 100%; position: relative;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            text-align: center; color: white; padding: 20px;
-        }
+        .hero-slide { flex: 0 0 100%; height: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; }
         .slide-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.65; z-index: 1; transition: transform 10s linear; }
         .hero-slide.active .slide-bg { transform: scale(1.1); }
-
         .slide-content { position: relative; z-index: 2; max-width: 800px; opacity: 0; transform: translateY(30px); transition: 1s; }
         .hero-slide.active .slide-content { opacity: 1; transform: translateY(0); }
-
         .slide-title { font-size: 4rem; font-family: 'Cinzel', serif; margin-bottom: 15px; text-shadow: 0 5px 20px rgba(0,0,0,0.5); }
         .slide-desc { font-size: 1.2rem; opacity: 0.9; margin-bottom: 25px; font-weight: 300; letter-spacing: 1px; }
-        .slide-btn { 
-            border: 2px solid white; color: white; padding: 15px 45px; 
-            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; display: inline-block;
-            background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); transition: 0.3s;
-        }
+        .slide-btn { border: 2px solid white; color: white; padding: 15px 45px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; display: inline-block; background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); transition: 0.3s; }
         .slide-btn:hover { background: white; color: black; }
 
-        /* PROGRESS BARS */
         .progress-container { position: absolute; bottom: 40px; left: 0; width: 100%; display: flex; justify-content: center; gap: 8px; z-index: 10; padding: 0 10%; }
         .progress-bar { height: 4px; background: rgba(255,255,255,0.3); flex: 1; max-width: 120px; border-radius: 2px; overflow: hidden; }
         .progress-fill { height: 100%; width: 0%; background: white; transition: width 0ms linear; }
 
-        /* ARROWS */
         .wheel-arrows { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; z-index: 10; pointer-events: none; }
         .arrow { pointer-events: auto; cursor: pointer; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; backdrop-filter: blur(5px); transition: 0.3s; border: 1px solid rgba(255,255,255,0.3); }
         .arrow:hover { background: white; color: black; }
 
-        /* --- 4. SECTIONS --- */
-        .section { padding: 100px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
+        /* SECTIONS */
+        .section { padding: 100px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; transition: opacity 0.4s; }
         .section-title { text-align: center; margin-bottom: 60px; }
         .section-title h2 { font-size: 2.5rem; font-family: 'Cinzel', serif; color: var(--charcoal); margin-bottom: 15px; }
         .section-title p { color: #777; font-size: 1rem; max-width: 600px; margin: 0 auto; }
@@ -111,7 +102,6 @@
         .card p { font-size: 0.9rem; opacity: 0.8; font-weight: 300; }
         .card-tag { position: absolute; top: 20px; right: 20px; background: var(--terracotta); color: white; padding: 5px 12px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
 
-        /* BLOG */
         .blog-scroller { display: flex; overflow-x: auto; gap: 30px; padding: 20px 5px; scroll-snap-type: x mandatory; scrollbar-width: none; }
         .blog-scroller::-webkit-scrollbar { display: none; }
         .blog-card { flex: 0 0 350px; scroll-snap-align: center; background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); transition: 0.3s; cursor: pointer; }
@@ -130,10 +120,10 @@
         .modal-body { padding: 40px; }
         .modal-close { position: absolute; top: 20px; right: 20px; background: white; color: black; width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .modal-title { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 20px; color: var(--charcoal); }
-        .modal-text { font-size: 1rem; color: #555; margin-bottom: 30px; line-height: 1.8; }
+        .modal-text { font-size: 1rem; color: #555; margin-bottom: 30px; line-height: 1.8; white-space: pre-wrap; }
         .modal-btn { background: var(--terracotta); color: white; padding: 15px 30px; font-weight: bold; text-transform: uppercase; display: inline-block; display: flex; align-items: center; justify-content: center; gap: 10px; width: fit-content; }
+        .modal-btn.hidden { display: none; }
         
-        /* FOOTER ICONS & LAYOUT */
         footer { background: #111; color: #777; padding: 80px 5%; text-align: center; font-size: 0.9rem; border-top: 5px solid var(--terracotta); }
         .footer-social { display: flex; justify-content: center; gap: 25px; margin-bottom: 30px; }
         .social-btn { display: flex; align-items: center; gap: 8px; color: white; font-weight: 600; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 30px; }
@@ -142,6 +132,7 @@
 
         @media (max-width: 768px) {
             .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .section { padding: 60px 5%; min-height: auto; } .wheel-arrows { display: none; }
+            .header-left { width: 100%; justify-content: space-between; }
             .footer-social { flex-direction: column; align-items: center; }
         }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -153,24 +144,26 @@
 
     <header>
         <div class="header-left">
-            <div class="logo-container" onclick="window.scrollTo(0,0)">
+            <div class="logo-container" onclick="location.reload()">
                 <span class="logo-main">NEXT STOP</span>
                 <span class="logo-sub">GEORGIA</span>
             </div>
             <div class="site-toggle">
                 <div class="toggle-btn active"><span class="dot">●</span> GEORGIA</div>
-                <a href="https://nextstop.com.ge" class="toggle-btn">WORLD</a>
+                <a href="https://nextstop.com.ge" class="toggle-btn inactive">WORLD</a>
             </div>
         </div>
-        <nav class="nav-links">
-            <a href="#travel" class="nav-item">Tours</a>
-            <a href="#services" class="nav-item">Services</a>
-            <a href="#blog" class="nav-item">Blog</a>
-            <a href="#footer" class="nav-item">About</a>
-        </nav>
+        <div class="nav-right">
+            <nav class="nav-links">
+                <a href="#travel" class="nav-item" data-key="nav_tours">Tours</a>
+                <a href="#services" class="nav-item" data-key="nav_services">Services</a>
+                <a href="#blog" class="nav-item" data-key="nav_blog">Blog</a>
+                <a href="#footer" class="nav-item" data-key="nav_about">About</a>
+            </nav>
+            <button class="lang-btn" id="langBtn" onclick="toggleLang()">🇺🇸</button>
+        </div>
     </header>
 
-    <!-- HERO WHEEL -->
     <div class="hero-wheel">
         <div class="wheel-track" id="heroTrack"></div>
         <div class="progress-container" id="progressContainer"></div>
@@ -182,24 +175,24 @@
 
     <section id="travel" class="section">
         <div class="section-title">
-            <h2>Curated Experiences</h2>
-            <p>Explore the distinct regions of the Caucasus through our specialized itineraries.</p>
+            <h2 data-key="section_travel_title">Curated Experiences</h2>
+            <p data-key="section_travel_desc">Explore the distinct regions of the Caucasus through our specialized itineraries.</p>
         </div>
         <div class="grid-4" id="travelGrid"></div>
     </section>
 
     <section id="services" class="section" style="background-color: #f0f0f0;">
         <div class="section-title">
-            <h2>Our Services</h2>
-            <p>Professional logistical support for medical, corporate, and VIP clients.</p>
+            <h2 data-key="section_services_title">Our Services</h2>
+            <p data-key="section_services_desc">Professional logistical support for medical, corporate, and VIP clients.</p>
         </div>
         <div class="grid-4" id="servicesGrid"></div>
     </section>
 
     <section id="blog" class="section" style="background: white;">
         <div class="section-title">
-            <h2>Journal</h2>
-            <p>Latest updates, guides, and news from the team.</p>
+            <h2 data-key="section_blog_title">Journal</h2>
+            <p data-key="section_blog_desc">Latest updates, guides, and news from the team.</p>
         </div>
         <div class="blog-scroller" id="blogTrack"></div>
     </section>
@@ -211,24 +204,19 @@
         </div>
         <p>Tbilisi, Georgia | <a href="tel:+995591705710" style="color:#aaa;">+995 591 70 57 10</a></p>
         <br>
-        
         <div class="footer-social">
             <a href="https://www.instagram.com/holidays_in_georgia2025/" target="_blank" class="social-btn">
                 <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                 Instagram
             </a>
             <a href="#" class="social-btn wa-link">
-                <!-- WhatsApp SVG -->
                 <svg class="social-icon" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                 WhatsApp
             </a>
         </div>
-        
-        <a href="#" class="wa-link">Contact Us</a> | <a href="#">About Us</a> | <a href="#">Policies</a>
-        <br><br>
-        <p style="opacity: 0.5; font-size: 0.7rem;">&copy; 2025 Next Stop Group. All rights reserved.</p>
     </footer>
 
+    <!-- MODAL -->
     <div class="modal-overlay" id="detailModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeModal()">×</div>
@@ -242,146 +230,134 @@
     </div>
 
     <script>
-        /* ============================================================
-           --- YOUR CONTROL PANEL (EDIT CONTENT BELOW) ---
-           ============================================================ */
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        const translations = {
+            en: {
+                nav_tours: "Tours",
+                nav_services: "Services",
+                nav_blog: "Blog",
+                nav_about: "About",
+                section_travel_title: "Curated Experiences",
+                section_travel_desc: "Explore the distinct regions of the Caucasus through our specialized itineraries.",
+                section_services_title: "Our Services",
+                section_services_desc: "Professional logistical support for medical, corporate, and VIP clients.",
+                section_blog_title: "Journal",
+                section_blog_desc: "Latest updates, guides, and news from the team.",
+                btn_details: "View Details",
+                btn_read: "Read Article",
+                btn_book: "Book This Now"
+            },
+            ka: {
+                nav_tours: "ტურები",
+                nav_services: "სერვისები",
+                nav_blog: "ბლოგი",
+                nav_about: "ჩვენ შესახებ",
+                section_travel_title: "გამორჩეული გამოცდილება",
+                section_travel_desc: "აღმოაჩინეთ კავკასიის უნიკალური რეგიონები ჩვენი სპეციალური მარშრუტებით.",
+                section_services_title: "ჩვენი სერვისები",
+                section_services_desc: "პროფესიონალური ლოჯისტიკური მხარდაჭერა სამედიცინო, კორპორატიული და VIP კლიენტებისთვის.",
+                section_blog_title: "ჟურნალი",
+                section_blog_desc: "სიახლეები, გიდები და ამბები ჩვენი გუნდისგან.",
+                btn_details: "დეტალების ნახვა",
+                btn_read: "სტატიის წაკითხვა",
+                btn_book: "დაჯავშნა"
+            }
+        };
+
         const config = {
             whatsapp: "995591705710", 
 
-            // 1. HERO SLIDES
             heroSlides: [
                 { 
-                    title: "The Heart of the Caucasus", 
-                    desc: "Discover 8,000 years of history and hospitality.",
-                    // IMAGE: Beautiful Kazbegi Mountain View (Valley)
+                    title: { en: "The Heart of the Caucasus", ka: "კავკასიის გული" },
+                    desc: { en: "Discover 8,000 years of history.", ka: "აღმოაჩინეთ 8,000 წლოვანი ისტორია." },
                     img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?q=80&w=2070", 
-                    fullText: "Experience the full breadth of Georgia. From the ancient streets of Tbilisi to the high peaks of Kazbegi."
+                    fullText: { en: "Experience the full breadth of Georgia...", ka: "გამოიცანით საქართველოს სრული მშვენება..." }
                 },
                 { 
-                    title: "Winter in Gudauri", 
-                    desc: "Premium Ski Packages | 5 Days All Inclusive",
-                    img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2070", // Skiing
-                    fullText: "Our Gudauri ski package includes airport transfers, 5-star accommodation, ski pass, and equipment rental."
+                    title: { en: "Winter in Gudauri", ka: "ზამთარი გუდაურში" },
+                    desc: { en: "Premium Ski Packages", ka: "პრემიუმ სათხილამურო პაკეტები" },
+                    img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2070",
+                    fullText: { en: "Our Gudauri ski package...", ka: "ჩვენი გუდაურის სათხილამურო პაკეტი..." }
                 },
                 { 
-                    title: "VIP Lifestyle", 
-                    desc: "Yachts, Casinos & Private Jets",
-                    img: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=2070", // Luxury Yacht
-                    fullText: "Join our exclusive Junket program. Qualified players receive complimentary flights, luxury accommodation, and VIP hosting."
+                    title: { en: "VIP Lifestyle", ka: "VIP ცხოვრების სტილი" },
+                    desc: { en: "Yachts, Casinos & Private Jets", ka: "იახტები, კაზინოები და კერძო თვითმფრინავები" },
+                    img: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=2070",
+                    fullText: { en: "Join our exclusive Junket...", ka: "შემოუერთდით ჩვენს ექსკლუზიურ ჯანკეტ..." }
                 }
             ],
 
-            // 2. TRAVEL GRID
             travelCards: [
-                { 
-                    title: "Adventure", 
-                    desc: "Hiking & Rafting", 
-                    img: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2073", // Hiker at sunset
-                    tag: "Active", 
-                    text: "Explore the untamed wilderness of Svaneti and Kazbegi with sunset hikes." 
-                },
-                { 
-                    title: "Luxury & Leisure", 
-                    desc: "5-Star Resorts", 
-                    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", // Luxury Pool
-                    tag: "Relax", 
-                    text: "Stay in Georgia's finest hotels with private pools and spas." 
-                },
-                { 
-                    title: "Wine Route", 
-                    desc: "Qvevri Tastings", 
-                    img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", // Vineyard
-                    tag: "Culture", 
-                    text: "Visit the cradle of wine in Kakheti. Private tastings." 
-                },
-                { 
-                    title: "Casino & Nightlife", 
-                    desc: "VIP Access", 
-                    // CHANGED: Poker Table / Chips (Dark Luxury)
-                    img: "https://images.unsplash.com/photo-1518893063132-36e465be7788?q=80&w=2070", 
-                    tag: "VIP", 
-                    text: "Experience the vibrant nightlife with exclusive club access." 
-                }
+                { title: { en: "Adventure", ka: "თავგადასავალი" }, desc: { en: "Hiking & Rafting", ka: "ლაშქრობა და რაფტინგი" }, img: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2073", tag: { en: "Active", ka: "აქტიური" }, text: { en: "Explore the untamed wilderness...", ka: "გამოიკვლიეთ ველური ბუნება..." } },
+                { title: { en: "Luxury & Leisure", ka: "ფუფუნება და დასვენება" }, desc: { en: "5-Star Resorts", ka: "5-ვარსკვლავიანი კურორტები" }, img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", tag: { en: "Relax", ka: "რელაქსი" }, text: { en: "Stay in Georgia's finest...", ka: "დაისვენეთ საქართველოს საუკეთესო..." } },
+                { title: { en: "Wine Route", ka: "ღვინის გზა" }, desc: { en: "Qvevri Tastings", ka: "ქვევრის ღვინის დეგუსტაცია" }, img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", tag: { en: "Culture", ka: "კულტურა" }, text: { en: "Visit the cradle of wine...", ka: "ეწვიეთ ღვინის სამშობლოს..." } },
+                { title: { en: "Casino & Nightlife", ka: "კაზინო და ღამის ცხოვრება" }, desc: { en: "VIP Access", ka: "VIP წვდომა" }, img: "https://images.unsplash.com/photo-1605870445919-838d190e8e1b?q=80&w=2070", tag: { en: "VIP", ka: "VIP" }, text: { en: "Experience the vibrant nightlife...", ka: "გამოიცანით ღამის ცხოვრება..." } }
             ],
 
-            // 3. SERVICES GRID
             servicesCards: [
-                { 
-                    title: "Medical Tourism", 
-                    desc: "Wellbeing & Health", 
-                    // CHANGED: Luxury Recovery Room / Sunny Breakfast
-                    img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070", 
-                    text: "Top clinics for Hair Transplants and Dental work with spa-like recovery." 
-                },
-                { 
-                    title: "MICE & Corporate", 
-                    desc: "Events & Conferences", 
-                    img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069", 
-                    text: "Full logistical support for business delegations." 
-                },
-                { 
-                    title: "Guides & Interpreters", 
-                    desc: "Local Experts", 
-                    // CHANGED: Guide telling stories
-                    img: "https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?q=80&w=2070", 
-                    text: "Our friendly, certified guides will show you the real Georgia." 
-                },
-                { 
-                    title: "Transport & Security", 
-                    desc: "Premium Chauffeur", 
-                    // CHANGED: Chauffeur opening luxury car door
-                    img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", 
-                    text: "Luxury vehicles with professional drivers opening doors for you." 
-                }
+                { title: { en: "Medical Tourism", ka: "სამედიცინო ტურიზმი" }, desc: { en: "Wellbeing & Health", ka: "ჯანმრთელობა და კეთილდღეობა" }, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070", text: { en: "Top clinics for Hair Transplants...", ka: "საუკეთესო კლინიკები..." } },
+                { title: { en: "MICE & Corporate", ka: "MICE და კორპორატიული" }, desc: { en: "Events & Conferences", ka: "ღონისძიებები და კონფერენციები" }, img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069", text: { en: "Full logistical support...", ka: "სრული ლოჯისტიკური მხარდაჭერა..." } },
+                { title: { en: "Business Opportunities", ka: "ბიზნეს შესაძლებლობები" }, desc: { en: "Investment & Partners", ka: "ინვესტიციები და პარტნიორები" }, img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070", text: { en: "We facilitate B2B introductions...", ka: "ჩვენ ვუზრუნველყოფთ B2B კავშირებს..." } },
+                { title: { en: "Guides & Transport", ka: "გიდები და ტრანსპორტი" }, desc: { en: "Logistics & Experts", ka: "ლოჯისტიკა და ექსპერტები" }, img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", text: { en: "Seamless travel logistics...", ka: "შეუფერხებელი მოგზაურობის ლოჯისტიკა..." } }
             ],
 
-            // 4. BLOG POSTS
             blogPosts: [
-                { 
-                    title: "Vineyards of Kakheti", 
-                    date: "Oct 2025", 
-                    img: "https://images.unsplash.com/photo-1566346547477-173084076792?q=80&w=2070", // Real Vineyard
-                    text: "A journey through the ancient wine region." 
-                },
-                { 
-                    title: "Medical Excellence", 
-                    date: "Sep 2025", 
-                    img: "https://images.unsplash.com/photo-1516549655169-df83a0925727?q=80&w=2070", // Modern Medical
-                    text: "Why Georgia is the top choice for medical procedures." 
-                },
-                { 
-                    title: "Ski Season Guide", 
-                    date: "Aug 2025", 
-                    img: "https://images.unsplash.com/photo-1610198871574-53537a702467?q=80&w=2070", // Snowy Ski Resort
-                    text: "Everything you need to know about Gudauri this winter." 
-                },
-                { 
-                    title: "Tbilisi Nightlife", 
-                    date: "July 2025", 
-                    img: "https://images.unsplash.com/photo-1555992336-03a2316dbbb3?q=80&w=2064", // Nightclub vibe
-                    text: "Best clubs and bars in the capital." 
-                }
+                { title: { en: "Vineyards of Kakheti", ka: "კახეთის ვენახები" }, date: { en: "Oct 2025", ka: "ოქტ 2025" }, img: "https://images.unsplash.com/photo-1566346547477-173084076792?q=80&w=2070", text: { en: "A journey through...", ka: "მოგზაურობა..." } },
+                { title: { en: "Medical Excellence", ka: "სამედიცინო ხარისხი" }, date: { en: "Sep 2025", ka: "სექ 2025" }, img: "https://images.unsplash.com/photo-1516549655169-df83a0925727?q=80&w=2070", text: { en: "Why Georgia...", ka: "რატომ არის საქართველო..." } },
+                { title: { en: "Ski Season Guide", ka: "სათხილამურო სეზონი" }, date: { en: "Aug 2025", ka: "აგვ 2025" }, img: "https://images.unsplash.com/photo-1610198871574-53537a702467?q=80&w=2070", text: { en: "Everything you need...", ka: "ყველაფერი რაც გჭირდებათ..." } },
+                { title: { en: "Tbilisi Nightlife", ka: "თბილისის ღამის ცხოვრება" }, date: { en: "July 2025", ka: "ივლისი 2025" }, img: "https://images.unsplash.com/photo-1555992336-03a2316dbbb3?q=80&w=2064", text: { en: "Best clubs...", ka: "საუკეთესო კლუბები..." } }
             ]
         };
 
-        /* --- RENDER LOGIC (DO NOT TOUCH) --- */
+        function toggleLang() {
+            setLanguage(currentLang === 'en' ? 'ka' : 'en');
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            document.getElementById('langBtn').innerText = lang === 'en' ? '🇺🇸' : '🇬🇪';
+            
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if(translations[lang][key]) el.innerText = translations[lang][key];
+            });
+
+            init();
+        }
+
         let currentSlide = 0;
         let autoPlayTimer;
         let barAnimTimer;
         const SLIDE_DURATION = 10000; 
 
         function init() {
-            updateWaLinks(config.whatsapp);
+            document.querySelectorAll('.wa-link').forEach(a => {
+                if(!a.classList.contains('modal-btn')) { 
+                    a.href = `https://wa.me/${config.whatsapp}`;
+                }
+            });
             
-            // Render Hero
             const heroTrack = document.getElementById('heroTrack');
             const progContainer = document.getElementById('progressContainer');
             
+            heroTrack.innerHTML = ''; 
+            progContainer.innerHTML = '';
+
             config.heroSlides.forEach((slide, index) => {
                 const div = document.createElement('div');
                 div.className = 'hero-slide';
                 if(index === 0) div.classList.add('active');
-                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title}</h2><p class="slide-desc">${slide.desc}</p><button class="slide-btn" onclick="openModal('${slide.title}', '${slide.fullText}', '${slide.img}')">View Details</button></div>`;
+                div.innerHTML = `
+                    <img src="${slide.img}" class="slide-bg">
+                    <div class="slide-content">
+                        <h2 class="slide-title">${slide.title[currentLang]}</h2>
+                        <p class="slide-desc">${slide.desc[currentLang]}</p>
+                        <button class="slide-btn" onclick="openModal('${slide.title[currentLang]}', '${slide.fullText[currentLang]}', '${slide.img}')">${translations[currentLang].btn_details}</button>
+                    </div>
+                `;
                 heroTrack.appendChild(div);
 
                 const bar = document.createElement('div');
@@ -390,30 +366,29 @@
                 progContainer.appendChild(bar);
             });
 
-            // Render Grids
-            const travelGrid = document.getElementById('travelGrid'); config.travelCards.forEach(item => travelGrid.appendChild(createCard(item, 'card')));
-            const servicesGrid = document.getElementById('servicesGrid'); config.servicesCards.forEach(item => servicesGrid.appendChild(createCard(item, 'card')));
-            const blogTrack = document.getElementById('blogTrack'); config.blogPosts.forEach(item => blogTrack.appendChild(createCard(item, 'blog')));
+            const travelGrid = document.getElementById('travelGrid'); travelGrid.innerHTML = ''; config.travelCards.forEach(item => travelGrid.appendChild(createCard(item, 'card')));
 
+            const servicesGrid = document.getElementById('servicesGrid'); servicesGrid.innerHTML = ''; config.servicesCards.forEach(item => servicesGrid.appendChild(createCard(item, 'card')));
+
+            const blogTrack = document.getElementById('blogTrack'); blogTrack.innerHTML = ''; config.blogPosts.forEach(item => blogTrack.appendChild(createCard(item, 'blog')));
+            
+            clearTimeout(autoPlayTimer);
             startStoryMode();
-        }
-
-        function updateWaLinks(number) {
-            document.querySelectorAll('.wa-link').forEach(a => {
-                if(!a.classList.contains('modal-btn')) { 
-                    a.href = `https://wa.me/${number}`;
-                }
-            });
         }
 
         function createCard(item, type) {
             const div = document.createElement('div');
             div.className = type === 'blog' ? 'blog-card' : 'card';
-            div.onclick = () => openModal(item.title, item.text, item.img);
+            div.onclick = () => openModal(item.title[currentLang], item.text[currentLang], item.img);
+            
+            const title = item.title[currentLang];
+            const desc = type === 'blog' ? item.date[currentLang] : item.desc[currentLang];
+            const tag = item.tag ? item.tag[currentLang] : '';
+            
             if (type === 'blog') {
-                div.innerHTML = `<div class="blog-img-box"><img src="${item.img}" loading="lazy"></div><div class="blog-content"><div class="blog-date">${item.date}</div><h4 class="blog-title">${item.title}</h4><span class="blog-link">Read Article &rarr;</span></div>`;
+                div.innerHTML = `<div class="blog-img-box"><img src="${item.img}" loading="lazy"></div><div class="blog-content"><div class="blog-date">${desc}</div><h4 class="blog-title">${title}</h4><span class="blog-link">${translations[currentLang].btn_read} &rarr;</span></div>`;
             } else {
-                div.innerHTML = `<img src="${item.img}" class="card-bg" loading="lazy"><div class="card-overlay">${item.tag ? `<span class="card-tag">${item.tag}</span>` : ''}<h3>${item.title}</h3><p>${item.desc}</p></div>`;
+                div.innerHTML = `<img src="${item.img}" class="card-bg" loading="lazy"><div class="card-overlay">${tag ? `<span class="card-tag">${tag}</span>` : ''}<h3>${title}</h3><p>${desc}</p></div>`;
             }
             return div;
         }
@@ -460,7 +435,7 @@
             modalTitle.innerText = title; 
             modalText.innerText = text; 
             modalImg.src = img; 
-            // Smart WhatsApp Link
+            modalBtn.innerText = translations[currentLang].btn_book;
             modalBtn.href = `https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${title}`;
             modal.classList.add('active'); 
         }
@@ -468,7 +443,8 @@
         function closeModal() { modal.classList.remove('active'); }
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
         
-        init();
+        // Start with saved language or default
+        setLanguage(currentLang);
     </script>
 </body>
 </html>
