@@ -3,276 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Next Stop: World | Curated Travel</title>
-    <meta name="description" content="Next Stop: World. Curated travel experiences.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+    
+    <!-- SEO & BROWSER ICON -->
+    <title>Next Stop: Georgia | Premium Travel</title>
+    <meta name="description" content="Next Stop: Georgia. Premium travel agency in Tbilisi offering VIP casino tours, medical tourism, ski packages in Gudauri, and exclusive wine tours in Kakheti.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🇬🇪</text></svg>">
 
+    <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- DYNAMIC VARIABLES --- */
+        /* --- 1. DESIGN VARIABLES --- */
         :root {
-            --accent: #006994;          
-            --bg-warm: #f8fbfd;
-            --charcoal: #1a1a1a;        
-            --gold: #c5a059;            
-            --header-h: 70px;
-            --ribbon-h: 65px;
+            --bg-warm: #fdfbf7;         
+            --charcoal: #1a1a1a;        /* Deepest Grey */
+            --terracotta: #a84a32;      /* Accent Color */
+            --gold: #c5a059;            /* Luxury Accent */
+            --green: #25D366;           /* WhatsApp */
+            --gray-light: #f4f4f4;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
-        html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + var(--ribbon-h) + 20px); }
-        body { color: var(--charcoal); background-color: var(--bg-warm); line-height: 1.6; overflow-x: hidden; transition: background 0.5s; padding-top: calc(var(--header-h) + var(--ribbon-h)); }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        body { color: var(--charcoal); background-color: var(--bg-warm); line-height: 1.6; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        button, select { cursor: pointer; border: none; outline: none; }
+        button { cursor: pointer; border: none; outline: none; }
 
-        /* --- HEADER --- */
+        /* --- 2. HEADER --- */
         header {
-            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px);
-            padding: 0 5%; height: var(--header-h); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            padding: 12px 5%;
+            position: fixed; top: 0; width: 100%; z-index: 1000;
             display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
+
         .header-left { display: flex; align-items: center; gap: 30px; }
+        
+        /* PREMIUM LOGO */
         .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: pointer; }
-        .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; }
-        .logo-sub { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--accent); letter-spacing: 4px; text-transform: uppercase; margin-left: 2px; transition: color 0.5s; }
+        .logo-main { 
+            font-family: 'Montserrat', sans-serif; 
+            font-size: 1.4rem; 
+            font-weight: 800; 
+            color: var(--charcoal); 
+            letter-spacing: -1px; 
+        }
+        .logo-sub { 
+            font-family: 'Cinzel', serif; 
+            font-size: 0.7rem; 
+            font-weight: 700; 
+            color: var(--terracotta); 
+            letter-spacing: 4px; 
+            text-transform: uppercase; 
+            margin-left: 2px; 
+        }
 
-        .site-toggle { display: flex; background: #eef2f5; padding: 4px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); }
-        .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none; transition: 0.3s; }
+        /* Toggle */
+        .site-toggle {
+            display: flex; background: var(--gray-light); padding: 4px;
+            border-radius: 30px; border: 1px solid rgba(0,0,0,0.05);
+        }
+        .toggle-btn {
+            padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700;
+            display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none;
+        }
         .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default; }
-        .toggle-btn.inactive:hover { color: var(--accent); }
-        .dot { color: var(--accent); font-size: 0.8rem; animation: pulse 2s infinite; }
+        .toggle-btn.inactive:hover { color: var(--terracotta); }
+        .dot { color: var(--green); font-size: 0.8rem; animation: pulse 2s infinite; }
 
-        /* --- RIBBON --- */
-        .ribbon-wrapper {
-            position: fixed; top: var(--header-h); left: 0; width: 100%; height: var(--ribbon-h);
-            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(15px);
-            z-index: 999; display: flex; align-items: center; padding: 0 5%;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.02);
-        }
-        .ribbon-stream { 
-            flex: 1; display: flex; align-items: center; gap: 12px; overflow-x: auto; scrollbar-width: none; height: 100%; 
-            mask-image: linear-gradient(to right, black 90%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
-            padding-left: 5px;
-        }
-        .ribbon-stream::-webkit-scrollbar { display: none; }
-        .stream-btn { 
-            padding: 8px 20px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; 
-            color: #555; background: white; border: 1px solid rgba(0,0,0,0.05);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03); white-space: nowrap; transition: all 0.3s;
-            text-transform: uppercase;
-        }
-        .stream-btn:hover { color: var(--accent); transform: translateY(-2px); }
-        .stream-btn.active { 
-            background: var(--accent); color: white; border-color: transparent;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2); transform: scale(1.05);
-        }
-        .more-btn {
-            width: 40px; height: 40px; border-radius: 50%; background: var(--charcoal); color: white;
-            display: flex; justify-content: center; align-items: center; font-size: 1.2rem; margin-left: 15px;
-            flex-shrink: 0; cursor: pointer; transition: 0.4s; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .more-btn:hover { transform: rotate(90deg) scale(1.1); background: var(--accent); }
-
-        /* --- MATRIX OVERLAY --- */
-        .matrix-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98);
-            z-index: 2000; display: none; flex-direction: column; padding: 100px 10%;
-            backdrop-filter: blur(20px); overflow-y: auto; animation: fadeIn 0.3s;
-        }
-        .matrix-overlay.active { display: flex; }
-        .matrix-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
-        .matrix-title { font-family: 'Cinzel', serif; font-size: 2.5rem; color: var(--charcoal); }
-        .matrix-close { font-size: 2rem; cursor: pointer; transition: 0.3s; }
-        .matrix-close:hover { color: var(--accent); transform: rotate(90deg); }
-        .matrix-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
-        .matrix-item {
-            padding: 15px; background: #f9f9f9; border-radius: 8px; text-align: center;
-            font-weight: 600; color: #555; transition: 0.2s; cursor: pointer; border: 1px solid transparent;
-        }
-        .matrix-item:hover { background: white; border-color: var(--accent); color: var(--accent); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transform: translateY(-3px); }
-
-        /* --- NAV & HERO --- */
-        .nav-right { display: flex; gap: 20px; align-items: center; }
-        .lang-select { padding: 6px 12px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.5); font-size: 0.75rem; font-weight: 700; }
+        /* Nav */
         .nav-links { display: flex; gap: 30px; }
         .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
+        .nav-item:hover { color: var(--terracotta); }
         
-        /* HERO CONTAINER */
-        .hero-wheel { height: 85vh; width: 100%; overflow: hidden; background: #000; position: relative; }
-        .wheel-track { display: flex; width: 100%; height: 100%; }
-        .hero-slide { flex: 0 0 100%; height: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; }
-        .slide-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.65; transition: transform 10s linear; }
+        /* LANG PICKER */
+        .nav-right { display: flex; gap: 20px; align-items: center; }
+        .lang-btn { font-size: 1.2rem; background: none; padding: 5px; border-radius: 4px; }
+        .lang-btn:hover { background: rgba(0,0,0,0.05); }
+
+        /* --- 3. HERO WHEEL --- */
+        .hero-wheel { height: 95vh; width: 100%; overflow: hidden; margin-top: 0; background: #000; position: relative; }
+        .wheel-track { display: flex; width: 100%; height: 100%; overflow: hidden; }
+        
+        .hero-slide { 
+            flex: 0 0 100%; height: 100%; position: relative;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            text-align: center; color: white; padding: 20px;
+        }
+        .slide-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.65; z-index: 1; transition: transform 10s linear; }
         .hero-slide.active .slide-bg { transform: scale(1.1); }
-        .slide-content { position: relative; z-index: 2; opacity: 0; transform: translateY(30px); transition: 1s; }
+
+        .slide-content { position: relative; z-index: 2; max-width: 800px; opacity: 0; transform: translateY(30px); transition: 1s; }
         .hero-slide.active .slide-content { opacity: 1; transform: translateY(0); }
+
         .slide-title { font-size: 4rem; font-family: 'Cinzel', serif; margin-bottom: 15px; text-shadow: 0 5px 20px rgba(0,0,0,0.5); }
-        .slide-btn { border: 1px solid rgba(255,255,255,0.5); color: white; padding: 15px 45px; text-transform: uppercase; letter-spacing: 3px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); transition: 0.3s; }
+        .slide-desc { font-size: 1.2rem; opacity: 0.9; margin-bottom: 25px; font-weight: 300; letter-spacing: 1px; }
+        .slide-btn { 
+            border: 2px solid white; color: white; padding: 15px 45px; 
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; display: inline-block;
+            background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); transition: 0.3s;
+        }
         .slide-btn:hover { background: white; color: black; }
 
-        /* --- NEW HOLOGRAPHIC MAP HERO --- */
-        .map-hero { 
-            width: 100%; height: 100%; background: #0a0a0a; /* Deep dark background */
-            position: relative; overflow: hidden;
-        }
-        .map-bg-img {
-            width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; /* Focus on Europe */
-            opacity: 0.5; filter: grayscale(100%) contrast(1.2); pointer-events: none;
-        }
-        .map-overlay-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            max-width: 1400px; margin: 0 auto; left: 50%; transform: translateX(-50%);
-        }
-        /* The interactive region hit-box */
-        .map-region {
-            position: absolute;
-            width: 120px; height: 120px; /* Size of the hit area */
-            transform: translate(-50%, -50%); /* Center on coordinate */
-            cursor: pointer; z-index: 10;
-            display: flex; justify-content: center; align-items: center;
-        }
-        /* The Glow Effect */
-        .region-glow {
-            position: absolute; width: 250%; height: 250%;
-            background: radial-gradient(circle, rgba(197, 160, 89, 0.5) 0%, rgba(197, 160, 89, 0.1) 40%, transparent 70%);
-            opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease;
-            pointer-events: none; mix-blend-mode: screen;
-            border-radius: 50%;
-        }
-        /* The Label */
-        .region-label {
-            position: relative; z-index: 2; color: rgba(255,255,255,0.7); 
-            font-family: 'Cinzel', serif; font-size: 0.9rem; letter-spacing: 1px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.8); transition: 0.3s; text-transform: uppercase;
-        }
-        /* Hover States */
-        .map-region:hover .region-glow { opacity: 1; transform: scale(1.1); }
-        .map-region:hover .region-label { color: var(--gold); text-shadow: 0 0 10px var(--gold); }
+        /* PROGRESS BARS */
+        .progress-container { position: absolute; bottom: 40px; left: 0; width: 100%; display: flex; justify-content: center; gap: 8px; z-index: 10; padding: 0 10%; }
+        .progress-bar { height: 4px; background: rgba(255,255,255,0.3); flex: 1; max-width: 120px; border-radius: 2px; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; background: white; transition: width 0ms linear; }
 
+        /* ARROWS */
+        .wheel-arrows { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; z-index: 10; pointer-events: none; }
+        .arrow { pointer-events: auto; cursor: pointer; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; backdrop-filter: blur(5px); transition: 0.3s; border: 1px solid rgba(255,255,255,0.3); }
+        .arrow:hover { background: white; color: black; }
 
-        /* --- SECTIONS --- */
-        .section { padding: 80px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
-        .section-title { text-align: center; margin-bottom: 60px; position: relative; }
-        .section-title h2 { font-size: 2.5rem; font-family: 'Cinzel', serif; color: var(--charcoal); margin-bottom: 10px; }
+        /* --- 4. SECTIONS --- */
+        .section { padding: 100px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; transition: opacity 0.3s; }
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .section-title h2 { font-size: 2.5rem; font-family: 'Cinzel', serif; color: var(--charcoal); margin-bottom: 15px; }
+        .section-title p { color: #777; font-size: 1rem; max-width: 600px; margin: 0 auto; }
         
-        .back-btn { 
-            display: none; cursor: pointer; font-size: 0.9rem; font-weight: 700; 
-            color: var(--accent); text-transform: uppercase; 
-            position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-            padding: 10px 20px; background: rgba(255,255,255,0.8); border-radius: 20px;
+        /* FILTER BAR */
+        .filter-container {
+            display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap;
         }
-        .back-btn.visible { display: block; }
+        .filter-btn {
+            padding: 8px 20px; border-radius: 30px; border: 1px solid #eee; background: white;
+            font-size: 0.8rem; font-weight: 700; color: #999; cursor: pointer; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .filter-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
+        .filter-btn.active { background: var(--terracotta); color: white; border-color: var(--terracotta); }
 
-        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
-        
-        .card { background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); height: 380px; position: relative; cursor: pointer; transition: 0.4s; }
+        /* GRID */
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
+
+        .card { background: white; border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); transition: 0.4s; height: 350px; position: relative; cursor: pointer; animation: fadeUp 0.5s ease-out; }
         .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .card-bg { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
         .card:hover .card-bg { transform: scale(1.1); }
-        .card-overlay { position: absolute; bottom: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2), transparent); padding: 30px; display: flex; flex-direction: column; justify-content: flex-end; color: white; }
+        .card-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; color: white; }
         .card h3 { font-family: 'Cinzel', serif; font-size: 1.4rem; margin-bottom: 8px; color: var(--gold); }
-        .card-tag { position: absolute; top: 20px; right: 20px; background: var(--accent); color: white; padding: 5px 12px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; border-radius: 4px; }
+        .card p { font-size: 0.9rem; opacity: 0.8; font-weight: 300; }
+        .card-tags { position: absolute; top: 20px; right: 20px; display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
+        .card-tag { background: var(--terracotta); color: white; padding: 4px 10px; font-size: 0.65rem; font-weight: bold; text-transform: uppercase; border-radius: 2px; }
 
         /* BLOG */
-        .blog-scroller { display: flex; overflow-x: auto; gap: 30px; padding: 20px 5px; scrollbar-width: none; scroll-snap-type: x mandatory; }
-        .blog-card { flex: 0 0 300px; scroll-snap-align: center; background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); transition: 0.3s; cursor: pointer; }
+        .blog-scroller { display: flex; overflow-x: auto; gap: 30px; padding: 20px 5px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .blog-scroller::-webkit-scrollbar { display: none; }
+        .blog-card { flex: 0 0 350px; scroll-snap-align: center; background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); transition: 0.3s; cursor: pointer; }
         .blog-card:hover { transform: translateY(-5px); }
-        .blog-img-box { height: 180px; overflow: hidden; }
-        .blog-content { padding: 20px; }
-        .blog-date { font-size: 0.7rem; color: var(--accent); font-weight: 700; text-transform: uppercase; }
-        .blog-title { font-size: 1.1rem; margin: 10px 0; color: var(--charcoal); font-family: 'Cinzel', serif; line-height: 1.3; }
+        .blog-img-box { height: 200px; overflow: hidden; }
+        .blog-content { padding: 25px; }
+        .blog-date { font-size: 0.7rem; color: var(--terracotta); font-weight: 700; text-transform: uppercase; }
+        .blog-title { font-size: 1.2rem; margin: 10px 0; color: var(--charcoal); font-family: 'Cinzel', serif; }
+        .blog-link { font-size: 0.8rem; text-decoration: underline; color: #888; }
 
         /* MODAL */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2100; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
-        .modal-overlay.active { display: flex; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); opacity: 0; transition: 0.3s; }
+        .modal-overlay.active { display: flex; opacity: 1; }
         .modal-content { background: white; width: 90%; max-width: 800px; max-height: 90vh; overflow-y: auto; border-radius: 8px; position: relative; animation: slideUp 0.4s ease; }
         .modal-header-img { height: 300px; width: 100%; object-fit: cover; }
         .modal-body { padding: 40px; }
-        .modal-close { position: absolute; top: 20px; right: 20px; background: white; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-weight: bold; }
-        .modal-btn { background: var(--accent); color: white; padding: 15px 30px; display: inline-block; font-weight: bold; text-transform: uppercase; margin-top: 20px; }
+        .modal-close { position: absolute; top: 20px; right: 20px; background: white; color: black; width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .modal-title { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 20px; color: var(--charcoal); }
+        .modal-text { font-size: 1rem; color: #555; margin-bottom: 30px; line-height: 1.8; }
+        
+        /* SUB-ITEMS LIST */
+        .modal-list { list-style: none; margin-top: 20px; }
+        .modal-item { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid #eee; transition: 0.3s; cursor: pointer; border-left: 3px solid transparent; }
+        .modal-item:hover { background: #f9f9f9; border-left: 3px solid var(--terracotta); padding-left: 25px; }
+        .modal-item-title { font-weight: bold; font-size: 1.1rem; color: var(--charcoal); }
+        .modal-item-desc { font-size: 0.85rem; color: #777; margin-top: 5px; }
+        .modal-item-arrow { color: var(--gold); font-weight: bold; }
 
-        footer { background: #111; color: #777; padding: 80px 5%; text-align: center; border-top: 5px solid var(--accent); }
-        @media (max-width: 768px) { 
-            .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .header-left { width: 100%; justify-content: space-between; } .site-toggle { display: none; } 
-            .map-bg-img { object-position: 50% 40%; transform: scale(2.5); } /* Zoom on mobile */
-            .map-region { transform: translate(-50%, -50%) scale(0.7); } /* Smaller targets on mobile */
+        /* SUB-ITEM DETAIL VIEW */
+        .detail-view { display: none; animation: fadeIn 0.3s; }
+        .detail-view.active { display: block; }
+        .detail-back { display: inline-flex; align-items: center; gap: 10px; color: #888; cursor: pointer; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; font-size: 0.8rem; }
+        .detail-back:hover { color: var(--terracotta); }
+
+        .modal-btn { background: var(--terracotta); color: white; padding: 15px 30px; font-weight: bold; text-transform: uppercase; display: inline-block; display: flex; align-items: center; justify-content: center; gap: 10px; width: fit-content; margin-top: 20px; }
+        
+        /* FOOTER */
+        footer { background: #111; color: #777; padding: 80px 5%; text-align: center; font-size: 0.9rem; border-top: 5px solid var(--terracotta); }
+        .footer-social { display: flex; justify-content: center; gap: 25px; margin-bottom: 30px; }
+        .social-btn { display: flex; align-items: center; gap: 8px; color: white; font-weight: 600; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 30px; }
+        .social-btn:hover { color: var(--terracotta); border-color: var(--terracotta); background: rgba(255,255,255,0.05); }
+        .social-icon { width: 20px; height: 20px; fill: currentColor; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .section { padding: 60px 5%; min-height: auto; } .wheel-arrows { display: none; }
+            .footer-social { flex-direction: column; align-items: center; }
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <header>
         <div class="header-left">
-            <div class="logo-container" onclick="location.reload()">
+            <div class="logo-container" onclick="window.scrollTo(0,0)">
                 <span class="logo-main">NEXT STOP</span>
-                <span class="logo-sub">WORLD</span>
+                <span class="logo-sub">GEORGIA</span>
             </div>
             <div class="site-toggle">
-                <a href="https://nextstop.ge" class="toggle-btn inactive">GEORGIA</a>
-                <div class="toggle-btn active" onclick="loadCountry('world')"><span class="dot">●</span> WORLD</div>
+                <div class="toggle-btn active"><span class="dot">●</span> GEORGIA</div>
+                <a href="https://nextstop.com.ge" class="toggle-btn inactive">WORLD</a>
             </div>
         </div>
+        
         <div class="nav-right">
             <nav class="nav-links">
-                <a href="#destinations" class="nav-item">Tours</a>
-                <a href="#services" class="nav-item">Services</a>
-                <a href="#blog" class="nav-item">Blog</a>
+                <a href="#travel" class="nav-item" data-key="nav_tours">Tours</a>
+                <a href="#services" class="nav-item" data-key="nav_services">Services</a>
+                <a href="#blog" class="nav-item" data-key="nav_blog">Blog</a>
+                <a href="#footer" class="nav-item" data-key="nav_about">About</a>
             </nav>
-            <select class="lang-select" onchange="changeLanguage(this.value)">
-                <option value="en">🇺🇸 ENG</option>
-                <option value="ka">🇬🇪 GEO</option>
-            </select>
+            <button class="lang-btn" id="langBtn" onclick="toggleLang()">🇺🇸</button>
         </div>
     </header>
 
-    <div class="ribbon-wrapper">
-        <div class="ribbon-stream" id="destRibbon"></div>
-        <div class="ribbon-library">
-            <button class="more-btn" onclick="toggleMatrix()">+</button>
-        </div>
-    </div>
-
-    <div class="matrix-overlay" id="matrixOverlay">
-        <div class="matrix-header">
-            <h2 class="matrix-title">Select Destination</h2>
-            <div class="matrix-close" onclick="toggleMatrix()">✕</div>
-        </div>
-        <div class="matrix-grid" id="matrixGrid"></div>
-    </div>
-
+    <!-- HERO WHEEL -->
     <div class="hero-wheel">
         <div class="wheel-track" id="heroTrack"></div>
+        <div class="progress-container" id="progressContainer"></div>
+        <div class="wheel-arrows">
+            <div class="arrow" onclick="manualSlide(-1)">&#10094;</div>
+            <div class="arrow" onclick="manualSlide(1)">&#10095;</div>
+        </div>
     </div>
 
-    <section id="destinations" class="section">
+    <!-- TRAVEL SECTION WITH FILTER -->
+    <section id="travel" class="section">
         <div class="section-title">
-            <div class="back-btn" id="toursBack" onclick="resetGrid('tours')">← Back to Categories</div>
-            <h2 id="toursTitle">Curated Experiences</h2>
-            <p id="toursDesc">Select a category to explore.</p>
+            <h2 data-key="section_travel_title">Curated Experiences</h2>
+            <p data-key="section_travel_desc">Explore the distinct regions of the Caucasus through our specialized itineraries.</p>
         </div>
-        <div class="grid-4" id="toursGrid"></div>
+        
+        <!-- DYNAMIC FILTER BAR -->
+        <div class="filter-container" id="travelFilters">
+            <!-- JS will populate this -->
+        </div>
+
+        <div class="grid-4" id="travelGrid"></div>
     </section>
 
-    <section id="services" class="section" style="background-color: #f0f4f8;">
+    <section id="services" class="section" style="background-color: #f0f0f0;">
         <div class="section-title">
-            <div class="back-btn" id="servicesBack" onclick="resetGrid('services')">← Back to Services</div>
-            <h2 id="servicesTitle">Services</h2>
-            <p id="servicesDesc">Full support for your international journey.</p>
+            <h2 data-key="section_services_title">Our Services</h2>
+            <p data-key="section_services_desc">Professional logistical support for medical, corporate, and VIP clients.</p>
         </div>
         <div class="grid-4" id="servicesGrid"></div>
     </section>
 
     <section id="blog" class="section" style="background: white;">
         <div class="section-title">
-            <h2>Travel Journal</h2>
-            <p>Tips, guides, and inspiration.</p>
+            <h2 data-key="section_blog_title">Journal</h2>
+            <p data-key="section_blog_desc">Latest updates, guides, and news from the team.</p>
         </div>
         <div class="blog-scroller" id="blogTrack"></div>
     </section>
@@ -280,238 +273,422 @@
     <footer id="footer">
         <div class="logo-container" style="align-items: center; margin-bottom: 30px; filter: invert(1);">
             <span class="logo-main">NEXT STOP</span>
-            <span class="logo-sub">WORLD</span>
+            <span class="logo-sub">GEORGIA</span>
         </div>
         <p>Tbilisi, Georgia | <a href="tel:+995591705710" style="color:#aaa;">+995 591 70 57 10</a></p>
-        <div style="margin-top: 20px;">
-            <a href="https://wa.me/995591705710" style="color:white; border:1px solid white; padding: 10px 20px; text-transform:uppercase; font-size:0.8rem;">Contact via WhatsApp</a>
+        <br>
+        
+        <div class="footer-social">
+            <a href="https://www.instagram.com/holidays_in_georgia2025/" target="_blank" class="social-btn">
+                <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                Instagram
+            </a>
+            <a href="#" class="social-btn wa-link">
+                <svg class="social-icon" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                WhatsApp
+            </a>
         </div>
+        
+        <a href="#" class="wa-link">Contact Us</a> | <a href="#">About Us</a> | <a href="#">Policies</a>
+        <br><br>
+        <p style="opacity: 0.5; font-size: 0.7rem;">&copy; 2025 Next Stop Group. All rights reserved.</p>
     </footer>
 
+    <!-- MODAL WITH DEEP DIVE LOGIC -->
     <div class="modal-overlay" id="detailModal">
         <div class="modal-content">
-            <div class="modal-close" onclick="closeDetail()">×</div>
+            <div class="modal-close" onclick="closeModal()">×</div>
             <img src="" class="modal-header-img" id="modalImg">
-            <div class="modal-body">
-                <h2 id="modalTitle" style="font-family:'Cinzel', serif; font-size:2rem; margin-bottom:15px;"></h2>
-                <p id="modalText" style="color:#666; line-height:1.8; margin-bottom:20px; white-space: pre-wrap;"></p>
-                <a href="#" class="modal-btn" id="quoteBtn">Request Quote</a>
+            
+            <!-- 1. LIST VIEW (For Categories) -->
+            <div class="modal-body" id="modalListView">
+                <h2 class="modal-title" id="modalTitle">Title</h2>
+                <div class="modal-list" id="modalList"></div>
+            </div>
+
+            <!-- 2. DETAIL VIEW (For Specific Tours) -->
+            <div class="modal-body detail-view" id="modalDetailView">
+                <div class="detail-back" onclick="showList()">← Back to Options</div>
+                <h2 class="modal-title" id="detailTitle">Sub Title</h2>
+                <div class="modal-text" id="detailText">Details here...</div>
+                <a href="#" class="modal-btn wa-link" id="detailBtn">Book via WhatsApp</a>
             </div>
         </div>
     </div>
 
     <script>
-        // --- DATA STORE ---
-        const serviceCategories = [
-            { title: "Visa Support", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070", desc: "Consultation & Filing.", items: [ { title: "Schengen Visa", img: "https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?q=80&w=2070", desc: "Europe", content: "SERVICE: SCHENGEN VISA\n\nFull assistance with forms and appointments." }, { title: "USA Visa", img: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=2070", desc: "B1/B2", content: "SERVICE: USA VISA\n\nSupport for tourist and business visas." } ] },
-            { title: "Transport", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074", desc: "Flights & Transfers.", items: [ { title: "Flight Booking", img: "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?q=80&w=2070", desc: "Global Routes", content: "SERVICE: FLIGHTS\n\nBest connections at best prices." } ] },
-            { title: "Accommodation", img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", desc: "Hotels & Villas.", items: [ { title: "Luxury Hotels", img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2070", desc: "5-Star", content: "SERVICE: HOTELS\n\nExclusive rates at top hotels." } ] },
-            { title: "VIP Services", img: "https://images.unsplash.com/photo-1551632436-cbf8dd354ca8?q=80&w=2069", desc: "Concierge.", items: [ { title: "Event Tickets", img: "https://images.unsplash.com/photo-1459749411177-0473ef487758?q=80&w=2070", desc: "Access", content: "SERVICE: TICKETS\n\nSports and concerts." } ] }
-        ];
+        /* ============================================================
+           --- YOUR CONTROL PANEL (EDIT CONTENT HERE) ---
+           ============================================================ */
+        
+        let currentLang = localStorage.getItem('lang') || 'en';
 
-        const database = {
-            world: {
-                accent: "#006994",
-                tourCategories: [
-                    { title: "European Best Sellers", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", desc: "Paris, Rome, Barcelona.", items: [ { title: "Rome Weekend", img: "https://images.unsplash.com/photo-1529260830199-42c42dda5f30?q=80&w=2071", desc: "3 Days in Rome.", content: "ITINERARY: ROME\n\nDay 1: Arrival & Dinner.\nDay 2: Colosseum & Forum.\nDay 3: Vatican." } ] },
-                    { title: "Exotic Asia", img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2077", desc: "Bali, Thailand, Japan.", items: [ { title: "Kyoto Temples", img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=2070", desc: "Ancient Japan.", content: "ITINERARY: KYOTO\n\nDay 1: Arashiyama.\nDay 2: Golden Pavilion." } ] },
-                    { title: "Honeymoon Specials", img: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2070", desc: "Maldives & Santorini.", items: [ { title: "Maldives", img: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?q=80&w=2070", desc: "Overwater Villa.", content: "ITINERARY: MALDIVES\n\n5 Days of pure relaxation." } ] },
-                    { title: "Ancient History", img: "https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=2070", desc: "Egypt & Athens.", items: [ { title: "Egypt Pyramids", img: "https://images.unsplash.com/photo-1539650116455-251ec23e0659?q=80&w=2070", desc: "Giza & Cairo", content: "ITINERARY: EGYPT\n\nDay 1: Giza Pyramids.\nDay 2: Museum." } ] }
-                ],
-                blog: [ { title: "Top 5 Visa-Free Countries", date: "Guide", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" }, { title: "Packing for Europe", date: "Tips", img: "https://images.unsplash.com/photo-1556557659-180ce79811d5?q=80&w=2070" } ]
+        const translations = {
+            en: {
+                nav_tours: "Tours",
+                nav_services: "Services",
+                nav_blog: "Blog",
+                nav_about: "About",
+                section_travel_title: "Curated Experiences",
+                section_travel_desc: "Explore the distinct regions of the Caucasus through our specialized itineraries.",
+                section_services_title: "Our Services",
+                section_services_desc: "Professional logistical support for medical, corporate, and VIP clients.",
+                section_blog_title: "Journal",
+                section_blog_desc: "Latest updates, guides, and news from the team.",
+                btn_details: "View Details",
+                btn_read: "Read Article",
+                btn_book: "Book This Now",
+                filter_all: "All"
             },
-            italy: {
-                accent: "#008C45",
-                hero: [{ title: "La Dolce Vita", desc: "The Sweet Life", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070" }],
-                tourCategories: [
-                    { title: "Art Cities", img: "https://images.unsplash.com/photo-1534445867742-43195f401b6c?q=80&w=2070", desc: "Rome, Florence, Venice.", items: [{title:"Rome Classic", img:"https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=2070", desc:"Eternal City", content:"ITINERARY: ROME\n\nDay 1: Colosseum.\nDay 2: Vatican."}] },
-                    { title: "Amalfi Coast", img: "https://images.unsplash.com/photo-1633321088355-d0f8c054e3e9?q=80&w=2070", desc: "Positano & Capri.", items: [{title:"Positano Dream", img:"https://images.unsplash.com/photo-1533602496739-1663470ccf6b?q=80&w=2070", desc:"Cliffside Luxury", content:"ITINERARY: POSITANO\n\nDay 1: Beach Club.\nDay 2: Boat Tour."}] },
-                    { title: "Food & Wine", img: "https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?q=80&w=2070", desc: "Tuscany & Naples.", items: [{title:"Tuscany Wine", img:"https://images.unsplash.com/photo-1473185906631-9a7444158913?q=80&w=2070", desc:"Chianti", content:"ITINERARY: TUSCANY\n\nDay 1: Siena.\nDay 2: Wine Tasting."}] },
-                    { title: "Islands", img: "https://images.unsplash.com/photo-1504198266287-1659872e6590?q=80&w=2070", desc: "Sicily.", items: [{title:"Sicily Tour", img:"https://images.unsplash.com/photo-1596706064228-4467d1db2688?q=80&w=2070", desc:"Etna", content:"ITINERARY: SICILY\n\nDay 1: Palermo.\nDay 2: Etna."}] }
-                ],
-                blog: [ { title: "Hidden Italy Gems", date: "Inspiration", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=2070" } ]
-            },
-            france: { accent: "#0055A4", hero: [{ title: "Esprit de France", desc: "Romance & Style", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073" }], tourCategories: [ { title: "City Highlights", img: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?q=80&w=2070", desc: "Paris & Lyon.", items: [{title:"Paris Classic", img:"https://images.unsplash.com/photo-1511739001486-6bfe10ce7859?q=80&w=2070", desc:"Eiffel", content:"ITINERARY: PARIS\n\nDay 1: Eiffel Tower."}] }, { title: "Riviera", img: "https://images.unsplash.com/photo-1533104823323-d62b7a4d9342?q=80&w=2070", desc: "Nice & Monaco.", items: [{title:"Nice", img:"https://images.unsplash.com/photo-1516982921503-4b9679624597?q=80&w=2070", desc:"Beach", content:"ITINERARY: NICE\n\nDay 1: Promenade."}] }, { title: "Wine", img: "https://images.unsplash.com/photo-1598394816675-246472232c73?q=80&w=2070", desc: "Bordeaux.", items: [{title:"Bordeaux", img:"https://images.unsplash.com/photo-1558455581-c35d18080614?q=80&w=2070", desc:"Vineyards", content:"ITINERARY: BORDEAUX\n\nDay 1: Wine Tasting."}] }, { title: "History", img: "https://images.unsplash.com/photo-1464965392013-162982d6771d?q=80&w=2070", desc: "Normandy.", items: [{title:"D-Day", img:"https://images.unsplash.com/photo-1520626353683-161d9a2ae4e4?q=80&w=2070", desc:"WW2", content:"ITINERARY: NORMANDY\n\nDay 1: Beaches."}] } ], blog: [{title: "Paris on a Budget", date: "Tips", img: "https://images.unsplash.com/photo-1454942901704-3c44c11b2ad1?q=80&w=2070"}] },
-            spain: { accent: "#AA151B", hero: [{ title: "Viva España", desc: "Passion", img: "https://images.unsplash.com/photo-1543783207-ec64e4d95325?q=80&w=2070" }], tourCategories: [ { title: "Cities", img: "https://images.unsplash.com/photo-1583422409516-2895a77efded?q=80&w=2070", desc: "Barcelona", items: [{title:"Barcelona", img:"https://images.unsplash.com/photo-1583422409516-2895a77efded?q=80&w=2070", desc:"Gaudi", content:"ITINERARY: BARCELONA\n\nDay 1: Sagrada Familia."}] }, { title: "Andalusia", img: "https://images.unsplash.com/photo-1558642084-fd1ba9181774?q=80&w=2070", desc: "Seville", items: [{title:"Seville", img:"https://images.unsplash.com/photo-1558642084-fd1ba9181774?q=80&w=2070", desc:"Flamenco", content:"ITINERARY: SEVILLE\n\nDay 1: Plaza de Espana."}] }, { title: "Islands", img: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=2070", desc: "Ibiza", items: [{title:"Ibiza", img:"https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=2070", desc:"Party", content:"ITINERARY: IBIZA\n\nDay 1: Sunset."}] }, { title: "North", img: "https://images.unsplash.com/photo-1562678853-b0f3404c0dfb?q=80&w=2070", desc: "San Sebastian", items: [{title:"San Sebastian", img:"https://images.unsplash.com/photo-1562678853-b0f3404c0dfb?q=80&w=2070", desc:"Food", content:"ITINERARY: BASQUE\n\nDay 1: Pintxos."}] } ], blog: [{title: "Tapas Guide", date: "Food", img: "https://images.unsplash.com/photo-1515443961218-a51367130e69?q=80&w=2070"}] },
-            portugal: { accent: "#006600", hero: [{ title: "Golden Coast", desc: "Atlantic Gems", img: "https://images.unsplash.com/photo-1555881400-74d7acaacd81?q=80&w=2070" }], tourCategories: [ { title: "Cities", img: "https://images.unsplash.com/photo-1592345279419-959d784e8aad?q=80&w=2070", desc: "Lisbon", items: [{title:"Lisbon", img:"https://images.unsplash.com/photo-1592345279419-959d784e8aad?q=80&w=2070", desc:"Trams", content:"ITINERARY: LISBON\n\nDay 1: Alfama."}] }, { title: "Beaches", img: "https://images.unsplash.com/photo-1589877814089-4d2434432617?q=80&w=2070", desc: "Algarve", items: [{title:"Algarve", img:"https://images.unsplash.com/photo-1629813134371-332e18512140?q=80&w=2070", desc:"Caves", content:"ITINERARY: ALGARVE\n\nDay 1: Benagil Cave."}] }, { title: "Islands", img: "https://images.unsplash.com/photo-1496245350849-06385df988d8?q=80&w=2070", desc: "Madeira", items: [{title:"Madeira", img:"https://images.unsplash.com/photo-1496245350849-06385df988d8?q=80&w=2070", desc:"Nature", content:"ITINERARY: MADEIRA\n\nDay 1: Funchal."}] }, { title: "History", img: "https://images.unsplash.com/photo-1580236162386-d24b61138243?q=80&w=2070", desc: "Sintra", items: [{title:"Sintra", img:"https://images.unsplash.com/photo-1580236162386-d24b61138243?q=80&w=2070", desc:"Palaces", content:"ITINERARY: SINTRA\n\nDay 1: Pena Palace."}] } ], blog: [{title: "Lisbon Guide", date: "City", img: "https://images.unsplash.com/photo-1592345279419-959d784e8aad?q=80&w=2070"}] },
-            greece: { accent: "#0D5EAF", hero: [{ title: "Aegean Blue", desc: "Gods & Islands", img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=2069" }], tourCategories: [ { title: "Cyclades", img: "https://images.unsplash.com/photo-1613395877344-13d4c79e4284?q=80&w=2070", desc: "Santorini", items: [{title:"Santorini", img:"https://images.unsplash.com/photo-1613395877344-13d4c79e4284?q=80&w=2070", desc:"Sunset", content:"ITINERARY: SANTORINI\n\nDay 1: Oia."}] }, { title: "History", img: "https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=2070", desc: "Athens", items: [{title:"Athens", img:"https://images.unsplash.com/photo-1555993539-1732b0258235?q=80&w=2070", desc:"Acropolis", content:"ITINERARY: ATHENS\n\nDay 1: Parthenon."}] }, { title: "Ionian", img: "https://images.unsplash.com/photo-1589552148408-41076b6b71f5?q=80&w=2070", desc: "Zakynthos", items: [{title:"Zakynthos", img:"https://images.unsplash.com/photo-1589552148408-41076b6b71f5?q=80&w=2070", desc:"Shipwreck", content:"ITINERARY: ZAKYNTHOS\n\nDay 1: Navagio Beach."}] }, { title: "Crete", img: "https://images.unsplash.com/photo-1555319176-068305c74381?q=80&w=2070", desc: "Big Island", items: [{title:"Crete", img:"https://images.unsplash.com/photo-1555319176-068305c74381?q=80&w=2070", desc:"Knossos", content:"ITINERARY: CRETE\n\nDay 1: Palace."}] } ], blog: [{title: "Greek Food", date: "Food", img: "https://images.unsplash.com/photo-1601581875309-fafbf2d3ed92?q=80&w=2070"}] },
-            germany: { accent: "#DD0000", hero: [{ title: "Heart of Europe", desc: "History & Nature", img: "https://images.unsplash.com/photo-1467269204594-9661b133dd2b?q=80&w=2070" }], tourCategories: [ { title: "Bavaria", img: "https://images.unsplash.com/photo-1467269204594-9661b133dd2b?q=80&w=2070", desc: "Castles", items: [{title:"Neuschwanstein", img:"https://images.unsplash.com/photo-1534068590799-09895a701e3e?q=80&w=2070", desc:"Fairytale", content:"ITINERARY: BAVARIA\n\nDay 1: Castle Tour."}] }, { title: "Berlin", img: "https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070", desc: "History", items: [{title:"Berlin", img:"https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070", desc:"Wall", content:"ITINERARY: BERLIN\n\nDay 1: The Wall."}] }, { title: "Rhine", img: "https://images.unsplash.com/photo-1522964789503-4f1144df3c51?q=80&w=2070", desc: "Cruise", items: [{title:"River Cruise", img:"https://images.unsplash.com/photo-1522964789503-4f1144df3c51?q=80&w=2070", desc:"Wine", content:"ITINERARY: RHINE\n\nDay 1: Boat Trip."}] }, { title: "Nature", img: "https://images.unsplash.com/photo-1516966006083-b3d27744a6b9?q=80&w=2070", desc: "Black Forest", items: [{title:"Black Forest", img:"https://images.unsplash.com/photo-1516966006083-b3d27744a6b9?q=80&w=2070", desc:"Hiking", content:"ITINERARY: FOREST\n\nDay 1: Hike."}] } ], blog: [{title: "Berlin Guide", date: "City", img: "https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=2070"}] },
-            iceland: { accent: "#0085CA", hero: [{ title: "Land of Fire", desc: "Ice & Magma", img: "https://images.unsplash.com/photo-1476610182048-b716b8518aae?q=80&w=2159" }], tourCategories: [ { title: "Golden Circle", img: "https://images.unsplash.com/photo-1504829857797-ddff29c27927?q=80&w=2070", desc: "Classic", items: [{title:"Golden Circle", img:"https://images.unsplash.com/photo-1504829857797-ddff29c27927?q=80&w=2070", desc:"Geysir", content:"ITINERARY: GOLDEN CIRCLE\n\nDay 1: Geysir."}] }, { title: "South Coast", img: "https://images.unsplash.com/photo-1526958097901-5e6d742d3371?q=80&w=2070", desc: "Waterfalls", items: [{title:"South Coast", img:"https://images.unsplash.com/photo-1526958097901-5e6d742d3371?q=80&w=2070", desc:"Vik", content:"ITINERARY: SOUTH COAST\n\nDay 1: Waterfalls."}] }, { title: "Aurora", img: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070", desc: "Northern Lights", items: [{title:"Aurora Hunt", img:"https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070", desc:"Night Tour", content:"ITINERARY: AURORA\n\nDay 1: Jeep Tour."}] }, { title: "Highlands", img: "https://images.unsplash.com/photo-1499638673689-79a0b5115d87?q=80&w=2070", desc: "Off-road", items: [{title:"Highlands", img:"https://images.unsplash.com/photo-1499638673689-79a0b5115d87?q=80&w=2070", desc:"Hiking", content:"ITINERARY: HIGHLANDS\n\nDay 1: Hike."}] } ], blog: [{title: "Iceland Packing", date: "Tips", img: "https://images.unsplash.com/photo-1476610182048-b716b8518aae?q=80&w=2159"}] },
-            norway: { accent: "#BA0C2F", hero: [{ title: "Fjord Kingdom", desc: "Nature's Masterpiece", img: "https://images.unsplash.com/photo-1520636969974-63415420e39d?q=80&w=2070" }], tourCategories: [ { title: "Fjords", img: "https://images.unsplash.com/photo-1506701168343-4cc66503c512?q=80&w=2070", desc: "Cruises", items: [{title:"Fjord Cruise", img:"https://images.unsplash.com/photo-1506701168343-4cc66503c512?q=80&w=2070", desc:"Boat", content:"ITINERARY: FJORDS\n\nDay 1: Cruise."}] }, { title: "Arctic", img: "https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?q=80&w=2070", desc: "Lofoten", items: [{title:"Lofoten", img:"https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?q=80&w=2070", desc:"Islands", content:"ITINERARY: LOFOTEN\n\nDay 1: Fishing Village."}] }, { title: "Hiking", img: "https://images.unsplash.com/photo-1500569410637-d626dc52d62e?q=80&w=2070", desc: "Trolltunga", items: [{title:"Trolltunga", img:"https://images.unsplash.com/photo-1500569410637-d626dc52d62e?q=80&w=2070", desc:"Hike", content:"ITINERARY: HIKE\n\nDay 1: Long Hike."}] }, { title: "Cities", img: "https://images.unsplash.com/photo-1590940207687-4003eb624f6f?q=80&w=2070", desc: "Oslo", items: [{title:"Oslo", img:"https://images.unsplash.com/photo-1590940207687-4003eb624f6f?q=80&w=2070", desc:"Museums", content:"ITINERARY: OSLO\n\nDay 1: Opera."}] } ], blog: [{title: "Norway Roadtrip", date: "Guide", img: "https://images.unsplash.com/photo-1520636969974-63415420e39d?q=80&w=2070"}] }
+            ka: {
+                nav_tours: "ტურები",
+                nav_services: "სერვისები",
+                nav_blog: "ბლოგი",
+                nav_about: "ჩვენ შესახებ",
+                section_travel_title: "გამორჩეული გამოცდილება",
+                section_travel_desc: "აღმოაჩინეთ კავკასიის უნიკალური რეგიონები ჩვენი სპეციალური მარშრუტებით.",
+                section_services_title: "ჩვენი სერვისები",
+                section_services_desc: "პროფესიონალური ლოჯისტიკური მხარდაჭერა სამედიცინო, კორპორატიული და VIP კლიენტებისთვის.",
+                section_blog_title: "ჟურნალი",
+                section_blog_desc: "სიახლეები, გიდები და ამბები ჩვენი გუნდისგან.",
+                btn_details: "დეტალების ნახვა",
+                btn_read: "სტატიის წაკითხვა",
+                btn_book: "დაჯავშნა",
+                filter_all: "ყველა"
+            }
         };
 
-        // --- LOGIC ---
-        let currentKey = 'world';
+        const config = {
+            whatsapp: "995591705710", 
 
-        function getCountryData(key) {
-            let data = database[key];
-            if (!data) return database['world']; 
-            if (!data.tourCategories) data.tourCategories = database['world'].tourCategories;
-            if (!data.blog) data.blog = database['world'].blog;
-            return data;
+            // 1. HERO SLIDES
+            heroSlides: [
+                { 
+                    title: { en: "The Heart of the Caucasus", ka: "კავკასიის გული" },
+                    desc: { en: "Discover 8,000 years of history.", ka: "აღმოაჩინეთ 8,000 წლოვანი ისტორია." },
+                    img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?q=80&w=2070", 
+                    fullText: { en: "Experience the full breadth of Georgia...", ka: "გამოიცანით საქართველოს სრული მშვენება..." }
+                },
+                { 
+                    title: { en: "Winter in Gudauri", ka: "ზამთარი გუდაურში" },
+                    desc: { en: "Premium Ski Packages", ka: "პრემიუმ სათხილამურო პაკეტები" },
+                    img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2070",
+                    fullText: { en: "Our Gudauri ski package...", ka: "ჩვენი გუდაურის სათხილამურო პაკეტი..." }
+                },
+                { 
+                    title: { en: "VIP Lifestyle", ka: "VIP ცხოვრების სტილი" },
+                    desc: { en: "Yachts, Casinos & Private Jets", ka: "იახტები, კაზინოები და კერძო თვითმფრინავები" },
+                    img: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=2070",
+                    fullText: { en: "Join our exclusive Junket...", ka: "შემოუერთდით ჩვენს ექსკლუზიურ ჯანკეტ..." }
+                }
+            ],
+
+            // 2. TRAVEL GRID (MULTI-TAG SUPPORT)
+            travelCards: [
+                { 
+                    title: { en: "Adventure", ka: "თავგადასავალი" }, 
+                    desc: { en: "Hiking & Rafting", ka: "ლაშქრობა და რაფტინგი" }, 
+                    img: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2073", 
+                    tags: { en: ["Active", "Nature"], ka: ["აქტიური", "ბუნება"] },
+                    subItems: [
+                        { title: "Kazbegi Hiking Day", desc: "Gergeti Church & Gveleti Waterfall hike.", details: "A full day expedition to the foot of Mt. Kazbek. Includes 4x4 transport, guided hike to Gergeti Trinity Church, and a picnic at Gveleti Waterfall." },
+                        { title: "Rafting on Aragvi", desc: "White water rafting with professional instructors.", details: "Adrenaline-filled rafting on the Aragvi river. Includes safety gear, certified instructor, and a traditional Georgian BBQ lunch after the ride." },
+                        { title: "Martvili Canyon", desc: "Boat ride through the emerald canyon.", details: "Explore the stunning Martvili Canyon by boat. Swim in crystal clear waters and visit the nearby Okatse Canyon skywalk." }
+                    ]
+                },
+                { 
+                    title: { en: "Luxury & Leisure", ka: "ფუფუნება და დასვენება" }, 
+                    desc: { en: "5-Star Resorts", ka: "5-ვარსკვლავიანი კურორტები" }, 
+                    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", 
+                    tags: { en: ["Relax", "Luxury"], ka: ["რელაქსი", "ლუქსი"] },
+                    subItems: [
+                        { title: "Tsinandali Estate", desc: "Weekend at Radisson Collection. Wine & Spa.", details: "Stay at the historic Tsinandali Estate. Includes tour of Prince Chavchavadze's museum, private wine tasting, and access to the infinity pool." },
+                        { title: "Lopota Lake Resort", desc: "Family relaxation, pools, and horse riding.", details: "A perfect getaway in Kakheti. All-inclusive stay with 3 meals, spa access, horse riding, and tennis courts surrounded by mountains." },
+                        { title: "Rooms Hotel Kazbegi", desc: "The most famous mountain view terrace.", details: "Iconic design hotel facing Mt. Kazbek. Package includes room with view, buffet breakfast, and dinner on the famous terrace." }
+                    ]
+                },
+                { 
+                    title: { en: "Wine Route", ka: "ღვინის გზა" }, 
+                    desc: { en: "Qvevri Tastings", ka: "ქვევრის დეგუსტაცია" }, 
+                    img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", 
+                    tags: { en: ["Culture", "Wine"], ka: ["კულტურა", "ღვინო"] },
+                    subItems: [
+                        { title: "8000 Vintages Tour", desc: "Visit Signagi and Bodbe Monastery.", details: "A journey through the 'City of Love' Signagi. Visit Bodbe Monastery and taste organic wines at Okro's Wines overlooking the Alazani Valley." },
+                        { title: "Qvevri Masterclass", desc: "Learn traditional winemaking at Ikalto.", details: "Visit the ancient Ikalto Academy. Participate in a Qvevri opening ceremony and learn to make Churchkhela and Khinkali." },
+                        { title: "Chateau Mukhrani", desc: "Royal estate tour with premium wine tasting.", details: "Experience the royal history of the Bagrationi dynasty. Tour the castle, vineyards, and enjoy a premium tasting of 5 wines." }
+                    ]
+                },
+                { 
+                    title: { en: "Casino & Nightlife", ka: "კაზინო და ღამის ცხოვრება" }, 
+                    desc: { en: "VIP Access", ka: "VIP წვდომა" }, 
+                    img: "https://images.unsplash.com/photo-1605870445919-838d190e8e1b?q=80&w=2070", 
+                    tags: { en: ["VIP", "Nightlife"], ka: ["VIP", "გართობა"] },
+                    subItems: [
+                        { title: "Tbilisi Poker Tour", desc: "Access to Shangri La & Ambassador VIP rooms.", details: "Exclusive entry to high-stakes tables. Complimentary drinks and transport included." },
+                        { title: "Batumi Junket", desc: "Eclipse Casino Weekend. Flight & Hotel Comped.", details: "For qualified players: Free flight, 5-star accommodation, and airport transfers. Minimum deposit required." },
+                        { title: "Private Club Hosting", desc: "Table reservations at top venues.", details: "Skip the line at Bassiani, Khidi, or noble Savage. Private table booking with bottle service and security." }
+                    ]
+                }
+            ],
+
+            // 3. SERVICES
+            servicesCards: [
+                { 
+                    title: { en: "Medical Tourism", ka: "სამედიცინო" }, 
+                    desc: { en: "Wellbeing & Health", ka: "ჯანმრთელობა" }, 
+                    img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070", 
+                    subItems: [
+                        { title: "Hair Transplantation", desc: "FUE/DHI Method. 3 Days.", details: "World-class hair transplant using FUE method. Package includes procedure, 2 nights hotel, and airport transfers. 100% painless." },
+                        { title: "Dental Tourism", desc: "Hollywood Smile Veneers & Implants.", details: "Save 70% on dental work compared to EU/US. Zirconia crowns, implants, and veneers done by top specialists in 5-7 days." },
+                        { title: "Balneological Spa", desc: "Sulfur bath recovery & massage.", details: "Post-treatment recovery programs in Tbilisi Balneological Resort. Sulfur baths, mud wraps, and therapeutic massage." }
+                    ]
+                },
+                { 
+                    title: { en: "MICE & Corporate", ka: "MICE" }, 
+                    desc: { en: "Events & Conferences", ka: "ღონისძიებები" }, 
+                    img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069", 
+                    subItems: [
+                        { title: "Corporate Retreats", desc: "Team building in Gudauri or Batumi.", details: "Organized team-building activities: Jeep tours, cooking classes, and conference facilities in luxury hotels." },
+                        { title: "Conference Management", desc: "Hall booking at Pullman or Sheraton.", details: "Full technical support for your conference: Sound, light, translation booths, and catering coffee breaks." },
+                        { title: "Business Dinner", desc: "Arranging gala dinners with folk shows.", details: "Impress your partners with a Supra (feast) featuring polyphonic singing and traditional dancers at a top restaurant." }
+                    ]
+                },
+                { 
+                    title: { en: "Business Opportunities", ka: "ბიზნეს შესაძლებლობები" }, 
+                    desc: { en: "Investment & Partners", ka: "ინვესტიციები" }, 
+                    img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070", 
+                    subItems: [
+                        { title: "Company Registration", desc: "Fast-track business setup.", details: "Register your LLC in Georgia in 1 day. We provide legal address, translator, and bank account opening assistance." },
+                        { title: "Real Estate Tour", desc: "Investment property viewing.", details: "Guided tour of high-ROI properties in Tbilisi and Batumi. Consultation with legal experts on residency through investment." },
+                        { title: "B2B Matchmaking", desc: "Finding reliable local partners.", details: "We connect you with verified suppliers, distributors, or partners in your specific industry sector." }
+                    ]
+                },
+                { 
+                    title: { en: "Guides & Transport", ka: "გიდები და ტრანსპორტი" }, 
+                    desc: { en: "Logistics", ka: "ლოჯისტიკა" }, 
+                    img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", 
+                    subItems: [
+                        { title: "Private Chauffeur", desc: "Mercedes S-Class or V-Class Minivan.", details: "Rent a premium vehicle with a professional, English-speaking driver for city or cross-country travel. Daily rates available." },
+                        { title: "Certified Guides", desc: "English, Russian, or Arabic speaking.", details: "Hire a licensed guide who specializes in history, wine, or culture to make your trip truly educational." },
+                        { title: "Airport Fast Track", desc: "VIP meeting at the aircraft door.", details: "Skip the lines. Personal assistant meets you at the plane, handles passport control, and escorts you to your car." }
+                    ]
+                }
+            ],
+
+            // 4. BLOG
+            blogPosts: [
+                { title: { en: "Vineyards of Kakheti", ka: "კახეთის ვენახები" }, date: { en: "Oct 2025", ka: "ოქტ 2025" }, img: "https://images.unsplash.com/photo-1566346547477-173084076792?q=80&w=2070", text: { en: "A journey...", ka: "მოგზაურობა..." } },
+                { title: { en: "Medical Excellence", ka: "სამედიცინო ხარისხი" }, date: { en: "Sep 2025", ka: "სექ 2025" }, img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053", text: { en: "Why Georgia...", ka: "რატომ საქართველო..." } },
+                { title: { en: "Ski Season Guide", ka: "სათხილამურო სეზონი" }, date: { en: "Aug 2025", ka: "აგვ 2025" }, img: "https://images.unsplash.com/photo-1610198871574-53537a702467?q=80&w=2070", text: { en: "Everything you need...", ka: "ყველაფერი რაც გჭირდებათ..." } },
+                { title: { en: "Tbilisi Nightlife", ka: "თბილისის ღამის ცხოვრება" }, date: { en: "July 2025", ka: "ივლისი 2025" }, img: "https://images.unsplash.com/photo-1555992336-03a2316dbbb3?q=80&w=2064", text: { en: "Best clubs...", ka: "საუკეთესო კლუბები..." } }
+            ]
+        };
+
+        /* --- LOGIC ENGINE --- */
+        function toggleLang() {
+            setLanguage(currentLang === 'en' ? 'ka' : 'en');
         }
 
-        const ribbon = document.getElementById('destRibbon');
-        const matrix = document.getElementById('matrixGrid');
-        const countries = ['italy', 'france', 'spain', 'portugal', 'greece', 'germany', 'iceland', 'norway'];
-
-        countries.forEach(key => {
-            const btn = document.createElement('button');
-            btn.className = 'stream-btn';
-            btn.innerText = key.toUpperCase();
-            btn.onclick = () => loadCountry(key);
-            btn.setAttribute('data-key', key);
-            ribbon.appendChild(btn);
-
-            const item = document.createElement('div');
-            item.className = 'matrix-item';
-            item.innerText = key.charAt(0).toUpperCase() + key.slice(1);
-            item.onclick = () => { loadCountry(key); toggleMatrix(); };
-            matrix.appendChild(item);
-        });
-
-        function toggleMatrix() { document.getElementById('matrixOverlay').classList.toggle('active'); }
-
-        function loadCountry(key) {
-            currentKey = key;
-            const data = getCountryData(key);
-
-            document.documentElement.style.setProperty('--accent', data.accent || '#006994');
-            document.querySelector('.logo-sub').innerText = key.toUpperCase();
-            document.querySelector('.logo-sub').style.color = data.accent || '#006994';
-
-            document.querySelectorAll('.stream-btn').forEach(b => {
-                b.classList.toggle('active', b.getAttribute('data-key') === key);
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            document.getElementById('langBtn').innerText = lang === 'en' ? '🇺🇸' : '🇬🇪';
+            
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if(translations[lang][key]) el.innerText = translations[lang][key];
             });
 
-            renderHero(data.hero);
-            renderCategories('toursGrid', data.tourCategories, 'tours');
-            renderCategories('servicesGrid', serviceCategories, 'services');
-            renderBlog(data.blog);
-            window.scrollTo(0,0);
+            init();
         }
 
-        function renderHero(slides) {
-            const track = document.getElementById('heroTrack');
-            track.innerHTML = '';
+        /* FILTER LOGIC */
+        let activeFilter = 'All';
 
-            // --- NEW HOLOGRAPHIC MAP VIEW FOR WORLD ---
-            if (currentKey === 'world') {
-                const mapDiv = document.createElement('div');
-                mapDiv.className = 'map-hero';
-                
-                // Using a dark, high-contrast map base
-                const mapHtml = `
-                    <img src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?q=80&w=2574" class="map-bg-img">
-                    <div class="map-overlay-container">
-                        
-                        <div class="map-region" style="top: 68%; left: 53%;" onclick="loadCountry('italy')">
-                            <div class="region-glow"></div><div class="region-label">Italy</div>
-                        </div>
-                        <div class="map-region" style="top: 62%; left: 48%;" onclick="loadCountry('france')">
-                            <div class="region-glow"></div><div class="region-label">France</div>
-                        </div>
-                        <div class="map-region" style="top: 72%; left: 42%;" onclick="loadCountry('spain')">
-                            <div class="region-glow"></div><div class="region-label">Spain</div>
-                        </div>
-                        <div class="map-region" style="top: 73%; left: 38%;" onclick="loadCountry('portugal')">
-                            <div class="region-glow"></div><div class="region-label">Portugal</div>
-                        </div>
-                         <div class="map-region" style="top: 75%; left: 60%;" onclick="loadCountry('greece')">
-                            <div class="region-glow"></div><div class="region-label">Greece</div>
-                        </div>
-                        <div class="map-region" style="top: 55%; left: 53%;" onclick="loadCountry('germany')">
-                            <div class="region-glow"></div><div class="region-label">Germany</div>
-                        </div>
-                        <div class="map-region" style="top: 35%; left: 35%;" onclick="loadCountry('iceland')">
-                            <div class="region-glow"></div><div class="region-label">Iceland</div>
-                        </div>
-                        <div class="map-region" style="top: 40%; left: 55%;" onclick="loadCountry('norway')">
-                            <div class="region-glow"></div><div class="region-label">Norway</div>
-                        </div>
+        function initFilters() {
+            const container = document.getElementById('travelFilters');
+            container.innerHTML = '';
+            
+            // 1. Collect all tags
+            let allTags = new Set();
+            config.travelCards.forEach(card => {
+                if(card.tags && card.tags[currentLang]) {
+                    card.tags[currentLang].forEach(tag => allTags.add(tag));
+                }
+            });
 
-                        <div style="position:absolute; bottom:10%; width:100%; text-align:center; pointer-events:none;">
-                            <h1 style="font-family:'Cinzel'; font-size:3rem; color:white; text-shadow:0 0 20px rgba(197, 160, 89, 0.8);">NEXT STOP: WORLD</h1>
-                        </div>
-                    </div>
-                `;
-                mapDiv.innerHTML = mapHtml;
-                track.appendChild(mapDiv);
-                return;
-            }
+            // 2. Create "All" Button
+            const allBtn = document.createElement('button');
+            allBtn.className = `filter-btn ${activeFilter === 'All' ? 'active' : ''}`;
+            allBtn.innerText = translations[currentLang].filter_all;
+            allBtn.onclick = () => filterGrid('All');
+            container.appendChild(allBtn);
 
-            // --- SLIDER FOR COUNTRIES ---
-            slides.forEach((slide, index) => {
-                const div = document.createElement('div');
-                div.className = `hero-slide ${index===0?'active':''}`;
-                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title}</h2><button class="slide-btn">Explore</button></div>`;
-                track.appendChild(div);
+            // 3. Create Category Buttons
+            allTags.forEach(tag => {
+                const btn = document.createElement('button');
+                btn.className = `filter-btn ${activeFilter === tag ? 'active' : ''}`;
+                btn.innerText = tag;
+                btn.onclick = () => filterGrid(tag);
+                container.appendChild(btn);
             });
         }
 
-        function renderCategories(gridId, categories, type) {
-            const grid = document.getElementById(gridId);
+        function filterGrid(tag) {
+            activeFilter = tag;
+            const grid = document.getElementById('travelGrid');
             grid.innerHTML = '';
-            document.getElementById(type + 'Back').classList.remove('visible');
-            document.getElementById(type + 'Title').innerText = type === 'tours' ? 'Curated Experiences' : 'Services';
-            document.getElementById(type + 'Desc').style.display = 'block';
+            
+            // Update Button Visuals
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText === tag || (tag === 'All' && btn.innerText === translations[currentLang].filter_all)) {
+                    btn.classList.add('active');
+                }
+            });
 
-            categories.forEach((cat, index) => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `<img src="${cat.img}" class="card-bg"><div class="card-overlay"><h3>${cat.title}</h3><p>${cat.desc}</p></div>`;
-                card.onclick = () => showSubItems(gridId, cat.items, cat.title, type);
-                grid.appendChild(card);
+            // Filter Logic
+            config.travelCards.forEach(item => {
+                const itemTags = item.tags[currentLang];
+                if (tag === 'All' || itemTags.includes(tag)) {
+                    grid.appendChild(createCard(item, 'card'));
+                }
             });
         }
 
-        function showSubItems(gridId, items, catTitle, type) {
-            const grid = document.getElementById(gridId);
-            grid.innerHTML = '';
-            document.getElementById(type + 'Back').classList.add('visible');
-            document.getElementById(type + 'Title').innerText = catTitle;
-            document.getElementById(type + 'Desc').style.display = 'none';
+        let currentSlide = 0;
+        let autoPlayTimer;
+        let barAnimTimer;
+        const SLIDE_DURATION = 10000; 
 
-            items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `<img src="${item.img}" class="card-bg"><div class="card-overlay"><h3>${item.title}</h3><p>${item.desc}</p></div>`;
-                card.onclick = () => openDetail(item.title, item.content, item.img);
-                grid.appendChild(card);
+        function init() {
+            document.querySelectorAll('.wa-link').forEach(a => { if(!a.classList.contains('modal-btn')) a.href = `https://wa.me/${config.whatsapp}`; });
+            
+            const heroTrack = document.getElementById('heroTrack');
+            const progContainer = document.getElementById('progressContainer');
+            heroTrack.innerHTML = ''; progContainer.innerHTML = '';
+            
+            config.heroSlides.forEach((slide, index) => {
+                const div = document.createElement('div'); div.className = 'hero-slide';
+                if(index === 0) div.classList.add('active');
+                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title[currentLang]}</h2><p class="slide-desc">${slide.desc[currentLang]}</p><button class="slide-btn" onclick="openModal('${slide.title[currentLang]}', null, '${slide.img}', 'hero', '${slide.fullText[currentLang]}')">${translations[currentLang].btn_details}</button></div>`;
+                heroTrack.appendChild(div);
+                const bar = document.createElement('div'); bar.className = 'progress-bar';
+                bar.innerHTML = `<div class="progress-fill" id="bar-${index}"></div>`;
+                progContainer.appendChild(bar);
             });
+
+            // Initialize Filters & Grid
+            initFilters();
+            filterGrid('All'); // Initial Render
+
+            const servicesGrid = document.getElementById('servicesGrid'); servicesGrid.innerHTML = ''; config.servicesCards.forEach(item => servicesGrid.appendChild(createCard(item, 'card')));
+            const blogTrack = document.getElementById('blogTrack'); blogTrack.innerHTML = ''; config.blogPosts.forEach(item => blogTrack.appendChild(createCard(item, 'blog')));
+            
+            clearTimeout(autoPlayTimer);
+            startStoryMode();
         }
 
-        function resetGrid(type) {
-            if (type === 'tours') {
-                const data = getCountryData(currentKey);
-                renderCategories('toursGrid', data.tourCategories, 'tours');
+        function createCard(item, type) {
+            const div = document.createElement('div');
+            div.className = type === 'blog' ? 'blog-card' : 'card';
+            
+            const subContent = type === 'blog' ? item.text[currentLang] : item.subItems;
+            
+            div.onclick = () => openModal(item.title[currentLang], subContent, item.img, type, item.text ? item.text[currentLang] : '');
+            
+            const title = item.title[currentLang];
+            const desc = type === 'blog' ? item.date[currentLang] : item.desc[currentLang];
+            // Show first tag as badge if available
+            const tag = item.tags ? item.tags[currentLang][0] : '';
+
+            if (type === 'blog') {
+                div.innerHTML = `<div class="blog-img-box"><img src="${item.img}" loading="lazy"></div><div class="blog-content"><div class="blog-date">${desc}</div><h4 class="blog-title">${title}</h4><span class="blog-link">${translations[currentLang].btn_read} &rarr;</span></div>`;
             } else {
-                renderCategories('servicesGrid', serviceCategories, 'services');
+                div.innerHTML = `<img src="${item.img}" class="card-bg" loading="lazy"><div class="card-overlay">${tag ? `<span class="card-tag">${tag}</span>` : ''}<h3>${title}</h3><p>${desc}</p></div>`;
             }
+            return div;
         }
 
-        function renderBlog(items) {
-            const track = document.getElementById('blogTrack');
-            track.innerHTML = '';
-            items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'blog-card';
-                card.innerHTML = `<div class="blog-img-box"><img src="${item.img}"></div><div class="blog-content"><div class="blog-date">${item.date}</div><h4 class="blog-title">${item.title}</h4></div>`;
-                track.appendChild(card);
+        function startStoryMode() { showSlide(currentSlide); }
+        function showSlide(index) {
+            const track = document.getElementById('heroTrack'); const slides = track.getElementsByClassName('hero-slide'); const bars = document.querySelectorAll('.progress-fill');
+            if(!slides.length) return;
+            if (index >= slides.length) { currentSlide = 0; resetBars(); index = 0; }
+            track.scrollTo({ left: track.clientWidth * index, behavior: 'smooth' });
+            Array.from(slides).forEach(s => s.classList.remove('active')); slides[index].classList.add('active');
+            bars.forEach((bar, idx) => {
+                bar.classList.remove('active'); bar.style.transition = 'none';
+                if (idx < index) { bar.style.width = '100%'; } else if (idx === index) { bar.style.width = '0%'; setTimeout(() => { bar.style.transition = `width 5000ms linear`; bar.style.width = '100%'; }, 50); } else { bar.style.width = '0%'; }
             });
+            clearTimeout(autoPlayTimer); autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, 5000);
+        }
+        function resetBars() { document.querySelectorAll('.progress-fill').forEach(bar => { bar.style.transition = 'none'; bar.style.width = '0%'; }); }
+        function manualSlide(dir) { currentSlide += dir; showSlide(currentSlide); }
+
+        /* MODAL ENGINE (DEEP DIVE) */
+        const modal = document.getElementById('detailModal'); 
+        const modalImg = document.getElementById('modalImg'); 
+        const modalTitle = document.getElementById('modalTitle'); 
+        const modalListView = document.getElementById('modalListView');
+        const modalList = document.getElementById('modalList');
+        const modalDetailView = document.getElementById('modalDetailView');
+        const detailTitle = document.getElementById('detailTitle');
+        const detailText = document.getElementById('detailText');
+        const detailBtn = document.getElementById('detailBtn');
+
+        function openModal(title, content, img, type, textContent) { 
+            modalImg.src = img; 
+            
+            // State 1: Blog or Hero (Just Text)
+            if (type === 'blog' || type === 'hero') {
+                modalTitle.innerText = title;
+                modalList.innerHTML = `<div class="modal-text">${textContent || content}</div>` + 
+                    (type === 'hero' ? `<a href="https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${title}" class="modal-btn wa-link">Contact Us</a>` : '');
+                modalListView.style.display = 'block';
+                modalDetailView.style.display = 'none';
+            } 
+            // State 2: Category List (Travel/Service) with DEEP DIVE
+            else if (Array.isArray(content)) {
+                modalTitle.innerText = title;
+                modalList.innerHTML = '';
+                content.forEach(sub => {
+                    const item = document.createElement('div');
+                    item.className = 'modal-item';
+                    item.onclick = () => showDetail(sub, title);
+                    item.innerHTML = `
+                        <div>
+                            <div class="modal-item-title">${sub.title}</div>
+                            <div class="modal-item-desc">${sub.desc}</div>
+                        </div>
+                        <div class="modal-item-arrow">&rarr;</div>
+                    `;
+                    modalList.appendChild(item);
+                });
+                modalListView.style.display = 'block';
+                modalDetailView.style.display = 'none';
+            }
+            modal.classList.add('active'); 
         }
 
-        const modal = document.getElementById('detailModal');
-        function openDetail(title, content, img) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalText').innerText = content;
-            document.getElementById('modalImg').src = img;
-            document.getElementById('quoteBtn').href = `https://wa.me/995591705710?text=I am interested in ${title}`;
-            modal.classList.add('active');
+        function showDetail(subItem, parentTitle) {
+            modalListView.style.display = 'none';
+            modalDetailView.style.display = 'block';
+            
+            detailTitle.innerText = subItem.title;
+            detailText.innerText = subItem.details;
+            detailBtn.href = `https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${parentTitle} - ${subItem.title}`;
         }
-        function closeDetail() { modal.classList.remove('active'); }
 
-        loadCountry('world');
+        function showList() {
+            modalListView.style.display = 'block';
+            modalDetailView.style.display = 'none';
+        }
+        
+        function closeModal() { modal.classList.remove('active'); }
+        modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+        
+        init();
     </script>
 </body>
 </html>
