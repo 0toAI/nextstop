@@ -12,10 +12,6 @@
     <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     
-    <!-- MAP ENGINE (LEAFLET) -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
     <style>
         /* --- 1. DESIGN VARIABLES --- */
         :root {
@@ -101,7 +97,6 @@
         .section-title p { color: #777; font-size: 1rem; max-width: 600px; margin: 0 auto; }
         .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
 
-        /* CARDS */
         .card { background: white; border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); transition: 0.4s; height: 350px; position: relative; cursor: pointer; }
         .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .card-bg { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
@@ -110,17 +105,6 @@
         .card h3 { font-family: 'Cinzel', serif; font-size: 1.4rem; margin-bottom: 8px; color: var(--gold); }
         .card p { font-size: 0.9rem; opacity: 0.8; font-weight: 300; }
         .card-tag { position: absolute; top: 20px; right: 20px; background: var(--terracotta); color: white; padding: 5px 12px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
-
-        /* MAP SECTION */
-        #map-section { height: 600px; width: 100%; margin: 0; padding: 0; position: relative; }
-        #georgia-map { height: 100%; width: 100%; z-index: 1; }
-        .map-overlay-text {
-            position: absolute; top: 50px; left: 5%; z-index: 500;
-            background: rgba(255,255,255,0.9); padding: 30px; border-radius: 4px; max-width: 300px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-left: 5px solid var(--terracotta);
-        }
-        .map-overlay-text h3 { font-family: 'Cinzel', serif; font-size: 1.5rem; margin-bottom: 10px; color: var(--charcoal); }
-        .map-overlay-text p { font-size: 0.9rem; color: #555; }
 
         /* BLOG */
         .blog-scroller { display: flex; overflow-x: auto; gap: 30px; padding: 20px 5px; scroll-snap-type: x mandatory; scrollbar-width: none; }
@@ -133,7 +117,7 @@
         .blog-title { font-size: 1.2rem; margin: 10px 0; color: var(--charcoal); font-family: 'Cinzel', serif; }
         .blog-link { font-size: 0.8rem; text-decoration: underline; color: #888; }
 
-        /* MODAL */
+        /* MODAL - DEEP DIVE */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); opacity: 0; transition: 0.3s; }
         .modal-overlay.active { display: flex; opacity: 1; }
         .modal-content { background: white; width: 90%; max-width: 800px; max-height: 90vh; overflow-y: auto; border-radius: 8px; position: relative; animation: slideUp 0.4s ease; }
@@ -141,8 +125,23 @@
         .modal-body { padding: 40px; }
         .modal-close { position: absolute; top: 20px; right: 20px; background: white; color: black; width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 1.2rem; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .modal-title { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 20px; color: var(--charcoal); }
-        .modal-text { font-size: 1rem; color: #555; margin-bottom: 30px; line-height: 1.8; white-space: pre-wrap; }
-        .modal-btn { background: var(--terracotta); color: white; padding: 15px 30px; font-weight: bold; text-transform: uppercase; display: inline-block; display: flex; align-items: center; justify-content: center; gap: 10px; width: fit-content; }
+        .modal-text { font-size: 1rem; color: #555; margin-bottom: 30px; line-height: 1.8; }
+        
+        /* SUB-ITEMS LIST */
+        .modal-list { list-style: none; margin-top: 20px; }
+        .modal-item { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid #eee; transition: 0.3s; cursor: pointer; border-left: 3px solid transparent; }
+        .modal-item:hover { background: #f9f9f9; border-left: 3px solid var(--terracotta); padding-left: 25px; }
+        .modal-item-title { font-weight: bold; font-size: 1.1rem; color: var(--charcoal); }
+        .modal-item-desc { font-size: 0.85rem; color: #777; margin-top: 5px; }
+        .modal-item-arrow { color: var(--gold); font-weight: bold; }
+
+        /* SUB-ITEM DETAIL VIEW */
+        .detail-view { display: none; animation: fadeIn 0.3s; }
+        .detail-view.active { display: block; }
+        .detail-back { display: inline-flex; align-items: center; gap: 10px; color: #888; cursor: pointer; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; font-size: 0.8rem; }
+        .detail-back:hover { color: var(--terracotta); }
+
+        .modal-btn { background: var(--terracotta); color: white; padding: 15px 30px; font-weight: bold; text-transform: uppercase; display: inline-block; display: flex; align-items: center; justify-content: center; gap: 10px; width: fit-content; margin-top: 20px; }
         
         /* FOOTER */
         footer { background: #111; color: #777; padding: 80px 5%; text-align: center; font-size: 0.9rem; border-top: 5px solid var(--terracotta); }
@@ -157,6 +156,7 @@
         }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
     </style>
 </head>
@@ -175,7 +175,6 @@
         </div>
         <nav class="nav-links">
             <a href="#travel" class="nav-item">Tours</a>
-            <a href="#map-section" class="nav-item">Map</a>
             <a href="#services" class="nav-item">Services</a>
             <a href="#blog" class="nav-item">Blog</a>
             <a href="#footer" class="nav-item">About</a>
@@ -198,15 +197,6 @@
             <p>Explore the distinct regions of the Caucasus through our specialized itineraries.</p>
         </div>
         <div class="grid-4" id="travelGrid"></div>
-    </section>
-
-    <!-- INTERACTIVE MAP SECTION -->
-    <section id="map-section">
-        <div class="map-overlay-text">
-            <h3>Discover Georgia</h3>
-            <p>Click on the markers to explore our key destinations and plan your perfect route.</p>
-        </div>
-        <div id="georgia-map"></div>
     </section>
 
     <section id="services" class="section" style="background-color: #f0f0f0;">
@@ -235,7 +225,7 @@
         
         <div class="footer-social">
             <a href="https://www.instagram.com/holidays_in_georgia2025/" target="_blank" class="social-btn">
-                <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                 Instagram
             </a>
             <a href="#" class="social-btn wa-link">
@@ -249,14 +239,24 @@
         <p style="opacity: 0.5; font-size: 0.7rem;">&copy; 2025 Next Stop Group. All rights reserved.</p>
     </footer>
 
+    <!-- MODAL WITH DEEP DIVE LOGIC -->
     <div class="modal-overlay" id="detailModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeModal()">×</div>
             <img src="" class="modal-header-img" id="modalImg">
-            <div class="modal-body">
+            
+            <!-- 1. LIST VIEW (For Categories) -->
+            <div class="modal-body" id="modalListView">
                 <h2 class="modal-title" id="modalTitle">Title</h2>
-                <div class="modal-text" id="modalText">Description</div>
-                <a href="#" class="modal-btn wa-link">Book This Now</a>
+                <div class="modal-list" id="modalList"></div>
+            </div>
+
+            <!-- 2. DETAIL VIEW (For Specific Tours) -->
+            <div class="modal-body detail-view" id="modalDetailView">
+                <div class="detail-back" onclick="showList()">← Back to Options</div>
+                <h2 class="modal-title" id="detailTitle">Sub Title</h2>
+                <div class="modal-text" id="detailText">Details here...</div>
+                <a href="#" class="modal-btn wa-link" id="detailBtn">Book via WhatsApp</a>
             </div>
         </div>
     </div>
@@ -273,7 +273,7 @@
                 { 
                     title: "The Heart of the Caucasus", 
                     desc: "Discover 8,000 years of history and hospitality.",
-                    // IMAGE: Beautiful Kazbegi Mountain View (Valley)
+                    // Fixed: Mountain Valley (Kazbegi/Gergeti)
                     img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?q=80&w=2070", 
                     fullText: "Experience the full breadth of Georgia. From the ancient streets of Tbilisi to the high peaks of Kazbegi."
                 },
@@ -291,67 +291,95 @@
                 }
             ],
 
-            // 2. TRAVEL GRID
+            // 2. TRAVEL GRID (DEEP DIVE)
             travelCards: [
                 { 
                     title: "Adventure", 
                     desc: "Hiking & Rafting", 
-                    img: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2073", // Hiker at sunset
+                    img: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2073", 
                     tag: "Active", 
-                    text: "Explore the untamed wilderness of Svaneti and Kazbegi with sunset hikes." 
+                    subItems: [
+                        { title: "Kazbegi Hiking Day", desc: "Gergeti Church & Gveleti Waterfall hike.", details: "A full day expedition to the foot of Mt. Kazbek. Includes 4x4 transport, guided hike to Gergeti Trinity Church, and a picnic at Gveleti Waterfall." },
+                        { title: "Rafting on Aragvi", desc: "White water rafting with professional instructors.", details: "Adrenaline-filled rafting on the Aragvi river. Includes safety gear, certified instructor, and a traditional Georgian BBQ lunch after the ride." },
+                        { title: "Martvili Canyon", desc: "Boat ride through the emerald canyon.", details: "Explore the stunning Martvili Canyon by boat. Swim in crystal clear waters and visit the nearby Okatse Canyon skywalk." }
+                    ]
                 },
                 { 
                     title: "Luxury & Leisure", 
                     desc: "5-Star Resorts", 
-                    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", // Luxury Pool
+                    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", 
                     tag: "Relax", 
-                    text: "Stay in Georgia's finest hotels with private pools and spas." 
+                    subItems: [
+                        { title: "Tsinandali Estate", desc: "Weekend at Radisson Collection. Wine & Spa.", details: "Stay at the historic Tsinandali Estate. Includes tour of Prince Chavchavadze's museum, private wine tasting, and access to the infinity pool." },
+                        { title: "Lopota Lake Resort", desc: "Family relaxation, pools, and horse riding.", details: "A perfect getaway in Kakheti. All-inclusive stay with 3 meals, spa access, horse riding, and tennis courts surrounded by mountains." },
+                        { title: "Rooms Hotel Kazbegi", desc: "The most famous mountain view terrace.", details: "Iconic design hotel facing Mt. Kazbek. Package includes room with view, buffet breakfast, and dinner on the famous terrace." }
+                    ]
                 },
                 { 
-                    title: "Wine Route", 
+                    title: "Wine & Gastronomy", 
                     desc: "Qvevri Tastings", 
-                    img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", // Vineyard
+                    img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", 
                     tag: "Culture", 
-                    text: "Visit the cradle of wine in Kakheti. Private tastings." 
+                    subItems: [
+                        { title: "8000 Vintages Tour", desc: "Visit Signagi and Bodbe Monastery.", details: "A journey through the 'City of Love' Signagi. Visit Bodbe Monastery and taste organic wines at Okro's Wines overlooking the Alazani Valley." },
+                        { title: "Qvevri Masterclass", desc: "Learn traditional winemaking at Ikalto.", details: "Visit the ancient Ikalto Academy. Participate in a Qvevri opening ceremony and learn to make Churchkhela and Khinkali." },
+                        { title: "Chateau Mukhrani", desc: "Royal estate tour with premium wine tasting.", details: "Experience the royal history of the Bagrationi dynasty. Tour the castle, vineyards, and enjoy a premium tasting of 5 wines." }
+                    ]
                 },
                 { 
                     title: "Casino & Nightlife", 
                     desc: "VIP Access", 
-                    // IMAGE: Poker Table / Chips (Dark Luxury)
-                    img: "https://images.unsplash.com/photo-1518893063132-36e465be7788?q=80&w=2070", 
+                    img: "https://images.unsplash.com/photo-1605870445919-838d190e8e1b?q=80&w=2070", 
                     tag: "VIP", 
-                    text: "Experience the vibrant nightlife with exclusive club access." 
+                    subItems: [
+                        { title: "Tbilisi Poker Tour", desc: "Access to Shangri La & Ambassador VIP rooms.", details: "Exclusive entry to high-stakes tables. Complimentary drinks and transport included." },
+                        { title: "Batumi Junket", desc: "Eclipse Casino Weekend. Flight & Hotel Comped.", details: "For qualified players: Free flight, 5-star accommodation, and airport transfers. Minimum deposit required." },
+                        { title: "Private Club Hosting", desc: "Table reservations at top venues.", details: "Skip the line at Bassiani, Khidi, or noble Savage. Private table booking with bottle service and security." }
+                    ]
                 }
             ],
 
-            // 3. SERVICES GRID
+            // 3. SERVICES GRID (DEEP DIVE)
             servicesCards: [
                 { 
                     title: "Medical Tourism", 
                     desc: "Wellbeing & Health", 
-                    // IMAGE: Bright, Sunny Luxury Recovery/Spa
                     img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070", 
-                    text: "Top clinics for Hair Transplants and Dental work with spa-like recovery." 
+                    subItems: [
+                        { title: "Hair Transplantation", desc: "FUE/DHI Method. 3 Days.", details: "World-class hair transplant using FUE method. Package includes procedure, 2 nights hotel, and airport transfers. 100% painless." },
+                        { title: "Dental Tourism", desc: "Hollywood Smile Veneers & Implants.", details: "Save 70% on dental work compared to EU/US. Zirconia crowns, implants, and veneers done by top specialists in 5-7 days." },
+                        { title: "Balneological Spa", desc: "Sulfur bath recovery & massage.", details: "Post-treatment recovery programs in Tbilisi Balneological Resort. Sulfur baths, mud wraps, and therapeutic massage." }
+                    ]
                 },
                 { 
                     title: "MICE & Corporate", 
                     desc: "Events & Conferences", 
                     img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069", 
-                    text: "Full logistical support for business delegations." 
+                    subItems: [
+                        { title: "Corporate Retreats", desc: "Team building in Gudauri or Batumi.", details: "Organized team-building activities: Jeep tours, cooking classes, and conference facilities in luxury hotels." },
+                        { title: "Conference Management", desc: "Hall booking at Pullman or Sheraton.", details: "Full technical support for your conference: Sound, light, translation booths, and catering coffee breaks." },
+                        { title: "Business Dinner", desc: "Arranging gala dinners with folk shows.", details: "Impress your partners with a Supra (feast) featuring polyphonic singing and traditional dancers at a top restaurant." }
+                    ]
                 },
                 { 
                     title: "Business Opportunities", 
                     desc: "Investment & Partners", 
-                    // IMAGE: High-Rise Handshake / Deal
                     img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070", 
-                    text: "We facilitate B2B introductions, arrange high-level meetings, and help you find reliable local partners for your ventures in Georgia." 
+                    subItems: [
+                        { title: "Company Registration", desc: "Fast-track business setup.", details: "Register your LLC in Georgia in 1 day. We provide legal address, translator, and bank account opening assistance." },
+                        { title: "Real Estate Tour", desc: "Investment property viewing.", details: "Guided tour of high-ROI properties in Tbilisi and Batumi. Consultation with legal experts on residency through investment." },
+                        { title: "B2B Matchmaking", desc: "Finding reliable local partners.", details: "We connect you with verified suppliers, distributors, or partners in your specific industry sector." }
+                    ]
                 },
                 { 
                     title: "Guides & Transport", 
                     desc: "Logistics & Experts", 
-                    // IMAGE: Chauffeur opening luxury car door
                     img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", 
-                    text: "Seamless travel logistics with luxury vehicles, professional drivers, and certified multilingual guides to ensure a smooth journey." 
+                    subItems: [
+                        { title: "Private Chauffeur", desc: "Mercedes S-Class or V-Class Minivan.", details: "Rent a premium vehicle with a professional, English-speaking driver for city or cross-country travel. Daily rates available." },
+                        { title: "Certified Guides", desc: "English, Russian, or Arabic speaking.", details: "Hire a licensed guide who specializes in history, wine, or culture to make your trip truly educational." },
+                        { title: "Airport Fast Track", desc: "VIP meeting at the aircraft door.", details: "Skip the lines. Personal assistant meets you at the plane, handles passport control, and escorts you to your car." }
+                    ]
                 }
             ],
 
@@ -361,36 +389,26 @@
                     title: "Vineyards of Kakheti", 
                     date: "Oct 2025", 
                     img: "https://images.unsplash.com/photo-1566346547477-173084076792?q=80&w=2070", // Real Vineyard
-                    text: "A journey through the ancient wine region." 
+                    text: "A journey through the ancient wine region. Discover the qvevri method and the best family-owned cellars to visit this autumn." 
                 },
                 { 
                     title: "Medical Excellence", 
                     date: "Sep 2025", 
-                    img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053", // Modern Medical
-                    text: "Why Georgia is the top choice for medical procedures." 
+                    img: "https://images.unsplash.com/photo-1516549655169-df83a0925727?q=80&w=2070", // Modern Medical
+                    text: "Why Georgia is the top choice for medical procedures. High quality, low cost, and no waiting lists for hair and dental work." 
                 },
                 { 
                     title: "Ski Season Guide", 
                     date: "Aug 2025", 
                     img: "https://images.unsplash.com/photo-1610198871574-53537a702467?q=80&w=2070", // Snowy Ski Resort
-                    text: "Everything you need to know about Gudauri this winter." 
+                    text: "Everything you need to know about Gudauri this winter. New ski lifts, best apres-ski spots, and gear rental prices." 
                 },
                 { 
                     title: "Tbilisi Nightlife", 
                     date: "July 2025", 
                     img: "https://images.unsplash.com/photo-1555992336-03a2316dbbb3?q=80&w=2064", // Nightclub vibe
-                    text: "Best clubs and bars in the capital." 
+                    text: "Best clubs and bars in the capital. A guide to the hidden gems of Sololaki and the techno raves of Bassiani." 
                 }
-            ],
-            
-            // 5. MAP MARKERS
-            mapMarkers: [
-                { lat: 41.7151, lng: 44.8271, title: "Tbilisi", desc: "The Capital & Cultural Heart" },
-                { lat: 41.6168, lng: 41.6367, title: "Batumi", desc: "Black Sea Gem" },
-                { lat: 42.6567, lng: 44.6433, title: "Kazbegi", desc: "Mountain Adventure" },
-                { lat: 41.6111, lng: 45.9271, title: "Kakheti", desc: "Wine Region" },
-                { lat: 43.0433, lng: 42.7265, title: "Mestia", desc: "Svaneti Highlands" },
-                { lat: 42.2662, lng: 42.7180, title: "Kutaisi", desc: "Historic Center" }
             ]
         };
 
@@ -402,7 +420,6 @@
 
         function init() {
             updateWaLinks(config.whatsapp);
-            initMap();
             
             // Render Hero
             const heroTrack = document.getElementById('heroTrack');
@@ -412,7 +429,7 @@
                 const div = document.createElement('div');
                 div.className = 'hero-slide';
                 if(index === 0) div.classList.add('active');
-                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title}</h2><p class="slide-desc">${slide.desc}</p><button class="slide-btn" onclick="openModal('${slide.title}', '${slide.fullText}', '${slide.img}')">View Details</button></div>`;
+                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${slide.title}</h2><p class="slide-desc">${slide.desc}</p><button class="slide-btn" onclick="openModal('${slide.title}', null, '${slide.img}', 'hero', '${slide.fullText}')">View Details</button></div>`;
                 heroTrack.appendChild(div);
 
                 const bar = document.createElement('div');
@@ -422,34 +439,11 @@
             });
 
             // Render Grids
-            const travelGrid = document.getElementById('travelGrid'); config.travelCards.forEach(item => travelGrid.appendChild(createCard(item, 'card')));
-            const servicesGrid = document.getElementById('servicesGrid'); config.servicesCards.forEach(item => servicesGrid.appendChild(createCard(item, 'card')));
+            const travelGrid = document.getElementById('travelGrid'); config.travelCards.forEach(item => travelGrid.appendChild(createCard(item, 'travel')));
+            const servicesGrid = document.getElementById('servicesGrid'); config.servicesCards.forEach(item => servicesGrid.appendChild(createCard(item, 'service')));
             const blogTrack = document.getElementById('blogTrack'); config.blogPosts.forEach(item => blogTrack.appendChild(createCard(item, 'blog')));
 
             startStoryMode();
-        }
-        
-        function initMap() {
-            const map = L.map('georgia-map').setView([42.0, 43.5], 7);
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                subdomains: 'abcd',
-                maxZoom: 19
-            }).addTo(map);
-            
-            const icon = L.divIcon({
-                className: 'custom-pin',
-                html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#a84a32" width="32px" height="32px"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`,
-                iconSize: [32, 32],
-                iconAnchor: [16, 32]
-            });
-
-            config.mapMarkers.forEach(m => {
-                const marker = L.marker([m.lat, m.lng], {icon: icon}).addTo(map);
-                marker.on('click', () => {
-                    openModal(m.title, m.desc, "https://images.unsplash.com/photo-1565118531796-763e5082d113?q=80&w=2070"); // Default image for map click
-                });
-            });
         }
 
         function updateWaLinks(number) {
@@ -463,7 +457,11 @@
         function createCard(item, type) {
             const div = document.createElement('div');
             div.className = type === 'blog' ? 'blog-card' : 'card';
-            div.onclick = () => openModal(item.title, item.text, item.img);
+            
+            const subContent = type === 'blog' ? item.text : item.subItems;
+            
+            div.onclick = () => openModal(item.title, subContent, item.img, type, item.text);
+            
             if (type === 'blog') {
                 div.innerHTML = `<div class="blog-img-box"><img src="${item.img}" loading="lazy"></div><div class="blog-content"><div class="blog-date">${item.date}</div><h4 class="blog-title">${item.title}</h4><span class="blog-link">Read Article &rarr;</span></div>`;
             } else {
@@ -504,24 +502,67 @@
 
         function manualSlide(dir) { currentSlide += dir; showSlide(currentSlide); }
 
+        /* MODAL ENGINE (DEEP DIVE) */
         const modal = document.getElementById('detailModal'); 
         const modalImg = document.getElementById('modalImg'); 
         const modalTitle = document.getElementById('modalTitle'); 
-        const modalText = document.getElementById('modalText');
-        const modalBtn = document.querySelector('.modal-btn');
+        const modalListView = document.getElementById('modalListView');
+        const modalList = document.getElementById('modalList');
+        const modalDetailView = document.getElementById('modalDetailView');
+        const detailTitle = document.getElementById('detailTitle');
+        const detailText = document.getElementById('detailText');
+        const detailBtn = document.getElementById('detailBtn');
 
-        function openModal(title, text, img) { 
-            modalTitle.innerText = title; 
-            modalText.innerText = text; 
+        function openModal(title, content, img, type, textContent) { 
             modalImg.src = img; 
-            // Smart WhatsApp Link
-            modalBtn.href = `https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${title}`;
+            
+            // State 1: Blog or Hero (Just Text)
+            if (type === 'blog' || type === 'hero') {
+                modalTitle.innerText = title;
+                modalList.innerHTML = `<div class="modal-text">${textContent || content}</div>` + 
+                    (type === 'hero' ? `<a href="https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${title}" class="modal-btn wa-link">Contact Us</a>` : '');
+                modalListView.style.display = 'block';
+                modalDetailView.style.display = 'none';
+            } 
+            // State 2: Category List (Travel/Service) with DEEP DIVE
+            else if (Array.isArray(content)) {
+                modalTitle.innerText = title;
+                modalList.innerHTML = '';
+                content.forEach(sub => {
+                    const item = document.createElement('div');
+                    item.className = 'modal-item';
+                    item.onclick = () => showDetail(sub, title);
+                    item.innerHTML = `
+                        <div>
+                            <div class="modal-item-title">${sub.title}</div>
+                            <div class="modal-item-desc">${sub.desc}</div>
+                        </div>
+                        <div class="modal-item-arrow">&rarr;</div>
+                    `;
+                    modalList.appendChild(item);
+                });
+                modalListView.style.display = 'block';
+                modalDetailView.style.display = 'none';
+            }
             modal.classList.add('active'); 
+        }
+
+        function showDetail(subItem, parentTitle) {
+            modalListView.style.display = 'none';
+            modalDetailView.style.display = 'block';
+            
+            detailTitle.innerText = subItem.title;
+            detailText.innerText = subItem.details;
+            detailBtn.href = `https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${parentTitle} - ${subItem.title}`;
+        }
+
+        function showList() {
+            modalListView.style.display = 'block';
+            modalDetailView.style.display = 'none';
         }
         
         function closeModal() { modal.classList.remove('active'); }
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
-        function openImage(src) { openModal("Gallery Image", "Next Stop Georgia Gallery", src); }
         
         init();
     </script>
