@@ -92,6 +92,7 @@
         .card p { font-size: 0.9rem; opacity: 0.8; font-weight: 300; }
         .card-tag { position: absolute; top: 20px; right: 20px; background: var(--terracotta); color: white; padding: 5px 12px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
 
+        /* BLOG */
         .blog-scroller { display: flex; overflow-x: auto; gap: 30px; padding: 20px 5px; scroll-snap-type: x mandatory; scrollbar-width: none; }
         .blog-scroller::-webkit-scrollbar { display: none; }
         .blog-card { flex: 0 0 350px; scroll-snap-align: center; background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); transition: 0.3s; cursor: pointer; }
@@ -157,6 +158,7 @@
                 <a href="https://nextstop.com.ge" class="toggle-btn inactive">WORLD</a>
             </div>
         </div>
+        
         <div class="nav-right">
             <nav class="nav-links">
                 <a href="#travel" class="nav-item" data-key="nav_tours">Tours</a>
@@ -217,6 +219,7 @@
         </div>
         <p>Tbilisi, Georgia | <a href="tel:+995591705710" style="color:#aaa;">+995 591 70 57 10</a></p>
         <br>
+        
         <div class="footer-social">
             <a href="https://www.instagram.com/holidays_in_georgia2025/" target="_blank" class="social-btn">
                 <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -380,7 +383,9 @@
                     { title: { en: "Food Tour", ka: "გასტრო ტური" }, desc: { en: "Taste of Tbilisi", ka: "თბილისის გემო" }, img: "https://images.unsplash.com/photo-1573409788406-1a6d54c2866d?q=80&w=2070", tag: { en: "Food", ka: "კვება" },
                       subItems: [{ title: "Dezerter Bazaar", desc: "Market Tour" }, { title: "Cooking Class", desc: "Khinkali Making" }] }
                 ],
-                blog: []
+                blog: [
+                    { title: { en: "Top 5 Restaurants", ka: "ტოპ 5 რესტორანი" }, date: { en: "Guide", ka: "გზამკვლევი" }, img: "https://images.unsplash.com/photo-1603002730629-64df815039c5?q=80&w=2070" }
+                ]
             },
             
             // 3. MTSKHETA-MTIANETI
@@ -539,16 +544,19 @@
         function init() {
             renderRibbon();
             loadRegion(currentKey);
+            
+            // Update WA links
             document.querySelectorAll('.wa-link').forEach(a => { if(!a.classList.contains('modal-btn')) a.href = `https://wa.me/${config.whatsapp}`; });
         }
 
         function renderRibbon() {
             const ribbon = document.getElementById('destRibbon');
             const keys = Object.keys(database);
+            
             ribbon.innerHTML = '';
             
             const labels = {
-                georgia: { en: "🇬🇪 GEORGIA", ka: "🇬🇪 საქართველო" },
+                georgia: { en: "🇬🇪 GEORGIA (ALL)", ka: "🇬🇪 საქართველო" },
                 tbilisi: { en: "TBILISI", ka: "თბილისი" },
                 mtskheta_mtianeti: { en: "MTSKHETA-MTIANETI", ka: "მცხეთა-მთიანეთი" },
                 kakheti: { en: "KAKHETI", ka: "კახეთი" },
@@ -615,10 +623,12 @@
         function renderHero(slides) {
             const track = document.getElementById('heroTrack');
             const progContainer = document.getElementById('progressContainer');
-            track.innerHTML = ''; progContainer.innerHTML = '';
+            track.innerHTML = '';
+            progContainer.innerHTML = '';
             
             slides.forEach((slide, index) => {
-                const div = document.createElement('div'); div.className = 'hero-slide';
+                const div = document.createElement('div');
+                div.className = 'hero-slide';
                 if(index === 0) div.classList.add('active');
                 
                 const title = typeof slide.title === 'object' ? slide.title[currentLang] : slide.title;
@@ -628,21 +638,28 @@
                 div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${title}</h2><p class="slide-desc">${desc}</p><button class="slide-btn" onclick="openModal('${title}', '${fullText || desc}', '${slide.img}')">${translations[currentLang].btn_details}</button></div>`;
                 track.appendChild(div);
 
-                const bar = document.createElement('div'); bar.className = 'progress-bar';
+                const bar = document.createElement('div');
+                bar.className = 'progress-bar';
                 bar.innerHTML = `<div class="progress-fill" id="bar-${index}"></div>`;
                 progContainer.appendChild(bar);
             });
-            currentSlide = 0; startStoryMode();
+            
+            currentSlide = 0;
+            startStoryMode();
         }
 
         function renderGrid(id, items) {
-            const grid = document.getElementById(id); grid.innerHTML = '';
+            const grid = document.getElementById(id);
+            grid.innerHTML = '';
             items.forEach(item => {
-                const card = document.createElement('div'); card.className = 'card';
+                const card = document.createElement('div');
+                card.className = 'card';
                 
                 const title = typeof item.title === 'object' ? item.title[currentLang] : item.title;
                 const desc = typeof item.desc === 'object' ? item.desc[currentLang] : item.desc;
                 const tag = item.tag ? (typeof item.tag === 'object' ? item.tag[currentLang] : item.tag) : '';
+                
+                // Determine if it has subItems or text
                 const subContent = item.subItems ? item.subItems : (item.text ? (typeof item.text === 'object' ? item.text[currentLang] : item.text) : '');
 
                 card.onclick = () => openModal(title, subContent, item.img);
@@ -652,9 +669,11 @@
         }
 
         function renderBlog(items) {
-            const track = document.getElementById('blogTrack'); track.innerHTML = '';
+            const track = document.getElementById('blogTrack');
+            track.innerHTML = '';
             items.forEach(item => {
-                const card = document.createElement('div'); card.className = 'blog-card';
+                const card = document.createElement('div');
+                card.className = 'blog-card';
                 
                 const title = typeof item.title === 'object' ? item.title[currentLang] : item.title;
                 const date = typeof item.date === 'object' ? item.date[currentLang] : item.date;
@@ -664,19 +683,37 @@
             });
         }
 
+        /* STORY ENGINE */
         function startStoryMode() { showSlide(currentSlide); }
         function showSlide(index) {
-            const track = document.getElementById('heroTrack'); if(!track) return;
-            const slides = track.getElementsByClassName('hero-slide'); const bars = document.querySelectorAll('.progress-fill');
+            const track = document.getElementById('heroTrack');
+            if(!track) return;
+            const slides = track.getElementsByClassName('hero-slide');
+            const bars = document.querySelectorAll('.progress-fill');
+            
             if(!slides.length) return;
+
             if (index >= slides.length) { currentSlide = 0; resetBars(); index = 0; }
+            if (index < 0) { currentSlide = slides.length - 1; resetBars(); index = slides.length - 1; }
+
             track.scrollTo({ left: track.clientWidth * index, behavior: 'smooth' });
-            Array.from(slides).forEach(s => s.classList.remove('active')); slides[index].classList.add('active');
+
+            Array.from(slides).forEach(s => s.classList.remove('active'));
+            slides[index].classList.add('active');
+
             bars.forEach((bar, idx) => {
-                bar.classList.remove('active'); bar.style.transition = 'none';
-                if (idx < index) { bar.style.width = '100%'; } else if (idx === index) { bar.style.width = '0%'; setTimeout(() => { bar.style.transition = `width 5000ms linear`; bar.style.width = '100%'; }, 50); } else { bar.style.width = '0%'; }
+                bar.classList.remove('active');
+                bar.style.transition = 'none';
+                if (idx < index) { bar.style.width = '100%'; } 
+                else if (idx === index) { 
+                    bar.style.width = '0%'; 
+                    setTimeout(() => { bar.style.transition = `width 5000ms linear`; bar.style.width = '100%'; }, 50); 
+                } 
+                else { bar.style.width = '0%'; }
             });
-            clearTimeout(autoPlayTimer); autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, 5000);
+
+            clearTimeout(autoPlayTimer);
+            autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, 5000);
         }
         function resetBars() { document.querySelectorAll('.progress-fill').forEach(bar => { bar.style.transition = 'none'; bar.style.width = '0%'; }); }
         function manualSlide(dir) { currentSlide += dir; showSlide(currentSlide); }
@@ -686,10 +723,12 @@
         function openModal(title, content, img) { 
             modalImg.src = img; 
             if (typeof content === 'string' || !content) {
+                // Simple Text Modal (Blog/Hero)
                 modalTitle.innerText = title;
                 modalList.innerHTML = `<div class="modal-text">${content || ""}</div><a href="https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${title}" class="modal-btn wa-link">${translations[currentLang].btn_book}</a>`;
                 modalListView.style.display = 'block'; modalDetailView.style.display = 'none';
             } else if (Array.isArray(content)) {
+                // List Modal (Tours with Sub-items)
                 modalTitle.innerText = title; modalList.innerHTML = '';
                 content.forEach(sub => {
                     const item = document.createElement('div'); item.className = 'modal-item';
