@@ -72,7 +72,7 @@ const config = {
         { 
             title: "Casino & Nightlife", 
             desc: "VIP Access", 
-            img: "https://images.unsplash.com/photo-1605870445919-838d190e8e1b?q=80&w=2070", 
+            img: "https://unsplash.com/photos/a-person-sitting-at-a-table-with-cards-and-chips-LDkm0b4fh48", 
             tag: "VIP", 
             subItems: [
                 { title: "Tbilisi Poker Tour", desc: "Access to Shangri La & Ambassador VIP rooms.", details: "Exclusive entry to high-stakes tables. Complimentary drinks and transport included." },
