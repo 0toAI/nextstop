@@ -11,13 +11,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 1. DESIGN VARIABLES --- */
         :root {
             --bg-warm: #fdfbf7;         
-            --charcoal: #1a1a1a;        
-            --terracotta: #a84a32;      
-            --gold: #c5a059;            
-            --green: #25D366;           
+            --charcoal: #1a1a1a;
+            --terracotta: #a84a32;
+            --gold: #c5a059;
+            --green: #25D366;
             --gray-light: #f4f4f4;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
@@ -32,7 +31,7 @@
         /* HEADER */
         header { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px); padding: 12px 5%; position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
         .header-left { display: flex; align-items: center; gap: 30px; }
-        .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: pointer; }
+        .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: pointer; min-width: 150px; }
         .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; }
         .logo-sub { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--terracotta); letter-spacing: 4px; text-transform: uppercase; margin-left: 2px; transition: color 0.5s; }
 
@@ -42,13 +41,12 @@
         .toggle-btn.inactive:hover { color: var(--terracotta); }
         .dot { color: var(--green); font-size: 0.8rem; animation: pulse 2s infinite; }
 
-        .nav-links { display: flex; gap: 30px; }
-        .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
-        .nav-item:hover { color: var(--terracotta); }
-
         .nav-right { display: flex; gap: 20px; align-items: center; }
         .lang-btn { font-size: 1.2rem; background: none; padding: 5px; border-radius: 4px; }
         .lang-btn:hover { background: rgba(0,0,0,0.05); }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
+        .nav-item:hover { color: var(--terracotta); }
 
         /* HERO WHEEL */
         .hero-wheel { height: 95vh; width: 100%; overflow: hidden; margin-top: 0; background: #000; position: relative; }
@@ -69,13 +67,14 @@
         .arrow { pointer-events: auto; cursor: pointer; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; backdrop-filter: blur(5px); transition: 0.3s; border: 1px solid rgba(255,255,255,0.3); }
         .arrow:hover { background: white; color: black; }
 
-        /* REGION RIBBON */
+        /* REGIONAL RIBBON */
         .ribbon-container { background: white; padding: 15px 5%; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; justify-content: center; }
-        .destination-ribbon { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; padding: 5px; }
+        .destination-ribbon { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding: 5px; max-width: 100%; }
         .destination-ribbon::-webkit-scrollbar { display: none; }
-        .dest-btn { padding: 8px 20px; border-radius: 25px; font-size: 0.75rem; font-weight: 700; color: #999; background: var(--gray-light); transition: 0.3s; cursor: pointer; white-space: nowrap; border: 1px solid transparent; text-transform: uppercase; }
+        .dest-btn { padding: 8px 18px; border-radius: 25px; font-size: 0.7rem; font-weight: 700; color: #999; background: var(--gray-light); transition: 0.3s; cursor: pointer; white-space: nowrap; border: 1px solid transparent; text-transform: uppercase; }
         .dest-btn:hover { background: #ddd; color: var(--charcoal); }
-        .dest-btn.active { background: var(--charcoal); color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateY(-1px); }
+        .dest-btn.active { background: var(--terracotta); color: white; box-shadow: 0 4px 12px rgba(168, 74, 50, 0.3); transform: translateY(-1px); }
+        .dest-btn.geo-main { border: 1px solid var(--terracotta); color: var(--terracotta); background: white; }
 
         /* SECTIONS */
         .section { padding: 100px 5%; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; transition: opacity 0.4s; }
@@ -129,7 +128,6 @@
 
         .modal-btn { background: var(--terracotta); color: white; padding: 15px 30px; font-weight: bold; text-transform: uppercase; display: inline-block; display: flex; align-items: center; justify-content: center; gap: 10px; width: fit-content; margin-top: 20px; }
         
-        /* FOOTER */
         footer { background: #111; color: #777; padding: 80px 5%; text-align: center; font-size: 0.9rem; border-top: 5px solid var(--terracotta); }
         .footer-social { display: flex; justify-content: center; gap: 25px; margin-bottom: 30px; }
         .social-btn { display: flex; align-items: center; gap: 8px; color: white; font-weight: 600; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 30px; }
@@ -138,7 +136,6 @@
 
         @media (max-width: 768px) {
             .nav-links { display: none; } .slide-title { font-size: 2.5rem; } .section { padding: 60px 5%; min-height: auto; } .wheel-arrows { display: none; }
-            .header-left { width: 100%; justify-content: space-between; }
             .footer-social { flex-direction: column; align-items: center; }
         }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -151,7 +148,7 @@
 
     <header>
         <div class="header-left">
-            <div class="logo-container" onclick="location.reload()">
+            <div class="logo-container" onclick="window.scrollTo(0,0)">
                 <span class="logo-main">NEXT STOP</span>
                 <span class="logo-sub" id="logoSub">GEORGIA</span>
             </div>
@@ -160,7 +157,6 @@
                 <a href="https://nextstop.com.ge" class="toggle-btn inactive">WORLD</a>
             </div>
         </div>
-        
         <div class="nav-right">
             <nav class="nav-links">
                 <a href="#travel" class="nav-item" data-key="nav_tours">Tours</a>
@@ -260,7 +256,7 @@
 
     <script>
         /* ============================================================
-           --- YOUR CONTROL PANEL (EDIT HERE) ---
+           --- YOUR CONTROL PANEL (EDIT CONTENT HERE) ---
            ============================================================ */
         
         let currentLang = localStorage.getItem('lang') || 'en';
@@ -302,6 +298,7 @@
 
         const whatsapp = "995591705710";
 
+        // Shared Services for all regions
         const commonServices = [
             { 
                 title: { en: "Medical Tourism", ka: "სამედიცინო ტურიზმი" }, 
@@ -346,6 +343,7 @@
         ];
 
         const database = {
+            // 1. GEORGIA (DEFAULT)
             georgia: {
                 accent: "#a84a32",
                 hero: [
@@ -354,58 +352,22 @@
                     { title: { en: "VIP Lifestyle", ka: "VIP ცხოვრების სტილი" }, desc: { en: "Yachts, Casinos & Private Jets", ka: "იახტები, კაზინოები და კერძო თვითმფრინავები" }, img: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=2070", fullText: { en: "Join our exclusive Junket...", ka: "შემოუერთდით ჩვენს ექსკლუზიურ ჯანკეტ..." } }
                 ],
                 tours: [
-                    { 
-                        title: { en: "Adventure", ka: "თავგადასავალი" }, 
-                        desc: { en: "Hiking & Rafting", ka: "ლაშქრობა და რაფტინგი" }, 
-                        img: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2073", 
-                        tag: { en: "Active", ka: "აქტიური" },
-                        subItems: [
-                            { title: "Kazbegi Hiking Day", desc: "Gergeti Church & Gveleti Waterfall hike.", details: "A full day expedition to the foot of Mt. Kazbek. Includes 4x4 transport, guided hike to Gergeti Trinity Church, and a picnic at Gveleti Waterfall." },
-                            { title: "Rafting on Aragvi", desc: "White water rafting with professional instructors.", details: "Adrenaline-filled rafting on the Aragvi river. Includes safety gear, certified instructor, and a traditional Georgian BBQ lunch after the ride." },
-                            { title: "Martvili Canyon", desc: "Boat ride through the emerald canyon.", details: "Explore the stunning Martvili Canyon by boat. Swim in crystal clear waters and visit the nearby Okatse Canyon skywalk." }
-                        ]
-                    },
-                    { 
-                        title: { en: "Luxury & Leisure", ka: "ფუფუნება და დასვენება" }, 
-                        desc: { en: "5-Star Resorts", ka: "5-ვარსკვლავიანი კურორტები" }, 
-                        img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", 
-                        tag: { en: "Relax", ka: "რელაქსი" },
-                        subItems: [
-                            { title: "Tsinandali Estate", desc: "Weekend at Radisson Collection. Wine & Spa.", details: "Stay at the historic Tsinandali Estate. Includes tour of Prince Chavchavadze's museum, private wine tasting, and access to the infinity pool." },
-                            { title: "Lopota Lake Resort", desc: "Family relaxation, pools, and horse riding.", details: "A perfect getaway in Kakheti. All-inclusive stay with 3 meals, spa access, horse riding, and tennis courts surrounded by mountains." },
-                            { title: "Rooms Hotel Kazbegi", desc: "The most famous mountain view terrace.", details: "Iconic design hotel facing Mt. Kazbek. Package includes room with view, buffet breakfast, and dinner on the famous terrace." }
-                        ]
-                    },
-                    { 
-                        title: { en: "Wine Route", ka: "ღვინის გზა" }, 
-                        desc: { en: "Qvevri Tastings", ka: "ქვევრის დეგუსტაცია" }, 
-                        img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", 
-                        tag: { en: "Culture", ka: "კულტურა" },
-                        subItems: [
-                            { title: "8000 Vintages Tour", desc: "Visit Signagi and Bodbe Monastery.", details: "A journey through the 'City of Love' Signagi. Visit Bodbe Monastery and taste organic wines at Okro's Wines overlooking the Alazani Valley." },
-                            { title: "Qvevri Masterclass", desc: "Learn traditional winemaking at Ikalto.", details: "Visit the ancient Ikalto Academy. Participate in a Qvevri opening ceremony and learn to make Churchkhela and Khinkali." },
-                            { title: "Chateau Mukhrani", desc: "Royal estate tour with premium wine tasting.", details: "Experience the royal history of the Bagrationi dynasty. Tour the castle, vineyards, and enjoy a premium tasting of 5 wines." }
-                        ]
-                    },
-                    { 
-                        title: { en: "Casino & Nightlife", ka: "კაზინო და ღამის ცხოვრება" }, 
-                        desc: { en: "VIP Access", ka: "VIP წვდომა" }, 
-                        img: "https://images.unsplash.com/photo-1605870445919-838d190e8e1b?q=80&w=2070", 
-                        tag: { en: "VIP", ka: "VIP" },
-                        subItems: [
-                            { title: "Tbilisi Poker Tour", desc: "Access to Shangri La & Ambassador VIP rooms.", details: "Exclusive entry to high-stakes tables. Complimentary drinks and transport included." },
-                            { title: "Batumi Junket", desc: "Eclipse Casino Weekend. Flight & Hotel Comped.", details: "For qualified players: Free flight, 5-star accommodation, and airport transfers. Minimum deposit required." },
-                            { title: "Private Club Hosting", desc: "Table reservations at top venues.", details: "Skip the line at Bassiani, Khidi, or noble Savage. Private table booking with bottle service and security." }
-                        ]
-                    }
+                    { title: { en: "Adventure", ka: "თავგადასავალი" }, desc: { en: "Hiking & Rafting", ka: "ლაშქრობა და რაფტინგი" }, img: "https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=2073", tag: { en: "Active", ka: "აქტიური" }, 
+                      subItems: [{ title: "Kazbegi Hiking", desc: "Gergeti Church Hike" }, { title: "Rafting", desc: "Aragvi River" }] },
+                    { title: { en: "Luxury & Leisure", ka: "ფუფუნება" }, desc: { en: "5-Star Resorts", ka: "5-ვარსკვლავიანი კურორტები" }, img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070", tag: { en: "Relax", ka: "რელაქსი" },
+                      subItems: [{ title: "Tsinandali Estate", desc: "Radisson Collection" }, { title: "Lopota Lake", desc: "Resort & Spa" }] },
+                    { title: { en: "Wine Route", ka: "ღვინის გზა" }, desc: { en: "Qvevri Tastings", ka: "ქვევრის დეგუსტაცია" }, img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", tag: { en: "Culture", ka: "კულტურა" },
+                      subItems: [{ title: "8000 Vintages", desc: "Tasting Tour" }, { title: "Chateau Mukhrani", desc: "Royal Estate" }] },
+                    { title: { en: "Casino & Nightlife", ka: "კაზინო" }, desc: { en: "VIP Access", ka: "VIP წვდომა" }, img: "https://images.unsplash.com/photo-1605870445919-838d190e8e1b?q=80&w=2070", tag: { en: "VIP", ka: "VIP" },
+                      subItems: [{ title: "Tbilisi Poker", desc: "Shangri La" }, { title: "Batumi Junket", desc: "Eclipse Casino" }] }
                 ],
                 blog: [
-                    { title: { en: "Vineyards of Kakheti", ka: "კახეთის ვენახები" }, date: { en: "Oct 2025", ka: "ოქტ 2025" }, img: "https://images.unsplash.com/photo-1566346547477-173084076792?q=80&w=2070", text: { en: "A journey...", ka: "მოგზაურობა..." } },
-                    { title: { en: "Medical Excellence", ka: "სამედიცინო ხარისხი" }, date: { en: "Sep 2025", ka: "სექ 2025" }, img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053", text: { en: "Why Georgia...", ka: "რატომ არის საქართველო..." } },
-                    { title: { en: "Ski Season Guide", ka: "სათხილამურო სეზონი" }, date: { en: "Aug 2025", ka: "აგვ 2025" }, img: "https://images.unsplash.com/photo-1610198871574-53537a702467?q=80&w=2070", text: { en: "Everything you need...", ka: "ყველაფერი რაც გჭირდებათ..." } },
-                    { title: { en: "Tbilisi Nightlife", ka: "თბილისის ღამის ცხოვრება" }, date: { en: "July 2025", ka: "ივლისი 2025" }, img: "https://images.unsplash.com/photo-1555992336-03a2316dbbb3?q=80&w=2064", text: { en: "Best clubs...", ka: "საუკეთესო კლუბები..." } }
+                    { title: { en: "Vineyards of Kakheti", ka: "კახეთის ვენახები" }, date: { en: "Oct 2025", ka: "ოქტ 2025" }, img: "https://images.unsplash.com/photo-1566346547477-173084076792?q=80&w=2070" },
+                    { title: { en: "Ski Season Guide", ka: "სათხილამურო სეზონი" }, date: { en: "Aug 2025", ka: "აგვ 2025" }, img: "https://images.unsplash.com/photo-1610198871574-53537a702467?q=80&w=2070" }
                 ]
             },
+            
+            // 2. TBILISI
             tbilisi: {
                 accent: "#a84a32",
                 hero: [
@@ -413,132 +375,146 @@
                     { title: { en: "Modern Architecture", ka: "თანამედროვე არქიტექტურა" }, desc: { en: "Bridge of Peace & Rike Park.", ka: "მშვიდობის ხიდი და რიყის პარკი." }, img: "https://images.unsplash.com/photo-1555992336-03a2316dbbb3?q=80&w=2064" }
                 ],
                 tours: [
-                    { 
-                        title: { en: "Old Town Walking Tour", ka: "ძველი თბილისის ტური" }, 
-                        desc: { en: "Sulfur Baths & Narikala", ka: "გოგირდის აბანოები და ნარიყალა" }, 
-                        img: "https://images.unsplash.com/photo-1580326733551-73e6c16f8517?q=80&w=2070", 
-                        tag: { en: "History", ka: "ისტორია" },
-                        subItems: [
-                            { title: "Abanotubani & Waterfall", desc: "Visit the sulfur bath district and the hidden waterfall." },
-                            { title: "Narikala Fortress", desc: "Cable car ride to the ancient fortress overlooking the city." },
-                            { title: "Sioni Cathedral", desc: "Visit one of the most important churches in Georgia." }
-                        ]
-                    },
-                    { 
-                        title: { en: "Food & Markets", ka: "საკვები და ბაზრები" }, 
-                        desc: { en: "Dezerter Bazaar Tasting", ka: "დეზერტირების ბაზრის დეგუსტაცია" }, 
-                        img: "https://images.unsplash.com/photo-1573409788406-1a6d54c2866d?q=80&w=2070", 
-                        tag: { en: "Food", ka: "კვება" },
-                        subItems: [
-                            { title: "Market Tasting Tour", desc: "Taste local cheese, spices, and churchkhela." },
-                            { title: "Cooking Class", desc: "Learn to make Khinkali and Khachapuri." }
-                        ]
-                    }
+                    { title: { en: "Old Town Walk", ka: "ძველი თბილისი" }, desc: { en: "History & Culture", ka: "ისტორია და კულტურა" }, img: "https://images.unsplash.com/photo-1580326733551-73e6c16f8517?q=80&w=2070", tag: { en: "History", ka: "ისტორია" },
+                      subItems: [{ title: "Narikala", desc: "Fortress Tour" }, { title: "Sulfur Baths", desc: "Abanotubani" }] },
+                    { title: { en: "Food Tour", ka: "გასტრო ტური" }, desc: { en: "Taste of Tbilisi", ka: "თბილისის გემო" }, img: "https://images.unsplash.com/photo-1573409788406-1a6d54c2866d?q=80&w=2070", tag: { en: "Food", ka: "კვება" },
+                      subItems: [{ title: "Dezerter Bazaar", desc: "Market Tour" }, { title: "Cooking Class", desc: "Khinkali Making" }] }
                 ],
-                blog: [
-                    { title: { en: "Top 5 Restaurants", ka: "ტოპ 5 რესტორანი" }, date: { en: "Guide", ka: "გზამკვლევი" }, img: "https://images.unsplash.com/photo-1603002730629-64df815039c5?q=80&w=2070" }
-                ]
+                blog: []
             },
+            
+            // 3. MTSKHETA-MTIANETI
+            mtskheta_mtianeti: {
+                accent: "#2e4053",
+                hero: [
+                    { title: { en: "Ancient Capital", ka: "ძველი დედაქალაქი" }, desc: { en: "Mtskheta & Jvari", ka: "მცხეთა და ჯვარი" }, img: "https://images.unsplash.com/photo-1565118531796-763e5082d113?q=80&w=2070" }
+                ],
+                tours: [
+                    { title: { en: "Kazbegi Tour", ka: "ყაზბეგის ტური" }, desc: { en: "Mountains & Church", ka: "მთები და ეკლესია" }, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?q=80&w=2070", tag: { en: "Nature", ka: "ბუნება" },
+                      subItems: [{ title: "Gergeti", desc: "Trinity Church" }, { title: "Gveleti", desc: "Waterfall" }] }
+                ],
+                blog: []
+            },
+
+            // 4. KAKHETI
             kakheti: {
-                accent: "#6e2c00", // Wine color
+                accent: "#6e2c00",
                 hero: [
-                    { title: { en: "Cradle of Wine", ka: "ღვინის აკვანი" }, desc: { en: "8,000 years of tradition.", ka: "8,000 წლოვანი ტრადიცია." }, img: "https://images.unsplash.com/photo-1566346547477-173084076792?q=80&w=2070" }
+                    { title: { en: "Wine Region", ka: "ღვინის რეგიონი" }, desc: { en: "Vineyards & Valleys", ka: "ვენახები და ველები" }, img: "https://images.unsplash.com/photo-1566346547477-173084076792?q=80&w=2070" }
                 ],
                 tours: [
-                    { 
-                        title: { en: "Signagi & Bodbe", ka: "სიღნაღი და ბოდბე" }, 
-                        desc: { en: "City of Love", ka: "სიყვარულის ქალაქი" }, 
-                        img: "https://images.unsplash.com/photo-1600742533089-a2e6e3c0b11b?q=80&w=2070", 
-                        tag: { en: "Romantic", ka: "რომანტიკული" },
-                        subItems: [
-                            { title: "Bodbe Monastery", desc: "Visit the burial place of St. Nino." },
-                            { title: "Signagi Wall", desc: "Walk the ancient defensive wall with valley views." }
-                        ]
-                    },
-                    { 
-                        title: { en: "Wine Tasting", ka: "ღვინის დეგუსტაცია" }, 
-                        desc: { en: "Kindzmarauli & Khareba", ka: "ქინძმარაული და ხარება" }, 
-                        img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?q=80&w=2070", 
-                        tag: { en: "Wine", ka: "ღვინო" },
-                        subItems: [
-                            { title: "Khareba Wine Tunnel", desc: "7km long tunnel filled with wine." },
-                            { title: "Family Cellar", desc: "Authentic lunch and tasting with a local family." }
-                        ]
-                    }
+                    { title: { en: "Signagi", ka: "სიღნაღი" }, desc: { en: "City of Love", ka: "სიყვარულის ქალაქი" }, img: "https://images.unsplash.com/photo-1600742533089-a2e6e3c0b11b?q=80&w=2070", tag: { en: "Romantic", ka: "რომანტიკული" },
+                      subItems: [{ title: "Bodbe", desc: "Monastery" }, { title: "City Walls", desc: "Walking Tour" }] }
                 ],
-                blog: [
-                    { title: { en: "Harvest Season (Rtveli)", ka: "რთველი" }, date: { en: "Sep-Oct", ka: "სექ-ოქტ" }, img: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=2071" }
-                ]
+                blog: []
             },
-            kazbegi: {
-                accent: "#2e4053", // Mountain Blue/Grey
+
+            // 5. KARTLI
+            kartli: {
+                accent: "#884ea0",
                 hero: [
-                    { title: { en: "Above the Clouds", ka: "ღრუბლებს ზევით" }, desc: { en: "The Great Caucasus.", ka: "დიდი კავკასიონი." }, img: "https://images.unsplash.com/photo-1565118531796-763e5082d113?q=80&w=2070" }
+                    { title: { en: "Heart of Kartli", ka: "ქართლის გული" }, desc: { en: "Caves & Stalin", ka: "გამოქვაბულები და სტალინი" }, img: "https://images.unsplash.com/photo-1600742533089-a2e6e3c0b11b?q=80&w=2070" }
                 ],
                 tours: [
-                    { 
-                        title: { en: "Gergeti Trinity", ka: "გერგეტის სამება" }, 
-                        desc: { en: "4x4 Off-Road", ka: "4x4 ტური" }, 
-                        img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?q=80&w=2070", 
-                        tag: { en: "Landmark", ka: "ღირსშესანიშნაობა" },
-                        subItems: [
-                            { title: "Gergeti Hike", desc: "Hike up to the church (1.5 hours)." },
-                            { title: "Jeep Tour", desc: "Drive up to the church in comfort." }
-                        ]
-                    }
+                    { title: { en: "Uplistsikhe", ka: "უფლისციხე" }, desc: { en: "Cave Town", ka: "კლდეში ნაკვეთი ქალაქი" }, img: "https://images.unsplash.com/photo-1600742533089-a2e6e3c0b11b?q=80&w=2070", tag: { en: "History", ka: "ისტორია" },
+                      subItems: [{ title: "Cave Tour", desc: "Ancient History" }, { title: "Gori", desc: "Stalin Museum" }] }
                 ],
-                blog: [
-                    { title: { en: "Best Hiking Trails", ka: "საუკეთესო ბილიკები" }, date: { en: "Guide", ka: "გზამკვლევი" }, img: "https://images.unsplash.com/photo-1475598226890-e7f119c74e8a?q=80&w=2073" }
-                ]
+                blog: []
             },
-            adjara: {
-                accent: "#006994", // Sea Blue
+
+            // 6. RACHA-LECHKHUMI
+            racha: {
+                accent: "#117a65",
                 hero: [
-                    { title: { en: "Black Sea Pearl", ka: "შავი ზღვის მარგალიტი" }, desc: { en: "Batumi & Coast.", ka: "ბათუმი და სანაპირო." }, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?q=80&w=2070" }
+                    { title: { en: "Highlands of Racha", ka: "რაჭის მთები" }, desc: { en: "Wine & Nature", ka: "ღვინო და ბუნება" }, img: "https://images.unsplash.com/photo-1596306499317-849aa5dd3396?q=80&w=2070" }
                 ],
                 tours: [
-                    { 
-                        title: { en: "Batumi City Tour", ka: "ბათუმის ტური" }, 
-                        desc: { en: "Boulevard & Ali and Nino", ka: "ბულვარი და ალი და ნინო" }, 
-                        img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?q=80&w=2070", 
-                        tag: { en: "City", ka: "ქალაქი" },
-                        subItems: [
-                            { title: "Botanical Garden", desc: "Green Cape tour." },
-                            { title: "Gonio Fortress", desc: "Roman fortification." }
-                        ]
-                    }
+                    { title: { en: "Shaori Lake", ka: "შაორის ტბა" }, desc: { en: "Scenic Views", ka: "ულამაზესი ხედები" }, img: "https://images.unsplash.com/photo-1596306499317-849aa5dd3396?q=80&w=2070", tag: { en: "Nature", ka: "ბუნება" },
+                      subItems: [{ title: "Ambrolauri", desc: "Wine Tasting" }, { title: "Nikortsminda", desc: "Cathedral" }] }
                 ],
-                blog: [
-                    { title: { en: "Adjarian Khachapuri", ka: "აჭარული ხაჭაპური" }, date: { en: "Food", ka: "კვება" }, img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=2070" }
-                ]
+                blog: []
             },
+
+            // 7. SVANETI
             svaneti: {
-                accent: "#1e8449", // Forest Green
+                accent: "#1e8449",
                 hero: [
-                    { title: { en: "Land of Towers", ka: "კოშკების მხარე" }, desc: { en: "Mysterious Svaneti.", ka: "იდუმალი სვანეთი." }, img: "https://images.unsplash.com/photo-1571258267881-5d6929516187?q=80&w=2070" }
+                    { title: { en: "Svaneti Towers", ka: "სვანური კოშკები" }, desc: { en: "UNESCO Heritage", ka: "იუნესკოს მემკვიდრეობა" }, img: "https://images.unsplash.com/photo-1571258267881-5d6929516187?q=80&w=2070" }
                 ],
                 tours: [
-                    { 
-                        title: { en: "Ushguli Jeep Tour", ka: "უშგულის ჯიპ ტური" }, 
-                        desc: { en: "Highest Village in Europe", ka: "ევროპის უმაღლესი სოფელი" }, 
-                        img: "https://images.unsplash.com/photo-1571258267881-5d6929516187?q=80&w=2070", 
-                        tag: { en: "Adventure", ka: "თავგადასავალი" },
-                        subItems: [
-                            { title: "Ushguli Day Trip", desc: "Visit the UNESCO heritage site." },
-                            { title: "Mestia Museum", desc: "See the Svan treasures." }
-                        ]
-                    }
+                    { title: { en: "Ushguli", ka: "უშგული" }, desc: { en: "Highest Village", ka: "უმაღლესი სოფელი" }, img: "https://images.unsplash.com/photo-1571258267881-5d6929516187?q=80&w=2070", tag: { en: "Adventure", ka: "თავგადასავალი" },
+                      subItems: [{ title: "Jeep Tour", desc: "Off-road" }, { title: "Mestia", desc: "Museum" }] }
                 ],
-                blog: [
-                    { title: { en: "Svan Culture", ka: "სვანური კულტურა" }, date: { en: "History", ka: "ისტორია" }, img: "https://images.unsplash.com/photo-1571258267881-5d6929516187?q=80&w=2070" }
-                ]
+                blog: []
+            },
+
+            // 8. IMERETI
+            imereti: {
+                accent: "#d35400",
+                hero: [
+                    { title: { en: "Kingdom of Colchis", ka: "კოლხეთის სამეფო" }, desc: { en: "Caves & Canyons", ka: "მღვიმეები და კანიონები" }, img: "https://images.unsplash.com/photo-1597166567079-189725761f37?q=80&w=2070" }
+                ],
+                tours: [
+                    { title: { en: "Prometheus Cave", ka: "პრომეთეს მღვიმე" }, desc: { en: "Underground World", ka: "მიწისქვეშა სამყარო" }, img: "https://images.unsplash.com/photo-1597166567079-189725761f37?q=80&w=2070", tag: { en: "Nature", ka: "ბუნება" },
+                      subItems: [{ title: "Boat Ride", desc: "In Cave" }, { title: "Kutaisi", desc: "City Tour" }] }
+                ],
+                blog: []
+            },
+
+            // 9. GURIA
+            guria: {
+                accent: "#27ae60",
+                hero: [
+                    { title: { en: "Green Guria", ka: "მწვანე გურია" }, desc: { en: "Tea & Coast", ka: "ჩაი და სანაპირო" }, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f?q=80&w=2070" }
+                ],
+                tours: [
+                    { title: { en: "Gomis Mta", ka: "გომის მთა" }, desc: { en: "Cloud Sea", ka: "ღრუბლების ზღვა" }, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f?q=80&w=2070", tag: { en: "Views", ka: "ხედები" },
+                      subItems: [{ title: "Sunset", desc: "Above clouds" }, { title: "Ureki", desc: "Magnetic Sand" }] }
+                ],
+                blog: []
+            },
+
+            // 10. SAMEGRELO
+            samegrelo: {
+                accent: "#8e44ad",
+                hero: [
+                    { title: { en: "Royal Dadiani", ka: "დადიანების სასახლე" }, desc: { en: "Canyons & Palaces", ka: "კანიონები და სასახლეები" }, img: "https://images.unsplash.com/photo-1604918363094-587689290516?q=80&w=2070" }
+                ],
+                tours: [
+                    { title: { en: "Martvili Canyon", ka: "მარტვილის კანიონი" }, desc: { en: "Emerald Waters", ka: "ზურმუხტის წყლები" }, img: "https://images.unsplash.com/photo-1604918363094-587689290516?q=80&w=2070", tag: { en: "Nature", ka: "ბუნება" },
+                      subItems: [{ title: "Boat Tour", desc: "Canyon Ride" }, { title: "Dadiani Palace", desc: "Museum" }] }
+                ],
+                blog: []
+            },
+
+            // 11. ADJARA
+            adjara: {
+                accent: "#006994",
+                hero: [
+                    { title: { en: "Batumi & Beyond", ka: "ბათუმი და აჭარა" }, desc: { en: "Sea & Mountains", ka: "ზღვა და მთები" }, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?q=80&w=2070" }
+                ],
+                tours: [
+                    { title: { en: "Batumi City", ka: "ბათუმის ტური" }, desc: { en: "Boulevard", ka: "ბულვარი" }, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?q=80&w=2070", tag: { en: "City", ka: "ქალაქი" },
+                      subItems: [{ title: "Botanical Garden", desc: "Green Cape" }, { title: "Gonio", desc: "Fortress" }] }
+                ],
+                blog: []
+            },
+
+            // 12. ABKHAZIA
+            abkhazia: {
+                accent: "#c0392b",
+                hero: [
+                    { title: { en: "Beautiful Abkhazia", ka: "მშვენიერი აფხაზეთი" }, desc: { en: "Hidden Gem", ka: "ფარული მარგალიტი" }, img: "https://images.unsplash.com/photo-1565008576549-57569a49371d?q=80&w=2070" }
+                ],
+                tours: [
+                    { title: { en: "Lake Ritsa", ka: "რიწის ტბა" }, desc: { en: "Nature Reserve", ka: "ნაკრძალი" }, img: "https://images.unsplash.com/photo-1565008576549-57569a49371d?q=80&w=2070", tag: { en: "Nature", ka: "ბუნება" },
+                      subItems: [{ title: "Gagra", desc: "Resort" }, { title: "New Athos", desc: "Monastery" }] }
+                ],
+                blog: []
             }
         };
 
-        let currentKey = 'georgia';
-        let currentSlide = 0;
-        let autoPlayTimer;
-
+        /* --- LOGIC ENGINE --- */
         function toggleLang() {
             setLanguage(currentLang === 'en' ? 'ka' : 'en');
         }
@@ -556,27 +532,34 @@
             init();
         }
 
+        let currentKey = 'georgia';
+        let currentSlide = 0;
+        let autoPlayTimer;
+
         function init() {
             renderRibbon();
             loadRegion(currentKey);
-            
-            // Update WA links
             document.querySelectorAll('.wa-link').forEach(a => { if(!a.classList.contains('modal-btn')) a.href = `https://wa.me/${config.whatsapp}`; });
         }
 
         function renderRibbon() {
             const ribbon = document.getElementById('destRibbon');
             const keys = Object.keys(database);
-            
             ribbon.innerHTML = '';
             
             const labels = {
-                georgia: { en: "🇬🇪 GEORGIA (ALL)", ka: "🇬🇪 საქართველო" },
+                georgia: { en: "🇬🇪 GEORGIA", ka: "🇬🇪 საქართველო" },
                 tbilisi: { en: "TBILISI", ka: "თბილისი" },
+                mtskheta_mtianeti: { en: "MTSKHETA-MTIANETI", ka: "მცხეთა-მთიანეთი" },
                 kakheti: { en: "KAKHETI", ka: "კახეთი" },
-                kazbegi: { en: "KAZBEGI", ka: "ყაზბეგი" },
+                kartli: { en: "KARTLI", ka: "ქართლი" },
+                racha: { en: "RACHA-LECHKHUMI", ka: "რაჭა-ლეჩხუმი" },
+                svaneti: { en: "SVANETI", ka: "სვანეთი" },
+                imereti: { en: "IMERETI", ka: "იმერეთი" },
+                guria: { en: "GURIA", ka: "გურია" },
+                samegrelo: { en: "SAMEGRELO", ka: "სამეგრელო" },
                 adjara: { en: "ADJARA", ka: "აჭარა" },
-                svaneti: { en: "SVANETI", ka: "სვანეთი" }
+                abkhazia: { en: "ABKHAZIA", ka: "აფხაზეთი" }
             };
 
             keys.forEach(key => {
@@ -584,7 +567,9 @@
                 btn.className = `dest-btn ${key === currentKey ? 'active' : ''}`;
                 btn.setAttribute('data-region', key);
                 btn.innerText = labels[key][currentLang];
+                // Specific logic: "Georgia" button resets to home
                 btn.onclick = () => loadRegion(key);
+                if (key === 'georgia') btn.classList.add('geo-main');
                 ribbon.appendChild(btn);
             });
         }
@@ -593,45 +578,47 @@
             currentKey = key;
             const data = database[key];
             
-            // Update UI Accent
             if(data.accent) {
                 document.documentElement.style.setProperty('--terracotta', data.accent);
                 document.querySelector('.logo-sub').style.color = data.accent;
-                document.querySelector('.logo-sub').innerText = key === 'georgia' ? 'GEORGIA' : key.toUpperCase();
+                document.querySelector('.logo-sub').innerText = key === 'georgia' ? 'GEORGIA' : key.toUpperCase().replace('_', '-');
             }
             
-            // Update Ribbon State
             document.querySelectorAll('.dest-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if(btn.getAttribute('data-region') === key) btn.classList.add('active');
                 
-                // Update language for buttons
-                const labels = {
-                    georgia: { en: "🇬🇪 GEORGIA (ALL)", ka: "🇬🇪 საქართველო" },
+                // Update labels based on current lang
+                 const labels = {
+                    georgia: { en: "🇬🇪 GEORGIA", ka: "🇬🇪 საქართველო" },
                     tbilisi: { en: "TBILISI", ka: "თბილისი" },
+                    mtskheta_mtianeti: { en: "MTSKHETA-MTIANETI", ka: "მცხეთა-მთიანეთი" },
                     kakheti: { en: "KAKHETI", ka: "კახეთი" },
-                    kazbegi: { en: "KAZBEGI", ka: "ყაზბეგი" },
+                    kartli: { en: "KARTLI", ka: "ქართლი" },
+                    racha: { en: "RACHA-LECHKHUMI", ka: "რაჭა-ლეჩხუმი" },
+                    svaneti: { en: "SVANETI", ka: "სვანეთი" },
+                    imereti: { en: "IMERETI", ka: "იმერეთი" },
+                    guria: { en: "GURIA", ka: "გურია" },
+                    samegrelo: { en: "SAMEGRELO", ka: "სამეგრელო" },
                     adjara: { en: "ADJARA", ka: "აჭარა" },
-                    svaneti: { en: "SVANETI", ka: "სვანეთი" }
+                    abkhazia: { en: "ABKHAZIA", ka: "აფხაზეთი" }
                 };
                 btn.innerText = labels[btn.getAttribute('data-region')][currentLang];
             });
 
             renderHero(data.hero);
             renderGrid('travelGrid', data.tours);
-            renderGrid('servicesGrid', commonServices); // Shared Services
+            renderGrid('servicesGrid', commonServices);
             renderBlog(data.blog);
         }
 
         function renderHero(slides) {
             const track = document.getElementById('heroTrack');
             const progContainer = document.getElementById('progressContainer');
-            track.innerHTML = '';
-            progContainer.innerHTML = '';
+            track.innerHTML = ''; progContainer.innerHTML = '';
             
             slides.forEach((slide, index) => {
-                const div = document.createElement('div');
-                div.className = 'hero-slide';
+                const div = document.createElement('div'); div.className = 'hero-slide';
                 if(index === 0) div.classList.add('active');
                 
                 const title = typeof slide.title === 'object' ? slide.title[currentLang] : slide.title;
@@ -641,28 +628,21 @@
                 div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${title}</h2><p class="slide-desc">${desc}</p><button class="slide-btn" onclick="openModal('${title}', '${fullText || desc}', '${slide.img}')">${translations[currentLang].btn_details}</button></div>`;
                 track.appendChild(div);
 
-                const bar = document.createElement('div');
-                bar.className = 'progress-bar';
+                const bar = document.createElement('div'); bar.className = 'progress-bar';
                 bar.innerHTML = `<div class="progress-fill" id="bar-${index}"></div>`;
                 progContainer.appendChild(bar);
             });
-            
-            currentSlide = 0;
-            startStoryMode();
+            currentSlide = 0; startStoryMode();
         }
 
         function renderGrid(id, items) {
-            const grid = document.getElementById(id);
-            grid.innerHTML = '';
+            const grid = document.getElementById(id); grid.innerHTML = '';
             items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card';
+                const card = document.createElement('div'); card.className = 'card';
                 
                 const title = typeof item.title === 'object' ? item.title[currentLang] : item.title;
                 const desc = typeof item.desc === 'object' ? item.desc[currentLang] : item.desc;
                 const tag = item.tag ? (typeof item.tag === 'object' ? item.tag[currentLang] : item.tag) : '';
-                
-                // Determine if it has subItems or text
                 const subContent = item.subItems ? item.subItems : (item.text ? (typeof item.text === 'object' ? item.text[currentLang] : item.text) : '');
 
                 card.onclick = () => openModal(title, subContent, item.img);
@@ -672,11 +652,9 @@
         }
 
         function renderBlog(items) {
-            const track = document.getElementById('blogTrack');
-            track.innerHTML = '';
+            const track = document.getElementById('blogTrack'); track.innerHTML = '';
             items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'blog-card';
+                const card = document.createElement('div'); card.className = 'blog-card';
                 
                 const title = typeof item.title === 'object' ? item.title[currentLang] : item.title;
                 const date = typeof item.date === 'object' ? item.date[currentLang] : item.date;
@@ -686,102 +664,53 @@
             });
         }
 
-        /* STORY ENGINE */
         function startStoryMode() { showSlide(currentSlide); }
         function showSlide(index) {
-            const track = document.getElementById('heroTrack');
-            if(!track) return;
-            const slides = track.getElementsByClassName('hero-slide');
-            const bars = document.querySelectorAll('.progress-fill');
-            
+            const track = document.getElementById('heroTrack'); if(!track) return;
+            const slides = track.getElementsByClassName('hero-slide'); const bars = document.querySelectorAll('.progress-fill');
             if(!slides.length) return;
-
             if (index >= slides.length) { currentSlide = 0; resetBars(); index = 0; }
-            if (index < 0) { currentSlide = slides.length - 1; resetBars(); index = slides.length - 1; }
-
             track.scrollTo({ left: track.clientWidth * index, behavior: 'smooth' });
-
-            Array.from(slides).forEach(s => s.classList.remove('active'));
-            slides[index].classList.add('active');
-
+            Array.from(slides).forEach(s => s.classList.remove('active')); slides[index].classList.add('active');
             bars.forEach((bar, idx) => {
-                bar.classList.remove('active');
-                bar.style.transition = 'none';
-                if (idx < index) { bar.style.width = '100%'; } 
-                else if (idx === index) { 
-                    bar.style.width = '0%'; 
-                    setTimeout(() => { bar.style.transition = `width 5000ms linear`; bar.style.width = '100%'; }, 50); 
-                } 
-                else { bar.style.width = '0%'; }
+                bar.classList.remove('active'); bar.style.transition = 'none';
+                if (idx < index) { bar.style.width = '100%'; } else if (idx === index) { bar.style.width = '0%'; setTimeout(() => { bar.style.transition = `width 5000ms linear`; bar.style.width = '100%'; }, 50); } else { bar.style.width = '0%'; }
             });
-
-            clearTimeout(autoPlayTimer);
-            autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, 5000);
+            clearTimeout(autoPlayTimer); autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, 5000);
         }
         function resetBars() { document.querySelectorAll('.progress-fill').forEach(bar => { bar.style.transition = 'none'; bar.style.width = '0%'; }); }
         function manualSlide(dir) { currentSlide += dir; showSlide(currentSlide); }
 
-        /* MODAL */
-        const modal = document.getElementById('detailModal'); 
-        const modalImg = document.getElementById('modalImg'); 
-        const modalTitle = document.getElementById('modalTitle'); 
-        const modalListView = document.getElementById('modalListView');
-        const modalList = document.getElementById('modalList');
-        const modalDetailView = document.getElementById('modalDetailView');
-        const detailTitle = document.getElementById('detailTitle');
-        const detailText = document.getElementById('detailText');
-        const detailBtn = document.getElementById('detailBtn');
+        const modal = document.getElementById('detailModal'); const modalImg = document.getElementById('modalImg'); const modalTitle = document.getElementById('modalTitle'); const modalListView = document.getElementById('modalListView'); const modalList = document.getElementById('modalList'); const modalDetailView = document.getElementById('modalDetailView'); const detailTitle = document.getElementById('detailTitle'); const detailText = document.getElementById('detailText'); const detailBtn = document.getElementById('detailBtn');
 
         function openModal(title, content, img) { 
             modalImg.src = img; 
-            
             if (typeof content === 'string' || !content) {
-                // Simple Text Modal (Blog/Hero)
                 modalTitle.innerText = title;
                 modalList.innerHTML = `<div class="modal-text">${content || ""}</div><a href="https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${title}" class="modal-btn wa-link">${translations[currentLang].btn_book}</a>`;
-                modalListView.style.display = 'block';
-                modalDetailView.style.display = 'none';
+                modalListView.style.display = 'block'; modalDetailView.style.display = 'none';
             } else if (Array.isArray(content)) {
-                // List Modal (Tours with Sub-items)
-                modalTitle.innerText = title;
-                modalList.innerHTML = '';
+                modalTitle.innerText = title; modalList.innerHTML = '';
                 content.forEach(sub => {
-                    const item = document.createElement('div');
-                    item.className = 'modal-item';
+                    const item = document.createElement('div'); item.className = 'modal-item';
                     item.onclick = () => showDetail(sub, title);
-                    item.innerHTML = `
-                        <div>
-                            <div class="modal-item-title">${sub.title}</div>
-                            <div class="modal-item-desc">${sub.desc}</div>
-                        </div>
-                        <div class="modal-item-arrow">&rarr;</div>
-                    `;
+                    item.innerHTML = `<div><div class="modal-item-title">${sub.title}</div><div class="modal-item-desc">${sub.desc}</div></div><div class="modal-item-arrow">&rarr;</div>`;
                     modalList.appendChild(item);
                 });
-                modalListView.style.display = 'block';
-                modalDetailView.style.display = 'none';
+                modalListView.style.display = 'block'; modalDetailView.style.display = 'none';
             }
             modal.classList.add('active'); 
         }
-
         function showDetail(subItem, parentTitle) {
-            modalListView.style.display = 'none';
-            modalDetailView.style.display = 'block';
-            detailTitle.innerText = subItem.title;
-            detailText.innerText = subItem.details;
+            modalListView.style.display = 'none'; modalDetailView.style.display = 'block';
+            detailTitle.innerText = subItem.title; detailText.innerText = subItem.details;
             detailBtn.innerText = translations[currentLang].btn_book;
             detailBtn.href = `https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${parentTitle} - ${subItem.title}`;
         }
-
-        function showList() {
-            modalListView.style.display = 'block';
-            modalDetailView.style.display = 'none';
-        }
-        
+        function showList() { modalListView.style.display = 'block'; modalDetailView.style.display = 'none'; }
         function closeModal() { modal.classList.remove('active'); }
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
         
-        // Start
         setLanguage(currentLang);
     </script>
 </body>
