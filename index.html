@@ -147,8 +147,23 @@
         .card-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; color: white; }
         .card h3 { font-family: 'Cinzel', serif; font-size: 1.4rem; margin-bottom: 8px; color: var(--gold); }
         .card p { font-size: 0.9rem; opacity: 0.8; font-weight: 300; }
-        .card-tags { position: absolute; top: 20px; right: 20px; display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
-        .card-tag { background: var(--terracotta); color: white; padding: 4px 10px; font-size: 0.65rem; font-weight: bold; text-transform: uppercase; border-radius: 2px; }
+        
+        /* NEW SEXY TAGS */
+        .card-tags { 
+            position: absolute; top: 20px; right: 20px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; z-index: 10;
+        }
+        .card-tag { 
+            background: rgba(168, 74, 50, 0.85); /* Semi-transparent Terracotta */
+            color: white; 
+            padding: 4px 12px; 
+            font-size: 0.6rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            border-radius: 20px; /* Rounded "pill" look */
+            backdrop-filter: blur(4px); /* Glassmorphism effect */
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
         /* BLOG */
         .blog-scroller { display: flex; overflow-x: auto; gap: 30px; padding: 20px 5px; scroll-snap-type: x mandatory; scrollbar-width: none; }
@@ -294,7 +309,6 @@
         <p style="opacity: 0.5; font-size: 0.7rem;">&copy; 2025 Next Stop Group. All rights reserved.</p>
     </footer>
 
-    <!-- MODAL WITH DEEP DIVE LOGIC -->
     <div class="modal-overlay" id="detailModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeModal()">×</div>
@@ -433,46 +447,10 @@
 
             // 3. SERVICES
             servicesCards: [
-                { 
-                    title: { en: "Medical Tourism", ka: "სამედიცინო" }, 
-                    desc: { en: "Wellbeing & Health", ka: "ჯანმრთელობა" }, 
-                    img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070", 
-                    subItems: [
-                        { title: "Hair Transplantation", desc: "FUE/DHI Method. 3 Days.", details: "World-class hair transplant using FUE method. Package includes procedure, 2 nights hotel, and airport transfers. 100% painless." },
-                        { title: "Dental Tourism", desc: "Hollywood Smile Veneers & Implants.", details: "Save 70% on dental work compared to EU/US. Zirconia crowns, implants, and veneers done by top specialists in 5-7 days." },
-                        { title: "Balneological Spa", desc: "Sulfur bath recovery & massage.", details: "Post-treatment recovery programs in Tbilisi Balneological Resort. Sulfur baths, mud wraps, and therapeutic massage." }
-                    ]
-                },
-                { 
-                    title: { en: "MICE & Corporate", ka: "MICE" }, 
-                    desc: { en: "Events & Conferences", ka: "ღონისძიებები" }, 
-                    img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069", 
-                    subItems: [
-                        { title: "Corporate Retreats", desc: "Team building in Gudauri or Batumi.", details: "Organized team-building activities: Jeep tours, cooking classes, and conference facilities in luxury hotels." },
-                        { title: "Conference Management", desc: "Hall booking at Pullman or Sheraton.", details: "Full technical support for your conference: Sound, light, translation booths, and catering coffee breaks." },
-                        { title: "Business Dinner", desc: "Arranging gala dinners with folk shows.", details: "Impress your partners with a Supra (feast) featuring polyphonic singing and traditional dancers at a top restaurant." }
-                    ]
-                },
-                { 
-                    title: { en: "Business Opportunities", ka: "ბიზნეს შესაძლებლობები" }, 
-                    desc: { en: "Investment & Partners", ka: "ინვესტიციები" }, 
-                    img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070", 
-                    subItems: [
-                        { title: "Company Registration", desc: "Fast-track business setup.", details: "Register your LLC in Georgia in 1 day. We provide legal address, translator, and bank account opening assistance." },
-                        { title: "Real Estate Tour", desc: "Investment property viewing.", details: "Guided tour of high-ROI properties in Tbilisi and Batumi. Consultation with legal experts on residency through investment." },
-                        { title: "B2B Matchmaking", desc: "Finding reliable local partners.", details: "We connect you with verified suppliers, distributors, or partners in your specific industry sector." }
-                    ]
-                },
-                { 
-                    title: { en: "Guides & Transport", ka: "გიდები და ტრანსპორტი" }, 
-                    desc: { en: "Logistics", ka: "ლოჯისტიკა" }, 
-                    img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", 
-                    subItems: [
-                        { title: "Private Chauffeur", desc: "Mercedes S-Class or V-Class Minivan.", details: "Rent a premium vehicle with a professional, English-speaking driver for city or cross-country travel. Daily rates available." },
-                        { title: "Certified Guides", desc: "English, Russian, or Arabic speaking.", details: "Hire a licensed guide who specializes in history, wine, or culture to make your trip truly educational." },
-                        { title: "Airport Fast Track", desc: "VIP meeting at the aircraft door.", details: "Skip the lines. Personal assistant meets you at the plane, handles passport control, and escorts you to your car." }
-                    ]
-                }
+                { title: { en: "Medical Tourism", ka: "სამედიცინო" }, desc: { en: "Wellbeing & Health", ka: "ჯანმრთელობა" }, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070", text: { en: "Top clinics...", ka: "საუკეთესო კლინიკები..." } },
+                { title: { en: "MICE & Corporate", ka: "MICE" }, desc: { en: "Events & Conferences", ka: "ღონისძიებები" }, img: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2069", text: { en: "Full logistical support...", ka: "ლოჯისტიკური მხარდაჭერა..." } },
+                { title: { en: "Business Opportunities", ka: "ბიზნეს შესაძლებლობები" }, desc: { en: "Investment & Partners", ka: "ინვესტიციები" }, img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070", text: { en: "We facilitate B2B...", ka: "B2B კავშირები..." } },
+                { title: { en: "Guides & Transport", ka: "გიდები და ტრანსპორტი" }, desc: { en: "Logistics", ka: "ლოჯისტიკა" }, img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070", text: { en: "Seamless logistics...", ka: "შეუფერხებელი ლოჯისტიკა..." } }
             ],
 
             // 4. BLOG
@@ -599,13 +577,22 @@
             
             const title = item.title[currentLang];
             const desc = type === 'blog' ? item.date[currentLang] : item.desc[currentLang];
-            // Show first tag as badge if available
-            const tag = item.tags ? item.tags[currentLang][0] : '';
+            
+            // --- NEW TAG LOGIC ---
+            let tagsHtml = '';
+            if (item.tags && item.tags[currentLang]) {
+                tagsHtml = '<div class="card-tags">';
+                item.tags[currentLang].forEach(tag => {
+                    tagsHtml += `<span class="card-tag">${tag}</span>`;
+                });
+                tagsHtml += '</div>';
+            }
 
             if (type === 'blog') {
                 div.innerHTML = `<div class="blog-img-box"><img src="${item.img}" loading="lazy"></div><div class="blog-content"><div class="blog-date">${desc}</div><h4 class="blog-title">${title}</h4><span class="blog-link">${translations[currentLang].btn_read} &rarr;</span></div>`;
             } else {
-                div.innerHTML = `<img src="${item.img}" class="card-bg" loading="lazy"><div class="card-overlay">${tag ? `<span class="card-tag">${tag}</span>` : ''}<h3>${title}</h3><p>${desc}</p></div>`;
+                // Inject tagsHtml into the card structure
+                div.innerHTML = `<img src="${item.img}" class="card-bg" loading="lazy">${tagsHtml}<div class="card-overlay"><h3>${title}</h3><p>${desc}</p></div>`;
             }
             return div;
         }
@@ -626,7 +613,6 @@
         function resetBars() { document.querySelectorAll('.progress-fill').forEach(bar => { bar.style.transition = 'none'; bar.style.width = '0%'; }); }
         function manualSlide(dir) { currentSlide += dir; showSlide(currentSlide); }
 
-        /* MODAL ENGINE (DEEP DIVE) */
         const modal = document.getElementById('detailModal'); 
         const modalImg = document.getElementById('modalImg'); 
         const modalTitle = document.getElementById('modalTitle'); 
@@ -640,7 +626,6 @@
         function openModal(title, content, img, type, textContent) { 
             modalImg.src = img; 
             
-            // State 1: Blog or Hero (Just Text)
             if (type === 'blog' || type === 'hero') {
                 modalTitle.innerText = title;
                 modalList.innerHTML = `<div class="modal-text">${textContent || content}</div>` + 
@@ -648,7 +633,6 @@
                 modalListView.style.display = 'block';
                 modalDetailView.style.display = 'none';
             } 
-            // State 2: Category List (Travel/Service) with DEEP DIVE
             else if (Array.isArray(content)) {
                 modalTitle.innerText = title;
                 modalList.innerHTML = '';
@@ -674,7 +658,6 @@
         function showDetail(subItem, parentTitle) {
             modalListView.style.display = 'none';
             modalDetailView.style.display = 'block';
-            
             detailTitle.innerText = subItem.title;
             detailText.innerText = subItem.details;
             detailBtn.href = `https://wa.me/${config.whatsapp}?text=Hi! I am interested in: ${parentTitle} - ${subItem.title}`;
@@ -688,7 +671,7 @@
         function closeModal() { modal.classList.remove('active'); }
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
         
-        init();
+        setLanguage(currentLang);
     </script>
 </body>
 </html>
