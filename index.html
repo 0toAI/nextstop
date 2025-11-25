@@ -25,7 +25,8 @@
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
-        html { scroll-behavior: smooth; scroll-padding-top: 160px; /* Adjusted for taller alignment */ }
+        /* Adjusted scroll padding to account for the taller header */
+        html { scroll-behavior: smooth; scroll-padding-top: 180px; }
         body { color: var(--charcoal); background-color: var(--bg-warm); line-height: 1.6; overflow-x: hidden; transition: background 0.5s; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -35,16 +36,15 @@
         header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
-            padding: 10px 5% 0;
+            /* Increased padding for a taller, more beautiful look */
+            padding: 20px 5% 10px; 
             position: fixed; top: 0; width: 100%; z-index: 1000;
-            display: flex; flex-direction: column; gap: 5px;
+            display: flex; flex-direction: column; gap: 15px; /* More space between rows */
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
         .header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; padding-bottom: 5px; }
-        
-        /* HEADER LEFT - Gap must match Ribbon Gap for alignment */
-        .header-left { display: flex; align-items: center; gap: 30px; } 
+        .header-left { display: flex; align-items: center; gap: 30px; }
         
         /* PREMIUM LOGO - FIXED WIDTH FOR ALIGNMENT */
         .logo-container { 
@@ -77,27 +77,41 @@
 
         /* NAV & LANG */
         .nav-right { display: flex; gap: 20px; align-items: center; }
-        .lang-btn { font-size: 1.2rem; background: none; padding: 5px; border-radius: 4px; }
-        .lang-btn:hover { background: rgba(0,0,0,0.05); }
         .nav-links { display: flex; gap: 30px; }
         .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
         .nav-item:hover { color: var(--terracotta); }
+
+        /* GLASSY LANGUAGE BUTTON */
+        .lang-btn { 
+            width: 40px; height: 40px; 
+            border-radius: 50%; 
+            background: rgba(255, 255, 255, 0.5); /* Glassy background */
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0,0,0,0.1);
+            font-size: 1.4rem; /* Large flag */
+            display: flex; justify-content: center; align-items: center;
+            padding: 0; 
+            transition: all 0.3s ease;
+        }
+        .lang-btn:hover { 
+            background: white; 
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
 
         /* --- HIGH-TECH RIBBON --- */
         .ribbon-container {
             width: 100%; padding: 0 0 15px 0;
             background: transparent;
             border-top: none;
-            /* No mask needed if we align strictly, but keeps edges nice */
             mask-image: linear-gradient(to right, black 95%, transparent); 
             -webkit-mask-image: linear-gradient(to right, black 95%, transparent);
         }
         
         .destination-ribbon { 
             display: flex; 
-            gap: 30px; /* MUST MATCH header-left GAP */
+            gap: 30px; /* Matches header-left gap */
             overflow-x: auto; 
-            /* Remove left padding to align with header padding (parent handles 5%) */
             padding: 5px 0; 
             scrollbar-width: none; 
             -ms-overflow-style: none; 
@@ -142,7 +156,6 @@
             border-color: var(--charcoal);
         }
         .dest-btn.geo-main.active {
-            /* Even when active, keep it distinct */
             background: var(--charcoal);
             color: white;
             border-color: var(--charcoal);
@@ -150,7 +163,8 @@
         }
 
         /* --- HERO WHEEL --- */
-        .hero-wheel { height: 90vh; width: 100%; overflow: hidden; margin-top: 140px; background: #000; position: relative; }
+        /* Margin top adjusted to 150px to perfectly meet the taller header with no gap */
+        .hero-wheel { height: 90vh; width: 100%; overflow: hidden; margin-top: 150px; background: #000; position: relative; }
         .wheel-track { display: flex; width: 100%; height: 100%; overflow: hidden; }
         .hero-slide { flex: 0 0 100%; height: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; }
         .slide-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.65; z-index: 1; transition: transform 10s linear; }
@@ -451,13 +465,13 @@
                 btn.className = `dest-btn ${key === currentKey ? 'active' : ''}`;
                 btn.setAttribute('data-region', key);
                 btn.innerText = labels[key][lang];
-                // Specific logic: "Georgia" button resets to home
                 btn.onclick = () => loadRegion(key);
-                if (key === 'georgia') btn.classList.add('geo-main');
+                if(key === 'georgia') btn.classList.add('geo-main');
                 
                 // Apply specific color logic for active state
                 if(key === currentKey) {
                     if(key === 'georgia') {
+                         // Keep it distinct but transparent/neutral
                          btn.style.backgroundColor = 'transparent';
                          btn.style.borderColor = database[key].accent;
                          btn.style.color = database[key].accent;
