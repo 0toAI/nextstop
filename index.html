@@ -81,6 +81,9 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            min-width: 50px;
+            display: flex;
+            justify-content: center;
         }
         .lang-btn:hover { 
             background: white; 
@@ -92,7 +95,8 @@
         /* --- RIBBON --- */
         .ribbon-container {
             width: 100%; 
-            padding: 12px 5%; 
+            /* Increased padding-top to create space from the line */
+            padding: 20px 5% 12px; 
             background: transparent;
             position: relative;
             z-index: 1;
@@ -129,6 +133,15 @@
         .wheel-arrows { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; z-index: 10; pointer-events: none; }
         .arrow { pointer-events: auto; cursor: pointer; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; backdrop-filter: blur(5px); transition: 0.3s; border: 1px solid rgba(255,255,255,0.3); }
         .arrow:hover { background: white; color: black; }
+
+        /* STATIC SLOGAN */
+        .hero-slogan {
+            position: absolute; top: 30px; width: 100%; text-align: center;
+            font-family: 'Cinzel', serif; color: rgba(255,255,255,0.6);
+            font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;
+            z-index: 10; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            pointer-events: none;
+        }
 
         /* --- SECTIONS & SCROLLERS --- */
         .section { padding: 80px 5%; display: flex; flex-direction: column; justify-content: center; transition: opacity 0.4s; }
@@ -262,6 +275,7 @@
 
     <!-- HERO WHEEL -->
     <div class="hero-wheel">
+        <div class="hero-slogan">Arrive in Georgia, Discover Sakartvelo</div>
         <div class="wheel-track" id="heroTrack"></div>
         <div class="progress-container" id="progressContainer"></div>
         <div class="wheel-arrows">
@@ -445,7 +459,7 @@
             kakheti: { 
                 accent: "#6D4C41", 
                 tours: [
-                    { title: {en: "Signagi", ka: "სიღნაღი"}, desc: {en: "City of Love", ka: "სიყვარულის ქალაქი"}, img: "https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&w=800&q=80", tag: {en: "Romantic", ka: "რომანტიკული"}, subItems: [{title: "Bodbe", desc: "Monastery"}] },
+                    { title: {en: "Signagi", ka: "სიღნაღი"}, desc: {en: "City of Love", ka: "სიყვარულის ქალაქი"}, img: "https://images.unsplash.com/photo-1600742533089-a2e6e3c0b11b?auto=format&fit=crop&w=800&q=80", tag: {en: "Romantic", ka: "რომანტიკული"}, subItems: [{title: "Bodbe", desc: "Monastery"}] },
                     { title: {en: "Tsinandali", ka: "წინანდალი"}, desc: {en: "Estate & Wine", ka: "მამული და ღვინო"}, img: "https://images.unsplash.com/photo-1584455390266-0337f26d0794?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Museum", desc: "Tour"}] },
                     { title: {en: "David Gareja", ka: "დავით გარეჯი"}, desc: {en: "Desert", ka: "უდაბნო"}, img: "https://images.unsplash.com/photo-1572571301957-3f2f65733239?auto=format&fit=crop&w=800&q=80", tag: {en: "Adventure", ka: "თავგადასავალი"}, subItems: [{title: "Caves", desc: "Hike"}] },
                     { title: {en: "Wine Tunnel", ka: "ღვინის გვირაბი"}, desc: {en: "Khareba", ka: "ხარება"}, img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800&q=80", tag: {en: "Wine", ka: "ღვინო"}, subItems: [{title: "Tasting", desc: "Qvevri"}] }
