@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
+        /* --- 1. DESIGN VARIABLES (WARM THEME) --- */
         :root {
             --bg-warm: #fdfbf7;         
             --charcoal: #1a1a1a;        
@@ -28,7 +29,7 @@
         img { width: 100%; height: 100%; object-fit: cover; display: block; }
         button { cursor: pointer; border: none; outline: none; }
 
-        /* --- HEADER --- */
+        /* --- 2. HEADER --- */
         header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
@@ -41,36 +42,113 @@
         .header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; padding-bottom: 5px; }
         .header-left { display: flex; align-items: center; gap: 30px; }
         
-        .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: pointer; width: 260px; flex-shrink: 0; }
+        /* LOGO - CENTERED */
+        .logo-container { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; /* Centers the text stack */
+            line-height: 0.9; 
+            cursor: pointer; 
+            width: 260px; 
+            flex-shrink: 0; 
+        }
         .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; }
-        .logo-sub { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--terracotta); letter-spacing: 4px; text-transform: uppercase; margin-left: 2px; transition: color 0.5s; white-space: nowrap; }
+        .logo-sub { 
+            font-family: 'Cinzel', serif; 
+            font-size: 0.7rem; 
+            font-weight: 700; 
+            color: var(--terracotta); 
+            letter-spacing: 4px; 
+            text-transform: uppercase; 
+            margin-left: 2px; 
+            transition: color 0.5s; 
+            white-space: nowrap;
+        }
 
+        /* TOGGLE */
         .site-toggle { display: flex; background: var(--gray-light); padding: 4px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); }
         .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none; }
         .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default; }
         .toggle-btn.inactive:hover { color: var(--terracotta); }
         .dot { color: var(--green); font-size: 0.8rem; animation: pulse 2s infinite; }
 
+        /* NAV & LANG */
         .nav-right { display: flex; gap: 20px; align-items: center; }
         .nav-links { display: flex; gap: 30px; }
         .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
         .nav-item:hover { color: var(--terracotta); }
 
-        .lang-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(5px); border: 1px solid rgba(0,0,0,0.1); font-size: 1.4rem; display: flex; justify-content: center; align-items: center; padding: 0; transition: all 0.3s ease; }
-        .lang-btn:hover { background: white; transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        /* GLASSY WIDE LANGUAGE BUTTON */
+        .lang-btn { 
+            width: 60px; height: 35px; /* Wide Pill */
+            border-radius: 30px; 
+            background: rgba(255, 255, 255, 0.5); 
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0,0,0,0.1);
+            display: flex; justify-content: center; align-items: center;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .lang-btn:hover { 
+            background: white; 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-color: var(--terracotta);
+        }
+        .lang-flag { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        /* --- RIBBON --- */
-        .ribbon-container { width: 100%; padding: 0 0 15px 0; background: transparent; border-top: none; mask-image: linear-gradient(to right, black 95%, transparent); -webkit-mask-image: linear-gradient(to right, black 95%, transparent); }
-        .destination-ribbon { display: flex; gap: 30px; overflow-x: auto; padding: 5px 0; scrollbar-width: none; -ms-overflow-style: none; white-space: nowrap; }
+        /* --- HIGH-TECH RIBBON --- */
+        .ribbon-container {
+            width: 100%; padding: 0 0 15px 0;
+            background: transparent;
+            border-top: none;
+            mask-image: linear-gradient(to right, black 95%, transparent); 
+            -webkit-mask-image: linear-gradient(to right, black 95%, transparent);
+        }
+        
+        .destination-ribbon { 
+            display: flex; 
+            align-items: center;
+            gap: 15px; 
+            overflow-x: auto; 
+            padding: 5px 0; 
+            scrollbar-width: none; 
+            -ms-overflow-style: none; 
+            white-space: nowrap; 
+        }
         .destination-ribbon::-webkit-scrollbar { display: none; }
         
-        .dest-btn { padding: 8px 22px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; color: #888; background: transparent; transition: all 0.3s ease; cursor: pointer; white-space: nowrap; border: 1px solid rgba(0,0,0,0.1); text-transform: uppercase; letter-spacing: 0.5px; }
+        /* SAKARTVELO LABEL (Not a button style) */
+        .ribbon-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            cursor: pointer;
+            padding: 0 5px;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            min-width: 260px; /* Matches Logo Width for alignment */
+            text-align: center;
+        }
+        .ribbon-label:hover { color: var(--terracotta); }
+        
+        .ribbon-separator {
+            color: #ddd;
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin: 0 10px 0 0; /* Gap before first pill */
+        }
+
+        /* REGION BUTTONS (Pills) */
+        .dest-btn { 
+            padding: 8px 22px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; 
+            color: #888; background: transparent; transition: all 0.3s ease; cursor: pointer; 
+            white-space: nowrap; border: 1px solid rgba(0,0,0,0.1); text-transform: uppercase; letter-spacing: 0.5px; 
+        }
         .dest-btn:hover { transform: translateY(-2px); color: var(--terracotta); border-color: var(--terracotta); background: rgba(168, 74, 50, 0.05); }
         .dest-btn.active { background: var(--terracotta); color: white; border-color: var(--terracotta); box-shadow: 0 4px 15px rgba(168, 74, 50, 0.3); transform: translateY(-1px); }
-        
-        .dest-btn.geo-main { border: 1px solid rgba(0,0,0,0.15); color: var(--charcoal); background: transparent; min-width: 260px; justify-content: center; text-align: center; }
-        .dest-btn.geo-main:hover { background: rgba(0,0,0,0.05); border-color: var(--charcoal); }
-        .dest-btn.geo-main.active { background: var(--charcoal); color: white; border-color: var(--charcoal); box-shadow: none; }
 
         /* --- HERO WHEEL --- */
         .hero-wheel { height: 90vh; width: 100%; overflow: hidden; margin-top: 150px; background: #000; position: relative; }
@@ -97,7 +175,11 @@
         .section-title { text-align: center; margin-bottom: 60px; }
         .section-title h2 { font-size: 2.5rem; font-family: 'Cinzel', serif; color: var(--charcoal); margin-bottom: 15px; }
         .section-title p { color: #777; font-size: 1rem; max-width: 600px; margin: 0 auto; }
+        
         .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
+        .horizontal-scroller { display: flex; overflow-x: auto; gap: 25px; padding: 20px 5px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .horizontal-scroller::-webkit-scrollbar { display: none; }
+        .horizontal-scroller .card { flex: 0 0 280px; scroll-snap-align: center; }
 
         .card { background: white; border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); transition: 0.4s; height: 350px; position: relative; cursor: pointer; animation: fadeUp 0.5s ease-out; }
         .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
@@ -162,9 +244,9 @@
             header { height: auto; flex-wrap: wrap; padding-bottom: 10px; }
             .header-left { width: 100%; justify-content: space-between; }
             .nav-right { position: absolute; top: 15px; right: 5%; }
-            .dest-btn.geo-main { min-width: auto; width: auto; }
+            /* Adjust alignment on mobile if needed */
             .logo-container { width: auto; }
-            .destination-ribbon { gap: 10px; }
+            .ribbon-label { min-width: auto; text-align: left; padding-left: 10px; }
         }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
@@ -194,13 +276,17 @@
                     <a href="#blog" class="nav-item" data-key="nav_blog">Blog</a>
                     <a href="#footer" class="nav-item" data-key="nav_about">About</a>
                 </nav>
-                <button class="lang-btn" id="langBtn" onclick="toggleLang()">🇺🇸</button>
+                <button class="lang-btn" id="langBtn" onclick="toggleLang()">
+                    <!-- SVG will be injected here -->
+                </button>
             </div>
         </div>
 
         <!-- ROW 2: REGIONAL RIBBON -->
         <div class="ribbon-container">
-            <div class="destination-ribbon" id="destRibbon"></div>
+            <div class="destination-ribbon" id="destRibbon">
+                <!-- JS will inject regions here -->
+            </div>
         </div>
     </header>
 
@@ -214,7 +300,7 @@
         </div>
     </div>
 
-    <!-- TRAVEL SECTION -->
+    <!-- TRAVEL SECTION WITH FILTER -->
     <section id="travel" class="section">
         <div class="section-title">
             <h2 data-key="section_travel_title">Curated Experiences</h2>
@@ -279,8 +365,14 @@
         let currentLang = localStorage.getItem('lang') || 'en';
         const whatsapp = "995591705710";
         
+        // Flags SVG
+        const flags = {
+            en: `<svg class="lang-flag" viewBox="0 0 640 480" preserveAspectRatio="none"><path fill="#bd3d44" d="M0 0h640v480H0"/><path stroke="#fff" stroke-width="37" d="M0 55.3h640M0 129h640M0 202.8h640M0 276.5h640M0 350.2h640M0 423.9h640"/><path fill="#192f5d" d="M0 0h296.4v258.5H0"/><path fill="#fff" d="M17.5 15h260v230h-260z"/><path fill="#192f5d" d="M17.5 15h260v230h-260z"/><path fill="#fff" d="M17.5 15h260v230h-260z"/><path fill="#fff" d="M43.5 40h208v180h-208z"/></svg>`,
+            ka: `<svg class="lang-flag" viewBox="0 0 640 480" preserveAspectRatio="none"><path fill="#fff" d="M0 0h640v480H0z"/><path fill="#f00" d="M280 0h80v480h-80z"/><path fill="#f00" d="M0 200h640v80H0z"/><path fill="#f00" d="M100 60h40v40h40v40h-40v40h-40v-40H60v-40h40zM460 60h40v40h40v40h-40v40h-40v-40h-40v-40h40zM100 340h40v40h40v40h-40v40h-40v-40H60v-40h40zM460 340h40v40h40v40h-40v40h-40v-40h-40v-40h40z"/></svg>`
+        };
+
         const translations = {
-            en: { nav_tours: "Tours", nav_services: "Services", nav_blog: "Blog", nav_about: "About", section_travel_title: "Curated Experiences", section_travel_desc: "Explore the distinct regions of the Caucasus.", section_services_title: "Our Services", section_services_desc: "Professional logistical support.", section_blog_title: "Journal", section_blog_desc: "Latest updates.", btn_details: "View Details", btn_read: "Read Article", btn_book: "Book This Now", filter_all: "All" },
+            en: { nav_tours: "Tours", nav_services: "Services", nav_blog: "Blog", nav_about: "About", section_travel_title: "Curated Experiences", section_travel_desc: "Explore the distinct regions of the Caucasus through our specialized itineraries.", section_services_title: "Our Services", section_services_desc: "Professional logistical support.", section_blog_title: "Journal", section_blog_desc: "Latest updates.", btn_details: "View Details", btn_read: "Read Article", btn_book: "Book This Now", filter_all: "All" },
             ka: { nav_tours: "ტურები", nav_services: "სერვისები", nav_blog: "ბლოგი", nav_about: "ჩვენ შესახებ", section_travel_title: "გამორჩეული გამოცდილება", section_travel_desc: "აღმოაჩინეთ კავკასია.", section_services_title: "სერვისები", section_services_desc: "პროფესიონალური ლოჯისტიკა.", section_blog_title: "ჟურნალი", section_blog_desc: "სიახლეები.", btn_details: "დეტალების ნახვა", btn_read: "წაკითხვა", btn_book: "დაჯავშნა", filter_all: "ყველა" }
         };
 
@@ -496,7 +588,7 @@
         function setLanguage(lang) {
             if(!lang) lang = 'en';
             localStorage.setItem('lang', lang);
-            document.getElementById('langBtn').innerText = lang === 'en' ? '🇺🇸' : '🇬🇪';
+            document.getElementById('langBtn').innerHTML = flags[lang];
             document.querySelectorAll('[data-key]').forEach(el => el.innerText = translations[lang][el.getAttribute('data-key')] || el.innerText);
             init();
         }
@@ -531,32 +623,39 @@
             const lang = localStorage.getItem('lang') || 'en';
 
             order.forEach(key => {
-                const btn = document.createElement('button');
-                btn.className = `dest-btn ${key === currentKey ? 'active' : ''}`;
-                btn.setAttribute('data-region', key);
-                btn.innerText = labels[key][lang];
-                btn.onclick = () => loadRegion(key);
-                if(key === 'georgia') btn.classList.add('geo-main');
-                
-                if(key === currentKey) {
-                    if(key === 'georgia') {
-                         btn.style.backgroundColor = 'transparent';
-                         btn.style.borderColor = database[key].accent;
-                         btn.style.color = database[key].accent;
-                         btn.style.borderWidth = '2px';
-                    } else {
+                // Special handling for Sakartvelo (Home)
+                if (key === 'georgia') {
+                    const label = document.createElement('div');
+                    label.className = 'ribbon-label';
+                    label.innerText = labels[key][lang];
+                    label.onclick = () => loadRegion(key);
+                    
+                    const sep = document.createElement('span');
+                    sep.className = 'ribbon-separator';
+                    sep.innerText = "|";
+                    
+                    ribbon.appendChild(label);
+                    ribbon.appendChild(sep);
+                } else {
+                    const btn = document.createElement('button');
+                    btn.className = `dest-btn ${key === currentKey ? 'active' : ''}`;
+                    btn.setAttribute('data-region', key);
+                    btn.innerText = labels[key][lang];
+                    btn.onclick = () => loadRegion(key);
+                    
+                    if(key === currentKey) {
                          const color = database[key].accent;
                          btn.style.backgroundColor = color;
                          btn.style.borderColor = color;
                          btn.style.color = 'white';
+                    } else {
+                        btn.style.backgroundColor = '';
+                        btn.style.borderColor = '';
+                        btn.style.color = '';
                     }
-                } else {
-                    btn.style.backgroundColor = '';
-                    btn.style.borderColor = '';
-                    btn.style.color = '';
+                    
+                    ribbon.appendChild(btn);
                 }
-                
-                ribbon.appendChild(btn);
             });
         }
 
@@ -573,11 +672,10 @@
             
             renderRibbon(); 
 
-            // --- HERO LOGIC UPDATE ---
+            // --- HERO LOGIC ---
             let heroItems = [];
             if (key === 'georgia') {
                 // Main Page: All Tours + All Blogs + Common Services
-                // Collect tours and blogs from ALL regions
                 heroItems = [...commonServices];
                 Object.values(database).forEach(region => {
                     if(region.tours) heroItems.push(...region.tours);
@@ -589,11 +687,25 @@
                 if(data.blog) heroItems.push(...data.blog);
             }
             
-            // Shuffle and render
             shuffle(heroItems);
             renderHero(heroItems);
+            
+            // GRID LOGIC
+            const travelSection = document.getElementById('travelGrid');
+            if (key === 'georgia') {
+                travelSection.className = 'horizontal-scroller'; 
+                
+                let allTours = [];
+                Object.values(database).forEach(region => {
+                    if(region.tours) allTours.push(...region.tours);
+                });
+                shuffle(allTours);
+                renderGrid('travelGrid', allTours);
 
-            renderGrid('travelGrid', data.tours);
+            } else {
+                travelSection.className = 'grid-4'; 
+                renderGrid('travelGrid', data.tours);
+            }
             
             const servicesSection = document.getElementById('services');
             if (key === 'georgia') {
@@ -603,7 +715,17 @@
                 servicesSection.style.display = 'none';
             }
 
-            renderBlog(data.blog);
+            // BLOG LOGIC
+            let blogItems = [];
+            if (key === 'georgia') {
+                Object.values(database).forEach(region => {
+                    if(region.blog) blogItems.push(...region.blog);
+                });
+                shuffle(blogItems);
+                renderBlog(blogItems);
+            } else {
+                renderBlog(data.blog);
+            }
         }
 
         function renderHero(slides) {
@@ -613,62 +735,30 @@
             progContainer.innerHTML = '';
             const lang = localStorage.getItem('lang') || 'en';
             
-            // Only take first 5 shuffled items for wheel to keep performance good? Or all?
-            // Prompt said "infinite". Let's put all.
-            
             slides.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.className = 'hero-slide';
                 if(index === 0) div.classList.add('active');
                 
-                // Determine properties based on type (Tour vs Blog vs Service)
-                // Tours/Services have 'desc'. Blogs have 'date'.
                 const title = typeof item.title === 'object' ? item.title[lang] : item.title;
                 let desc = "";
                 let btnText = translations[lang].btn_details;
                 
-                if (item.date) { // It's a blog
+                if (item.date) { 
                     desc = item.date[lang];
                     btnText = translations[lang].btn_read;
-                } else { // Tour or Service
+                } else { 
                     desc = typeof item.desc === 'object' ? item.desc[lang] : item.desc;
                 }
                 
-                // For OpenModal content:
-                // Blog has 'text', Tours/Services have 'subItems'
-                // But flattened items might be tricky. 
-                // If it's a blog item, openModal uses 'text'.
-                // If it's a tour item, openModal uses 'subItems'.
-                // If it's a service, openModal uses 'subItems'.
-                // We need to pass the right content.
+                const subContent = item.subItems ? item.subItems : (item.text ? item.text[lang] : '');
+
+                const img = document.createElement('img');
+                img.src = item.img;
+                img.className = 'slide-bg';
                 
-                // We can attach the whole object to onclick for openModal to handle?
-                // Better yet, pre-calculate the content argument.
-                
-                // We need a way to identify if it is blog or tour for the openModal logic.
-                // Let's simplify openModal signature or logic inside onclick.
-                
-                // Hack: if item has 'date', treat as blog text. If 'subItems', list.
-                // BUT, 'openModal' expects separate arguments.
-                // Let's just pass the object properties directly.
-                
-                // Problem: onclick string interpolation is messy with objects.
-                // Solution: Assign data to element property and read in handler? Or just simple args.
-                // Let's assume 'item.subItems' or 'item.text' exists.
-                
-                // Wait, 'renderHero' builds HTML string. We can't pass array in string easily.
-                // We will store the current hero items in a global array or just use index?
-                // Simplest: Just pass title and desc/text/subItems? No, subItems is array.
-                
-                // Refactor: Use DOM elements instead of innerHTML string to attach click handler properly.
-                
-                // DIV creation
-                const slideBg = document.createElement('img');
-                slideBg.src = item.img;
-                slideBg.className = 'slide-bg';
-                
-                const slideContent = document.createElement('div');
-                slideContent.className = 'slide-content';
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'slide-content';
                 
                 const h2 = document.createElement('h2');
                 h2.className = 'slide-title';
@@ -681,17 +771,14 @@
                 const btn = document.createElement('button');
                 btn.className = 'slide-btn';
                 btn.innerText = btnText;
-                
-                // Click Handler
-                const subContent = item.subItems ? item.subItems : (item.text ? item.text[lang] : '');
                 btn.onclick = () => openModal(title, subContent, item.img);
                 
-                slideContent.appendChild(h2);
-                slideContent.appendChild(p);
-                slideContent.appendChild(btn);
+                contentDiv.appendChild(h2);
+                contentDiv.appendChild(p);
+                contentDiv.appendChild(btn);
                 
-                div.appendChild(slideBg);
-                div.appendChild(slideContent);
+                div.appendChild(img);
+                div.appendChild(contentDiv);
                 track.appendChild(div);
 
                 const bar = document.createElement('div');
@@ -728,10 +815,10 @@
             const lang = localStorage.getItem('lang') || 'en';
             items.forEach(item => {
                 const card = document.createElement('div'); card.className = 'blog-card';
-                const subContent = item.text ? item.text[lang] : ''; // Blog usually has text
+                const subContent = item.text ? item.text[lang] : ''; 
                 const title = item.title[lang];
                 
-                card.onclick = () => openModal(title, subContent, item.img); // Make blog clickable too!
+                card.onclick = () => openModal(title, subContent, item.img);
                 
                 card.innerHTML = `<div class="blog-img-box"><img src="${item.img}"></div><div class="blog-content"><div class="blog-date">${item.date[lang]}</div><h4 class="blog-title">${title}</h4><span class="blog-link">${translations[lang].btn_read}</span></div>`;
                 track.appendChild(card);
