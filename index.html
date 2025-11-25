@@ -43,8 +43,8 @@
 
         .header-top { 
             display: flex; justify-content: space-between; align-items: center; width: 100%; 
-            padding: 20px 5%;
-            /* Clean, solid dividing line */
+            padding: 15px 5%;
+            /* Clean line, no shadow */
             border-bottom: 1px solid #e0e0e0; 
             z-index: 2;
         }
@@ -90,13 +90,14 @@
             background: white; 
             border-color: var(--terracotta);
             color: var(--terracotta);
-            transform: translateY(-1px);
+            /* No movement on hover */
         }
 
         /* --- RIBBON --- */
         .ribbon-container {
             width: 100%; 
-            padding: 20px 5%; 
+            /* Padding ensures buttons clear the line */
+            padding: 30px 5% 15px; 
             background: transparent;
             position: relative;
             z-index: 1;
@@ -126,9 +127,8 @@
             letter-spacing: 0.5px; 
         }
         
-        /* Dynamic Hover Effect - NO MOVEMENT */
+        /* Dynamic Hover Effect - STATIC (No movement) */
         .dest-btn:hover { 
-            /* Removed translateY */
             border-color: rgba(var(--btn-rgb), 1); 
             color: rgba(var(--btn-rgb), 1); 
             background: rgba(var(--btn-rgb), 0.20); /* 20% Opacity Fill */
@@ -136,17 +136,17 @@
             position: relative; 
         }
         
-        /* Active State - NO MOVEMENT */
+        /* Active State - STATIC */
         .dest-btn.active { 
             background: rgba(var(--btn-rgb), 1); 
             color: white; 
             border-color: rgba(var(--btn-rgb), 1); 
             box-shadow: 0 4px 15px rgba(var(--btn-rgb), 0.4); 
-            /* Removed translateY */
         }
 
         /* --- HERO WHEEL --- */
-        .hero-wheel { height: 90vh; width: 100%; overflow: hidden; margin-top: 150px; background: #000; position: relative; }
+        /* Margin ensures smooth transition from header */
+        .hero-wheel { height: 90vh; width: 100%; overflow: hidden; margin-top: 160px; background: #000; position: relative; }
         .wheel-track { display: flex; width: 100%; height: 100%; overflow: hidden; }
         .hero-slide { flex: 0 0 100%; height: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; }
         .slide-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.65; z-index: 1; transition: transform 10s linear; }
@@ -157,22 +157,22 @@
         .slide-desc { font-size: 1.2rem; opacity: 0.9; margin-bottom: 25px; font-weight: 300; letter-spacing: 1px; }
         .slide-btn { border: 2px solid white; color: white; padding: 15px 45px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 3px; display: inline-block; background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); transition: 0.3s; }
         .slide-btn:hover { background: white; color: black; }
+        
+        /* STATIC SLOGAN */
+        .hero-slogan {
+            position: absolute; top: 40px; width: 100%; text-align: center;
+            font-family: 'Cinzel', serif; color: rgba(255,255,255,0.95);
+            font-size: 1.1rem; letter-spacing: 4px; text-transform: uppercase;
+            font-weight: 700; z-index: 10; text-shadow: 0 2px 15px rgba(0,0,0,0.8);
+            pointer-events: none;
+        }
+        
         .progress-container { position: absolute; bottom: 40px; left: 0; width: 100%; display: flex; justify-content: center; gap: 8px; z-index: 10; padding: 0 10%; }
         .progress-bar { height: 4px; background: rgba(255,255,255,0.3); flex: 1; max-width: 120px; border-radius: 2px; overflow: hidden; }
         .progress-fill { height: 100%; width: 0%; background: white; transition: width 0ms linear; }
         .wheel-arrows { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; z-index: 10; pointer-events: none; }
         .arrow { pointer-events: auto; cursor: pointer; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 1.5rem; backdrop-filter: blur(5px); transition: 0.3s; border: 1px solid rgba(255,255,255,0.3); }
         .arrow:hover { background: white; color: black; }
-
-        /* STATIC SLOGAN - MORE VISIBLE */
-        .hero-slogan {
-            position: absolute; top: 40px; width: 100%; text-align: center;
-            font-family: 'Cinzel', serif; color: rgba(255,255,255,0.95); /* Brighter White */
-            font-size: 1.1rem; letter-spacing: 4px; text-transform: uppercase; /* Larger */
-            font-weight: 700; /* Bolder */
-            z-index: 10; text-shadow: 0 2px 15px rgba(0,0,0,0.8);
-            pointer-events: none;
-        }
 
         /* --- SECTIONS & SCROLLERS --- */
         .section { padding: 80px 5%; display: flex; flex-direction: column; justify-content: center; transition: opacity 0.4s; }
@@ -399,6 +399,30 @@
             </div>
         </div>
     </div>
+
+    <!-- FIREBASE & LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAM-24214oP5GTan935IE1fg6rn5BayUak",
+            authDomain: "nextstop-e7017.firebaseapp.com",
+            projectId: "nextstop-e7017",
+            storageBucket: "nextstop-e7017.firebasestorage.app",
+            messagingSenderId: "530843130880",
+            appId: "1:530843130880:web:53569b8204f7989e7e0ce5",
+            measurementId: "G-JLM2Z6XSWB"
+        };
+
+        let db;
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            window.db = db; window.getDocs = getDocs; window.collection = collection;
+            if(window.initMain) window.initMain();
+        } catch(e) { console.log(e); }
+    </script>
 
     <script>
         let currentLang = localStorage.getItem('lang') || 'en';
