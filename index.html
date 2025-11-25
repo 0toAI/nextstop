@@ -42,12 +42,29 @@
         }
 
         .header-top { display: flex; justify-content: space-between; align-items: center; width: 100%; padding-bottom: 5px; }
-        .header-left { display: flex; align-items: center; gap: 30px; }
+        .header-left { display: flex; align-items: center; gap: 10px; } /* Reduced gap slightly */
         
-        /* PREMIUM LOGO */
-        .logo-container { display: flex; flex-direction: column; line-height: 0.9; cursor: pointer; min-width: 150px; }
+        /* PREMIUM LOGO - FIXED WIDTH TO PREVENT JUMPING */
+        .logo-container { 
+            display: flex; 
+            flex-direction: column; 
+            line-height: 0.9; 
+            cursor: pointer; 
+            width: 260px; /* Fixed width to accommodate long region names like Racha-Lechkhumi */
+            flex-shrink: 0; /* Prevent shrinking */
+        }
         .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; }
-        .logo-sub { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--terracotta); letter-spacing: 4px; text-transform: uppercase; margin-left: 2px; transition: color 0.5s; }
+        .logo-sub { 
+            font-family: 'Cinzel', serif; 
+            font-size: 0.7rem; 
+            font-weight: 700; 
+            color: var(--terracotta); 
+            letter-spacing: 4px; 
+            text-transform: uppercase; 
+            margin-left: 2px; 
+            transition: color 0.5s; 
+            white-space: nowrap; /* Ensure text stays on one line */
+        }
 
         /* TOGGLE */
         .site-toggle { display: flex; background: var(--gray-light); padding: 4px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); }
@@ -99,22 +116,16 @@
             transform: translateY(-1px);
         }
         
-        /* Sakartvelo (Home) Transparent Button */
-        .dest-btn.geo-main { 
-            border: 1px solid rgba(0,0,0,0.2); 
+        /* Sakartvelo (Home) Transparent Button Active State Override */
+        .dest-btn.geo-main.active { 
+            border: 1px solid var(--charcoal); 
             color: var(--charcoal); 
             background: transparent;
+            box-shadow: none;
         }
         .dest-btn.geo-main:hover {
             background: rgba(0,0,0,0.05);
             border-color: var(--charcoal);
-        }
-        .dest-btn.geo-main.active {
-            /* Even when active, keep it neutral but distinct */
-            background: var(--charcoal);
-            color: white;
-            border-color: var(--charcoal);
-            box-shadow: none;
         }
 
         /* --- HERO WHEEL --- */
@@ -328,8 +339,8 @@
         const whatsapp = "995591705710";
         
         const translations = {
-            en: { nav_tours: "Tours", nav_services: "Services", nav_blog: "Blog", nav_about: "About", section_travel_title: "Curated Experiences", section_travel_desc: "Explore the distinct regions of the Caucasus.", section_services_title: "Our Services", section_services_desc: "Professional logistical support.", section_blog_title: "Journal", section_blog_desc: "Latest updates.", btn_details: "View Details", btn_read: "Read Article", btn_book: "Book This Now" },
-            ka: { nav_tours: "ტურები", nav_services: "სერვისები", nav_blog: "ბლოგი", nav_about: "ჩვენ შესახებ", section_travel_title: "გამორჩეული გამოცდილება", section_travel_desc: "აღმოაჩინეთ კავკასია.", section_services_title: "სერვისები", section_services_desc: "პროფესიონალური ლოჯისტიკა.", section_blog_title: "ჟურნალი", section_blog_desc: "სიახლეები.", btn_details: "დეტალების ნახვა", btn_read: "წაკითხვა", btn_book: "დაჯავშნა" }
+            en: { nav_tours: "Tours", nav_services: "Services", nav_blog: "Blog", nav_about: "About", section_travel_title: "Curated Experiences", section_travel_desc: "Explore the distinct regions of the Caucasus.", section_services_title: "Our Services", section_services_desc: "Professional logistical support.", section_blog_title: "Journal", section_blog_desc: "Latest updates.", btn_details: "View Details", btn_read: "Read Article", btn_book: "Book This Now", filter_all: "All" },
+            ka: { nav_tours: "ტურები", nav_services: "სერვისები", nav_blog: "ბლოგი", nav_about: "ჩვენ შესახებ", section_travel_title: "გამორჩეული გამოცდილება", section_travel_desc: "აღმოაჩინეთ კავკასია.", section_services_title: "სერვისები", section_services_desc: "პროფესიონალური ლოჯისტიკა.", section_blog_title: "ჟურნალი", section_blog_desc: "სიახლეები.", btn_details: "დეტალების ნახვა", btn_read: "წაკითხვა", btn_book: "დაჯავშნა", filter_all: "ყველა" }
         };
 
         const commonServices = [
@@ -355,13 +366,13 @@
             tbilisi: { accent: "#2C3E50", hero: [{title: {en:"Tbilisi", ka:"თბილისი"}, desc: {en:"Capital", ka:"დედაქალაქი"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c"}], tours: [], blog: [] },
             mtskheta_mtianeti: { accent: "#4E342E", hero: [{title: {en:"Mtskheta", ka:"მცხეთა"}, desc: {en:"Ancient", ka:"ძველი"}, img: "https://images.unsplash.com/photo-1565118531796-763e5082d113"}], tours: [], blog: [] },
             kartli: { accent: "#5D4037", hero: [{title: {en:"Kartli", ka:"ქართლი"}, desc: {en:"Heart", ka:"გული"}, img: "https://images.unsplash.com/photo-1600742533089-a2e6e3c0b11b"}], tours: [], blog: [] },
-            kakheti: { accent: "#795548", hero: [{title: {en:"Kakheti", ka:"კახეთი"}, desc: {en:"Wine", ka:"ღვინო"}, img: "https://images.unsplash.com/photo-1566346547477-173084076792"}], tours: [], blog: [] },
-            samtskhe_javakheti: { accent: "#556B2F", hero: [{title: {en:"Samtskhe", ka:"სამცხე"}, desc: {en:"Fortresses", ka:"ციხესიმაგრეები"}, img: "https://images.unsplash.com/photo-1564052552234-2c585403590a"}], tours: [], blog: [] },
-            imereti: { accent: "#2E7D32", hero: [{title: {en:"Imereti", ka:"იმერეთი"}, desc: {en:"Golden Fleece", ka:"ოქროს საწმისი"}, img: "https://images.unsplash.com/photo-1597166567079-189725761f37"}], tours: [], blog: [] },
-            samegrelo: { accent: "#00695C", hero: [{title: {en:"Samegrelo", ka:"სამეგრელო"}, desc: {en:"Canyons", ka:"კანიონები"}, img: "https://images.unsplash.com/photo-1604918363094-587689290516"}], tours: [], blog: [] },
-            guria: { accent: "#00897B", hero: [{title: {en:"Guria", ka:"გურია"}, desc: {en:"Green", ka:"მწვანე"}, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f"}], tours: [], blog: [] },
-            racha: { accent: "#0097A7", hero: [{title: {en:"Racha", ka:"რაჭა"}, desc: {en:"Highlands", ka:"მთები"}, img: "https://images.unsplash.com/photo-1596306499317-849aa5dd3396"}], tours: [], blog: [] },
-            svaneti: { accent: "#0288D1", hero: [{title: {en:"Svaneti", ka:"სვანეთი"}, desc: {en:"Towers", ka:"კოშკები"}, img: "https://images.unsplash.com/photo-1571258267881-5d6929516187"}], tours: [], blog: [] },
+            kakheti: { accent: "#6D4C41", hero: [{title: {en:"Kakheti", ka:"კახეთი"}, desc: {en:"Wine", ka:"ღვინო"}, img: "https://images.unsplash.com/photo-1566346547477-173084076792"}], tours: [], blog: [] },
+            samtskhe_javakheti: { accent: "#827717", hero: [{title: {en:"Samtskhe", ka:"სამცხე"}, desc: {en:"Fortresses", ka:"ციხესიმაგრეები"}, img: "https://images.unsplash.com/photo-1564052552234-2c585403590a"}], tours: [], blog: [] },
+            imereti: { accent: "#33691E", hero: [{title: {en:"Imereti", ka:"იმერეთი"}, desc: {en:"Golden Fleece", ka:"ოქროს საწმისი"}, img: "https://images.unsplash.com/photo-1597166567079-189725761f37"}], tours: [], blog: [] },
+            samegrelo: { accent: "#2E7D32", hero: [{title: {en:"Samegrelo", ka:"სამეგრელო"}, desc: {en:"Canyons", ka:"კანიონები"}, img: "https://images.unsplash.com/photo-1604918363094-587689290516"}], tours: [], blog: [] },
+            guria: { accent: "#00695C", hero: [{title: {en:"Guria", ka:"გურია"}, desc: {en:"Green", ka:"მწვანე"}, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f"}], tours: [], blog: [] },
+            racha: { accent: "#00838F", hero: [{title: {en:"Racha", ka:"რაჭა"}, desc: {en:"Highlands", ka:"მთები"}, img: "https://images.unsplash.com/photo-1596306499317-849aa5dd3396"}], tours: [], blog: [] },
+            svaneti: { accent: "#0277BD", hero: [{title: {en:"Svaneti", ka:"სვანეთი"}, desc: {en:"Towers", ka:"კოშკები"}, img: "https://images.unsplash.com/photo-1571258267881-5d6929516187"}], tours: [], blog: [] },
             adjara: { accent: "#1565C0", hero: [{title: {en:"Adjara", ka:"აჭარა"}, desc: {en:"Coast", ka:"სანაპირო"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c"}], tours: [], blog: [] },
             abkhazeti: { accent: "#004D40", hero: [{title: {en:"Abkhazeti", ka:"აფხაზეთი"}, desc: {en:"Gem", ka:"მარგალიტი"}, img: "https://images.unsplash.com/photo-1565008576549-57569a49371d"}], tours: [], blog: [] }
             /* --- END GRADATION --- */
@@ -420,10 +431,17 @@
                 
                 // Apply specific color logic for active state
                 if(key === currentKey) {
-                    const color = database[key].accent;
-                    btn.style.backgroundColor = color;
-                    btn.style.borderColor = color;
-                    btn.style.color = 'white';
+                    if(key === 'georgia') {
+                         btn.style.backgroundColor = 'transparent';
+                         btn.style.borderColor = database[key].accent;
+                         btn.style.color = database[key].accent;
+                         btn.style.borderWidth = '2px';
+                    } else {
+                         const color = database[key].accent;
+                         btn.style.backgroundColor = color;
+                         btn.style.borderColor = color;
+                         btn.style.color = 'white';
+                    }
                 } else {
                     btn.style.backgroundColor = '';
                     btn.style.borderColor = '';
@@ -455,19 +473,30 @@
 
         function renderHero(slides) {
             const track = document.getElementById('heroTrack');
+            const progContainer = document.getElementById('progressContainer');
             track.innerHTML = '';
-            const lang = localStorage.getItem('lang') || 'en';
+            progContainer.innerHTML = '';
             
             slides.forEach((slide, index) => {
                 const div = document.createElement('div');
                 div.className = 'hero-slide';
                 if(index === 0) div.classList.add('active');
-                const title = slide.title[lang];
-                const desc = slide.desc[lang];
-                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${title}</h2><p class="slide-desc">${desc}</p><button class="slide-btn" onclick="openModal('${title}', '${desc}', '${slide.img}')">${translations[lang].btn_details}</button></div>`;
+                
+                const title = typeof slide.title === 'object' ? slide.title[currentLang] : slide.title;
+                const desc = typeof slide.desc === 'object' ? slide.desc[currentLang] : slide.desc;
+                const fullText = typeof slide.fullText === 'object' ? slide.fullText[currentLang] : slide.fullText;
+
+                div.innerHTML = `<img src="${slide.img}" class="slide-bg"><div class="slide-content"><h2 class="slide-title">${title}</h2><p class="slide-desc">${desc}</p><button class="slide-btn" onclick="openModal('${title}', '${fullText || desc}', '${slide.img}')">${translations[currentLang].btn_details}</button></div>`;
                 track.appendChild(div);
+
+                const bar = document.createElement('div');
+                bar.className = 'progress-bar';
+                bar.innerHTML = `<div class="progress-fill" id="bar-${index}"></div>`;
+                progContainer.appendChild(bar);
             });
-            currentSlide = 0; startStoryMode();
+            
+            currentSlide = 0;
+            startStoryMode();
         }
 
         function renderGrid(id, items) {
@@ -477,36 +506,69 @@
             items.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
-                const title = item.title[lang];
-                const desc = item.desc[lang];
-                const tag = item.tag ? item.tag[lang] : '';
-                card.onclick = () => openModal(title, item.subItems, item.img);
+                
+                const title = typeof item.title === 'object' ? item.title[lang] : item.title;
+                const desc = typeof item.desc === 'object' ? item.desc[lang] : item.desc;
+                const tag = item.tag ? (typeof item.tag === 'object' ? item.tag[lang] : item.tag) : '';
+                
+                // Determine if it has subItems or text
+                const subContent = item.subItems ? item.subItems : (item.text ? (typeof item.text === 'object' ? item.text[lang] : item.text) : '');
+
+                card.onclick = () => openModal(title, subContent, item.img);
                 card.innerHTML = `<img src="${item.img}" class="card-bg"><div class="card-overlay">${tag ? `<span class="card-tag">${tag}</span>` : ''}<h3>${title}</h3><p>${desc}</p></div>`;
                 grid.appendChild(card);
             });
         }
-        
+
         function renderBlog(items) {
             const track = document.getElementById('blogTrack');
             track.innerHTML = '';
             const lang = localStorage.getItem('lang') || 'en';
             items.forEach(item => {
-                const card = document.createElement('div'); card.className = 'blog-card';
-                card.innerHTML = `<div class="blog-img-box"><img src="${item.img}"></div><div class="blog-content"><div class="blog-date">${item.date[lang]}</div><h4 class="blog-title">${item.title[lang]}</h4><span class="blog-link">Read</span></div>`;
+                const card = document.createElement('div');
+                card.className = 'blog-card';
+                
+                const title = typeof item.title === 'object' ? item.title[lang] : item.title;
+                const date = typeof item.date === 'object' ? item.date[lang] : item.date;
+                
+                card.innerHTML = `<div class="blog-img-box"><img src="${item.img}"></div><div class="blog-content"><div class="blog-date">${date}</div><h4 class="blog-title">${title}</h4><span class="blog-link">${translations[lang].btn_read}</span></div>`;
                 track.appendChild(card);
             });
         }
 
+        /* STORY ENGINE */
         function startStoryMode() { showSlide(currentSlide); }
         function showSlide(index) {
-            const track = document.getElementById('heroTrack'); if(!track) return;
+            const track = document.getElementById('heroTrack');
+            if(!track) return;
             const slides = track.getElementsByClassName('hero-slide');
+            const bars = document.querySelectorAll('.progress-fill');
+            
             if(!slides.length) return;
-            if (index >= slides.length) { currentSlide = 0; index = 0; }
+
+            if (index >= slides.length) { currentSlide = 0; resetBars(); index = 0; }
+            if (index < 0) { currentSlide = slides.length - 1; resetBars(); index = slides.length - 1; }
+
             track.scrollTo({ left: track.clientWidth * index, behavior: 'smooth' });
-            Array.from(slides).forEach(s => s.classList.remove('active')); slides[index].classList.add('active');
-            clearTimeout(autoPlayTimer); autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, 5000);
+
+            Array.from(slides).forEach(s => s.classList.remove('active'));
+            slides[index].classList.add('active');
+
+            bars.forEach((bar, idx) => {
+                bar.classList.remove('active');
+                bar.style.transition = 'none';
+                if (idx < index) { bar.style.width = '100%'; } 
+                else if (idx === index) { 
+                    bar.style.width = '0%'; 
+                    setTimeout(() => { bar.style.transition = `width 5000ms linear`; bar.style.width = '100%'; }, 50); 
+                } 
+                else { bar.style.width = '0%'; }
+            });
+
+            clearTimeout(autoPlayTimer);
+            autoPlayTimer = setTimeout(() => { currentSlide++; showSlide(currentSlide); }, 5000);
         }
+        function resetBars() { document.querySelectorAll('.progress-fill').forEach(bar => { bar.style.transition = 'none'; bar.style.width = '0%'; }); }
         function manualSlide(dir) { currentSlide += dir; showSlide(currentSlide); }
 
         const modal = document.getElementById('detailModal'); const modalImg = document.getElementById('modalImg'); const modalTitle = document.getElementById('modalTitle'); const modalListView = document.getElementById('modalListView'); const modalList = document.getElementById('modalList'); const modalDetailView = document.getElementById('modalDetailView'); const detailTitle = document.getElementById('detailTitle'); const detailText = document.getElementById('detailText'); const detailBtn = document.getElementById('detailBtn');
