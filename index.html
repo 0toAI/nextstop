@@ -25,7 +25,7 @@
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
-        html { scroll-behavior: smooth; scroll-padding-top: 240px; /* Increased for larger header */ }
+        html { scroll-behavior: smooth; scroll-padding-top: 220px; }
         body { color: var(--charcoal); background-color: var(--bg-warm); line-height: 1.6; overflow-x: hidden; transition: background 0.5s; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -43,9 +43,9 @@
 
         .header-top { 
             display: flex; justify-content: space-between; align-items: center; width: 100%; 
-            /* Increased vertical padding for spacing around the line */
-            padding: 20px 5%;
-            border-bottom: 1px solid rgba(0,0,0,0.08); 
+            padding: 15px 5%;
+            /* Changed to solid hex color for a crisp line without "shade" */
+            border-bottom: 1px solid #e0e0e0; 
             z-index: 2;
         }
 
@@ -96,8 +96,8 @@
         /* --- RIBBON --- */
         .ribbon-container {
             width: 100%; 
-            /* Increased top padding to push buttons away from line */
-            padding: 25px 5% 15px; 
+            /* Padding adjusted to create clear space below the line */
+            padding: 20px 5% 12px; 
             background: transparent;
             position: relative;
             z-index: 1;
@@ -117,8 +117,7 @@
         .dest-btn.active { background: var(--terracotta); color: white; border-color: var(--terracotta); box-shadow: 0 4px 15px rgba(168, 74, 50, 0.3); transform: translateY(-1px); }
 
         /* --- HERO WHEEL --- */
-        /* Adjusted top margin for taller header */
-        .hero-wheel { height: 90vh; width: 100%; overflow: hidden; margin-top: 185px; background: #000; position: relative; }
+        .hero-wheel { height: 90vh; width: 100%; overflow: hidden; margin-top: 160px; background: #000; position: relative; }
         .wheel-track { display: flex; width: 100%; height: 100%; overflow: hidden; }
         .hero-slide { flex: 0 0 100%; height: 100%; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; }
         .slide-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.65; z-index: 1; transition: transform 10s linear; }
