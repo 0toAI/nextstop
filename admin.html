@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | NextStop Georgia</title>
+    <title>Manager | NextStop Georgia</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        :root { --charcoal: #1a1a1a; --terracotta: #a84a32; --gray-light: #f4f4f4; }
+        :root { --charcoal: #1a1a1a; --terracotta: #a84a32; --gray-light: #f4f4f4; --blue: #2980b9; }
         * { box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
         body { background: var(--gray-light); color: var(--charcoal); margin: 0; padding: 40px; min-height: 100vh; }
         
@@ -17,33 +17,52 @@
             background: var(--charcoal); z-index: 2000;
             display: flex; justify-content: center; align-items: center;
         }
-        .login-box {
-            background: white; padding: 40px; border-radius: 8px; width: 350px; text-align: center;
-        }
+        .login-box { background: white; padding: 40px; border-radius: 8px; width: 350px; text-align: center; }
         .login-box h2 { margin-top: 0; font-family: 'Cinzel', serif; color: var(--terracotta); }
-        .login-btn {
-            background: var(--charcoal); color: white; width: 100%; padding: 12px;
-            border: none; margin-top: 20px; cursor: pointer; font-weight: bold;
-        }
+        .login-btn { background: var(--charcoal); color: white; width: 100%; padding: 12px; border: none; margin-top: 20px; cursor: pointer; font-weight: bold; }
 
-        /* DASHBOARD */
-        .admin-container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: none; }
-        h1 { font-family: 'Cinzel', serif; color: var(--charcoal); border-bottom: 2px solid var(--terracotta); padding-bottom: 15px; margin-bottom: 30px; }
+        /* DASHBOARD LAYOUT */
+        .admin-wrapper { display: flex; gap: 40px; max-width: 1200px; margin: 0 auto; display: none; }
         
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; text-transform: uppercase; }
-        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; }
-        textarea { height: 100px; resize: vertical; }
+        /* LEFT COLUMN: EDITOR */
+        .editor-panel { flex: 1; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); height: fit-content; position: sticky; top: 20px; }
         
-        .row { display: flex; gap: 20px; }
+        /* RIGHT COLUMN: LIST */
+        .list-panel { flex: 1; }
+        
+        h1, h2 { font-family: 'Cinzel', serif; color: var(--charcoal); margin-top: 0; }
+        .header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid var(--terracotta); padding-bottom: 10px; }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.8rem; text-transform: uppercase; color: #777; }
+        input, textarea, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.95rem; }
+        textarea { height: 80px; resize: vertical; }
+        
+        .row { display: flex; gap: 15px; }
         .col { flex: 1; }
         
-        .btn-save { background: var(--terracotta); color: white; border: none; padding: 15px 30px; font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; transition: 0.3s; }
+        .btn-save { background: var(--terracotta); color: white; border: none; padding: 15px; font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; transition: 0.3s; border-radius: 4px; }
         .btn-save:hover { background: #8a3b26; }
+        
+        /* LIST ITEMS */
+        .content-card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-left: 5px solid #ddd; transition: 0.3s; display: flex; justify-content: space-between; align-items: center; }
+        .content-card:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .content-card.type-tours { border-left-color: var(--terracotta); }
+        .content-card.type-blog { border-left-color: var(--blue); }
+        
+        .card-info h3 { margin: 0 0 5px 0; font-size: 1.1rem; font-family: 'Montserrat', sans-serif; }
+        .card-meta { font-size: 0.8rem; color: #888; }
+        
+        .card-actions { display: flex; gap: 10px; }
+        .action-btn { padding: 8px 12px; border-radius: 4px; border: none; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
+        .btn-edit { background: var(--gray-light); color: var(--charcoal); }
+        .btn-edit:hover { background: #ddd; }
+        .btn-delete { background: #ffebee; color: #c62828; }
+        .btn-delete:hover { background: #ffcdd2; }
 
-        .status-msg { margin-top: 15px; text-align: center; font-weight: bold; display: none; }
-        .success { color: green; }
-        .error { color: red; }
+        .status-msg { margin-top: 15px; text-align: center; font-weight: bold; display: none; padding: 10px; border-radius: 4px; }
+        .success { background: #e8f5e9; color: green; }
+        .error { background: #ffebee; color: red; }
     </style>
 </head>
 <body>
@@ -51,153 +70,237 @@
     <!-- LOGIN SCREEN -->
     <div id="login-screen">
         <div class="login-box">
-            <h2>NextStop Admin</h2>
-            <p>Please sign in to edit content.</p>
+            <h2>Manager Login</h2>
             <input type="email" id="email" placeholder="Email" style="margin-bottom: 10px;">
             <input type="password" id="password" placeholder="Password">
-            <button class="login-btn" onclick="login()">Secure Login</button>
+            <button class="login-btn" onclick="login()">Enter Dashboard</button>
         </div>
     </div>
 
-    <!-- MAIN DASHBOARD (Hidden until login) -->
-    <div class="admin-container" id="dashboard">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h1>Content Manager</h1>
-            <button onclick="logout()" style="background:none; border:none; text-decoration:underline; cursor:pointer;">Logout</button>
-        </div>
-
-        <div class="form-group">
-            <label>Category / Region</label>
-            <select id="regionSelect">
-                <option value="georgia">Main Page (Georgia)</option>
-                <option value="tbilisi">Tbilisi</option>
-                <option value="kakheti">Kakheti</option>
-                <option value="kazbegi">Kazbegi</option>
-                <option value="svaneti">Svaneti</option>
-                <option value="adjara">Adjara</option>
-                <option value="abkhazeti">Abkhazeti</option>
-                <option value="imereti">Imereti</option>
-                <option value="samegrelo">Samegrelo</option>
-                <option value="guria">Guria</option>
-                <option value="racha">Racha</option>
-                <option value="kartli">Kartli</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Type of Content</label>
-            <select id="contentType">
-                <option value="tours">Tour Package</option>
-                <option value="blog">Journal Post</option>
-            </select>
-        </div>
-
-        <!-- ENGLISH CONTENT -->
-        <div class="row">
-            <div class="col">
-                <div class="form-group">
-                    <label>Title (English)</label>
-                    <input type="text" id="title_en" placeholder="e.g., Wine Tasting">
+    <!-- MAIN DASHBOARD -->
+    <div class="admin-wrapper" id="dashboard">
+        
+        <!-- EDITOR (Left) -->
+        <div class="editor-panel">
+            <h2>Editor</h2>
+            <input type="hidden" id="docId"> <!-- Hidden ID field to track editing -->
+            
+            <div class="form-group">
+                <label>Type & Region</label>
+                <div class="row">
+                    <select id="contentType" class="col">
+                        <option value="tours">Tour</option>
+                        <option value="blog">Journal</option>
+                    </select>
+                    <select id="regionSelect" class="col">
+                        <option value="georgia">Main Page</option>
+                        <option value="tbilisi">Tbilisi</option>
+                        <option value="kakheti">Kakheti</option>
+                        <option value="kazbegi">Kazbegi</option>
+                        <option value="svaneti">Svaneti</option>
+                        <option value="adjara">Adjara</option>
+                        <option value="abkhazeti">Abkhazeti</option>
+                        <option value="imereti">Imereti</option>
+                        <option value="samegrelo">Samegrelo</option>
+                        <option value="guria">Guria</option>
+                        <option value="racha">Racha</option>
+                        <option value="kartli">Kartli</option>
+                    </select>
                 </div>
-                <div class="form-group">
-                    <label>Short Desc (English)</label>
-                    <textarea id="desc_en" placeholder="e.g., 3 Day tour..."></textarea>
-                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Title (English / Georgian)</label>
+                <input type="text" id="title_en" placeholder="English Title" style="margin-bottom:5px;">
+                <input type="text" id="title_ka" placeholder="ქართული სათაური">
+            </div>
+
+            <div class="form-group">
+                <label>Description / Date (Eng / Geo)</label>
+                <textarea id="desc_en" placeholder="English Description (or Date for Blog)" style="height:60px; margin-bottom:5px;"></textarea>
+                <textarea id="desc_ka" placeholder="ქართული აღწერა (ან თარიღი ბლოგისთვის)" style="height:60px;"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Image URL</label>
+                <input type="text" id="imgUrl" placeholder="https://...">
             </div>
             
-            <!-- GEORGIAN CONTENT -->
-            <div class="col">
-                <div class="form-group">
-                    <label>Title (Georgian)</label>
-                    <input type="text" id="title_ka" placeholder="მაგ: ღვინის ტური">
+            <div class="form-group">
+                <label>Tag (e.g. Adventure / თავგადასავალი)</label>
+                <div class="row">
+                    <input type="text" id="tag_en" class="col" placeholder="Tag (EN)">
+                    <input type="text" id="tag_ka" class="col" placeholder="Tag (KA)">
                 </div>
-                <div class="form-group">
-                    <label>Short Desc (Georgian)</label>
-                    <textarea id="desc_ka" placeholder="მაგ: 3 დღიანი ტური..."></textarea>
-                </div>
+            </div>
+
+            <button class="btn-save" id="saveBtn" onclick="saveData()">Add New Item</button>
+            <button onclick="resetForm()" style="width:100%; margin-top:10px; padding:10px; border:none; background:transparent; cursor:pointer; color:#999;">Cancel / Clear</button>
+            <p id="status" class="status-msg"></p>
+        </div>
+
+        <!-- LIST (Right) -->
+        <div class="list-panel">
+            <div class="header-bar">
+                <h1>Your Content</h1>
+                <button onclick="logout()" style="border:none; background:none; cursor:pointer; text-decoration:underline;">Logout</button>
+            </div>
+            <div id="contentList">
+                <p style="color:#999; text-align:center;">Loading database...</p>
             </div>
         </div>
 
-        <!-- MEDIA -->
-        <div class="form-group">
-            <label>Image Link (URL)</label>
-            <input type="text" id="imgUrl" placeholder="https://...">
-        </div>
-        
-        <div class="form-group">
-            <label>Tag (e.g., Adventure, Relax)</label>
-            <input type="text" id="tag" placeholder="Tag Name">
-        </div>
-
-        <button class="btn-save" onclick="saveData()">Save to Website</button>
-        <p id="status" class="status-msg"></p>
     </div>
 
     <!-- FIREBASE SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // --- 🔴 PASTE YOUR FIREBASE CONFIG HERE 🔴 ---
         const firebaseConfig = {
-           apiKey: "AIzaSyAM-24214oP5GTan935IE1fg6rn5BayUak",
-  authDomain: "nextstop-e7017.firebaseapp.com",
-  projectId: "nextstop-e7017",
-  storageBucket: "nextstop-e7017.firebasestorage.app",
-  messagingSenderId: "530843130880",
-  appId: "1:530843130880:web:53569b8204f7989e7e0ce5",
-  measurementId: "G-JLM2Z6XSWB"  // Paste the code from Firebase Console here (apiKey, authDomain, etc.)
+            apiKey: "AIzaSyAM-24214oP5GTan935IE1fg6rn5BayUak",
+            authDomain: "nextstop-e7017.firebaseapp.com",
+            projectId: "nextstop-e7017",
+            storageBucket: "nextstop-e7017.firebasestorage.app",
+            messagingSenderId: "530843130880",
+            appId: "1:530843130880:web:53569b8204f7989e7e0ce5",
+            measurementId: "G-JLM2Z6XSWB" 
         };
-        // ------------------------------------------------
 
-        // Initialize Firebase
         let app, db, auth;
         
         try {
             app = initializeApp(firebaseConfig);
             db = getFirestore(app);
             auth = getAuth(app);
-        } catch (e) {
-            console.log("Waiting for config...");
-        }
+        } catch (e) { console.error("Firebase Error", e); }
 
-        // --- AUTH LOGIC ---
+        // --- AUTH ---
         window.login = () => {
             const email = document.getElementById('email').value;
             const pass = document.getElementById('password').value;
-            signInWithEmailAndPassword(auth, email, pass)
-                .catch((error) => alert("Error: " + error.message));
+            signInWithEmailAndPassword(auth, email, pass).catch(e => alert(e.message));
         };
-
         window.logout = () => signOut(auth);
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
+                document.querySelector('.admin-wrapper').style.display = 'flex';
+                loadContent(); // Load data on login
             } else {
                 document.getElementById('login-screen').style.display = 'flex';
-                document.getElementById('dashboard').style.display = 'none';
+                document.querySelector('.admin-wrapper').style.display = 'none';
             }
         });
 
-        // --- SAVE LOGIC ---
+        // --- LOAD CONTENT ---
+        let loadedItems = {};
+
+        window.loadContent = async () => {
+            const list = document.getElementById('contentList');
+            list.innerHTML = '<p style="text-align:center; color:#999;">Refreshing list...</p>';
+            
+            try {
+                const q = query(collection(db, "content"));
+                const querySnapshot = await getDocs(q);
+                
+                list.innerHTML = ""; // Clear list
+                loadedItems = {};
+                
+                querySnapshot.forEach((doc) => {
+                    const item = doc.data();
+                    const id = doc.id;
+                    loadedItems[id] = item;
+                    
+                    const div = document.createElement('div');
+                    div.className = `content-card type-${item.type}`;
+                    div.innerHTML = `
+                        <div class="card-info">
+                            <h3>${item.title.en}</h3>
+                            <div class="card-meta">
+                                <strong>${item.region.toUpperCase()}</strong> • ${item.type.toUpperCase()}
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="action-btn btn-edit" onclick="fillForm('${id}')">EDIT</button>
+                            <button class="action-btn btn-delete" onclick="deleteItem('${id}')">DEL</button>
+                        </div>
+                    `;
+                    list.appendChild(div);
+                });
+
+                if(querySnapshot.empty) {
+                    list.innerHTML = '<p style="text-align:center; color:#999;">No content found. Create something!</p>';
+                }
+
+            } catch (e) {
+                list.innerHTML = `<p style="color:red">Error loading: ${e.message}</p>`;
+            }
+        };
+
+        window.fillForm = (id) => {
+            const data = loadedItems[id];
+            if(!data) return;
+            
+            document.getElementById('docId').value = id;
+            document.getElementById('regionSelect').value = data.region;
+            document.getElementById('contentType').value = data.type;
+            
+            document.getElementById('title_en').value = data.title.en;
+            document.getElementById('title_ka').value = data.title.ka;
+            
+            document.getElementById('desc_en').value = data.desc ? data.desc.en : data.date.en;
+            document.getElementById('desc_ka').value = data.desc ? data.desc.ka : data.date.ka;
+            
+            document.getElementById('imgUrl').value = data.img;
+            
+            if(data.tag) {
+                document.getElementById('tag_en').value = data.tag.en;
+                document.getElementById('tag_ka').value = data.tag.ka;
+            }
+
+            document.getElementById('saveBtn').innerText = "UPDATE ITEM";
+            document.getElementById('saveBtn').style.background = "#2980b9"; 
+            window.scrollTo(0,0);
+        };
+
+        window.resetForm = () => {
+            document.getElementById('docId').value = "";
+            document.getElementById('title_en').value = "";
+            document.getElementById('title_ka').value = "";
+            document.getElementById('desc_en').value = "";
+            document.getElementById('desc_ka').value = "";
+            document.getElementById('imgUrl').value = "";
+            document.getElementById('tag_en').value = "";
+            document.getElementById('tag_ka').value = "";
+            
+            document.getElementById('saveBtn').innerText = "ADD NEW ITEM";
+            document.getElementById('saveBtn').style.background = "#a84a32";
+        };
+
+        window.deleteItem = async (id) => {
+            if(confirm("Are you sure you want to delete this?")) {
+                await deleteDoc(doc(db, "content", id));
+                loadContent(); 
+            }
+        };
+
         window.saveData = async () => {
             if (!db) return alert("Database not connected! Check your config.");
             
-            const region = document.getElementById('regionSelect').value;
-            const type = document.getElementById('contentType').value;
+            const id = document.getElementById('docId').value;
             const status = document.getElementById('status');
-
+            
             const data = {
-                region: region,
-                type: type,
+                region: document.getElementById('regionSelect').value,
+                type: document.getElementById('contentType').value,
                 title: { en: document.getElementById('title_en').value, ka: document.getElementById('title_ka').value },
-                desc: { en: document.getElementById('desc_en').value, ka: document.getElementById('desc_ka').value }, // Used for Tours
-                date: { en: document.getElementById('desc_en').value, ka: document.getElementById('desc_ka').value }, // Used for Blog (reusing field)
+                desc: { en: document.getElementById('desc_en').value, ka: document.getElementById('desc_ka').value }, 
+                date: { en: document.getElementById('desc_en').value, ka: document.getElementById('desc_ka').value },
                 img: document.getElementById('imgUrl').value,
-                tag: { en: document.getElementById('tag').value, ka: document.getElementById('tag').value } // Simplified tag for now
+                tag: { en: document.getElementById('tag_en').value, ka: document.getElementById('tag_ka').value }
             };
 
             status.innerText = "Saving...";
@@ -205,13 +308,18 @@
             status.className = "status-msg";
 
             try {
-                await addDoc(collection(db, "content"), data);
-                status.innerText = "✅ Saved Successfully! (Note: Website update requires Step 2)";
-                status.className = "status-msg success";
+                if (id) {
+                    await updateDoc(doc(db, "content", id), data);
+                    status.innerText = "✅ Updated Successfully!";
+                } else {
+                    await addDoc(collection(db, "content"), data);
+                    status.innerText = "✅ Created Successfully!";
+                }
                 
-                // Clear form
-                document.getElementById('title_en').value = "";
-                document.getElementById('imgUrl').value = "";
+                status.className = "status-msg success";
+                resetForm();
+                loadContent(); 
+                
             } catch (e) {
                 status.innerText = "❌ Error: " + e.message;
                 status.className = "status-msg error";
