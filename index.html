@@ -95,7 +95,7 @@
         /* --- RIBBON --- */
         .ribbon-container {
             width: 100%; 
-            padding: 20px 5% 12px; 
+            padding: 30px 5% 15px; 
             background: transparent;
             position: relative;
             z-index: 1;
@@ -161,7 +161,7 @@
         footer { background: #111; color: #777; padding: 80px 5%; text-align: center; font-size: 0.9rem; border-top: 5px solid var(--terracotta); }
         .footer-logo .logo-main { color: #fff; } .footer-logo .logo-sub { color: var(--terracotta); }
 
-        @media (max-width: 1000px) { /* Mobile Adjustments */
+        @media (max-width: 1000px) { 
             .nav-links { display: none; } header { height: auto; flex-wrap: wrap; padding-bottom: 10px; }
             .header-left { width: 100%; justify-content: space-between; }
             .nav-right { position: absolute; top: 15px; right: 5%; }
@@ -370,26 +370,24 @@
 
         // FETCH DATA FROM FIREBASE AND MERGE
         window.initMain = async function() {
-            // Only proceed if DB is available (i.e., keys were pasted correctly)
+            // Check if DB is available (i.e., keys were pasted correctly)
             if (window.db) {
                 try {
                     const querySnapshot = await window.getDocs(window.collection(window.db, "content"));
                     
-                    // Clear hardcoded tours/blogs to make way for live data
+                    // 1. Clear hardcoded tours/blogs to make way for live data
                     Object.keys(database).forEach(key => { database[key].tours = []; database[key].blog = []; });
-
+                    
+                    // 2. Populate data from Firestore
                     querySnapshot.forEach((doc) => {
                         const item = doc.data();
-                        
-                        // Check if the item is published (default is true if field doesn't exist)
                         const isPublished = item.published !== false;
                         
                         if (isPublished && database[item.region]) {
-                            if(item.type === 'tours') database[item.region].tours.push(item);
+                            if(item.type === 'tours' || item.type === 'services') database[item.region].tours.push(item);
                             if(item.type === 'blog') database[item.region].blog.push(item);
                         }
                     });
-                    console.log("Live content loaded successfully from Firebase.");
                 } catch(e) {
                     console.error("Failed to fetch Firebase content. Using hardcoded defaults.", e);
                 }
@@ -417,19 +415,10 @@
             ribbon.innerHTML = '';
             
             const labels = {
-                georgia: { en: "SAKARTVELO", ka: "საქართველო" },
-                tbilisi: { en: "TBILISI", ka: "თბილისი" },
-                mtskheta_mtianeti: { en: "MTSKHETA-MTIANETI", ka: "მცხეთა-მთიანეთი" },
-                kakheti: { en: "KAKHETI", ka: "კახეთი" },
-                kartli: { en: "KARTLI", ka: "ქართლი" },
-                samtskhe_javakheti: { en: "SAMTSKHE-JAVAKHETI", ka: "სამცხე-ჯავახეთი" },
-                racha: { en: "RACHA-LECHKHUMI", ka: "რაჭა-ლეჩხუმი" },
-                svaneti: { en: "SVANETI", ka: "სვანეთი" },
-                imereti: { en: "IMERETI", ka: "იმერეთი" },
-                guria: { en: "GURIA", ka: "გურია" },
-                samegrelo: { en: "SAMEGRELO", ka: "სამეგრელო" },
-                adjara: { en: "ADJARA", ka: "აჭარა" },
-                abkhazeti: { en: "ABKHAZETI", ka: "აფხაზეთი" }
+                georgia: { en: "SAKARTVELO", ka: "საქართველო" }, tbilisi: { en: "TBILISI", ka: "თბილისი" }, mtskheta_mtianeti: { en: "MTSKHETA-MTIANETI", ka: "მცხეთა-მთიანეთი" },
+                kakheti: { en: "KAKHETI", ka: "კახეთი" }, kartli: { en: "KARTLI", ka: "ქართლი" }, samtskhe_javakheti: { en: "SAMTSKHE-JAVAKHETI", ka: "სამცხე-ჯავახეთი" },
+                racha: { en: "RACHA-LECHKHUMI", ka: "რაჭა-ლეჩხუმი" }, svaneti: { en: "SVANETI", ka: "სვანეთი" }, imereti: { en: "IMERETI", ka: "იმერეთი" },
+                guria: { en: "GURIA", ka: "გურია" }, samegrelo: { en: "SAMEGRELO", ka: "სამეგრელო" }, adjara: { en: "ADJARA", ka: "აჭარა" }, abkhazeti: { en: "ABKHAZETI", ka: "აფხაზეთი" }
             };
             
             const lang = localStorage.getItem('lang') || 'en';
@@ -475,7 +464,7 @@
             
             renderRibbon(); 
 
-            // Hero Logic
+            // 1. Hero Logic (Optimized: Limited Shuffle)
             let heroItems = [];
             if (key === 'georgia') {
                 heroItems = [...commonServices];
@@ -494,7 +483,7 @@
             
             renderHero(heroItems);
 
-            // Tours Logic
+            // 2. Tours Logic (ALWAYS SCROLLER)
             let toursItems = [];
             if (key === 'georgia') {
                 Object.values(database).forEach(region => {
@@ -506,7 +495,7 @@
             }
             renderScroller('travelGrid', toursItems, 'card');
 
-            // Services Logic
+            // 3. Services Logic
             const servicesSection = document.getElementById('services');
             const servicesLink = document.getElementById('servicesLink');
             
@@ -521,7 +510,7 @@
                 servicesLink.setAttribute('onclick', 'openServicesModal()');
             }
 
-            // Blog Logic
+            // 4. Blog Logic
             let blogItems = [];
             if (key === 'georgia') {
                 Object.values(database).forEach(region => {
@@ -701,8 +690,9 @@
         function closeModal() { modal.classList.remove('active'); }
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 
-        window.initMain = window.initMain || function() { console.log("Init triggered early."); };
-        setLanguage(localStorage.getItem('lang'));
+        // Trigger Main Init
+        if (window.initMain) window.initMain();
+        else setLanguage(localStorage.getItem('lang'));
     </script>
 </body>
 </html>
