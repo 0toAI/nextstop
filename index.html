@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Next Stop: Georgia | Premium Travel</title>
-    <meta name="description" content="Next Stop: Georgia. Premium travel agency in Tbilisi offering VIP casino tours, medical tourism, ski packages in Gudauri, and exclusive wine tours in Kakheti.">
+    <!-- 1. GLOBAL SEO METADATA -->
+    <title>NextStop Georgia | Premium Travel, Business & Medical Concierge</title>
+    <meta name="description" content="Make Georgia your NextStop. Your local partner for luxury leisure, adventure travel, business logistics (MICE), and medical wellness. Arrive as a guest, operate like a local.">
+    <meta name="keywords" content="Premium travel Georgia, Wine and Gastronomy, MICE Georgia, Medical Tourism Tbilisi, Transport and Security, Adventure Tours, Luxury Vacation, NextStop Georgia">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🇬🇪</text></svg>">
 
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
@@ -42,7 +44,6 @@
         .header-top { 
             display: flex; justify-content: space-between; align-items: center; width: 100%; 
             padding: 15px 5%;
-            /* Clean separation line */
             border-bottom: 1px solid rgba(0,0,0,0.08); 
             z-index: 2;
         }
@@ -64,13 +65,13 @@
 
         .nav-right { display: flex; gap: 20px; align-items: center; }
         .nav-links { display: flex; gap: 30px; }
-        .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; }
+        .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; cursor: pointer; }
         .nav-item:hover { color: var(--terracotta); }
 
-        /* PILL LANGUAGE BUTTON (NO FLAGS) */
+        /* PILL LANGUAGE BUTTON */
         .lang-btn { 
             padding: 6px 16px; 
-            border-radius: 20px; /* Pill shape */
+            border-radius: 20px; 
             background: var(--gray-light); 
             border: 1px solid rgba(0,0,0,0.05);
             font-size: 0.7rem; 
@@ -91,7 +92,6 @@
         /* --- RIBBON --- */
         .ribbon-container {
             width: 100%; 
-            /* Padding adjusted to clear the border line */
             padding: 12px 5%; 
             background: transparent;
             position: relative;
@@ -248,7 +248,7 @@
                     <a href="#travel" class="nav-item" data-key="nav_tours">Tours</a>
                     <a href="#services" class="nav-item" data-key="nav_services">Services</a>
                     <a href="#blog" class="nav-item" data-key="nav_blog">Blog</a>
-                    <a href="#footer" class="nav-item" data-key="nav_about">About</a>
+                    <a onclick="openAbout()" class="nav-item" data-key="nav_about">About</a>
                 </nav>
                 <button class="lang-btn" id="langBtn" onclick="toggleLang()">ENG</button>
             </div>
@@ -321,7 +321,7 @@
             <span class="logo-main">NEXT STOP</span>
             <span class="logo-sub">GEORGIA</span>
         </div>
-        <p>Tbilisi, Georgia | <a href="tel:+995591705710" style="color:#aaa;">+995 591 70 57 10</a></p>
+        <p>Ready for the journey? Make Georgia your NextStop. Adventure, Business, and Health.</p>
         <br>
         <div class="footer-social">
             <a href="https://www.instagram.com/holidays_in_georgia2025/" target="_blank" class="social-btn">Instagram</a>
@@ -360,17 +360,42 @@
             ka: { nav_tours: "ტურები", nav_services: "სერვისები", nav_blog: "ბლოგი", nav_about: "ჩვენ შესახებ", section_travel_title: "გამორჩეული გამოცდილება", section_travel_desc: "აღმოაჩინეთ კავკასია.", section_services_title: "სერვისები", section_services_desc: "პროფესიონალური ლოჯისტიკა.", section_blog_title: "ჟურნალი", section_blog_desc: "სიახლეები.", btn_details: "დეტალების ნახვა", btn_read: "წაკითხვა", btn_book: "დაჯავშნა", filter_all: "ყველა" }
         };
 
+        // NEW 4 PILLARS OF SERVICES
         const commonServices = [
-            { title: { en: "Medical Tourism", ka: "სამედიცინო" }, desc: { en: "Health", ka: "ჯანმრთელობა" }, img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80", subItems: [{ title: "Hair Transplant", desc: "FUE Method" }] },
-            { title: { en: "MICE", ka: "MICE" }, desc: { en: "Events", ka: "ღონისძიებები" }, img: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=800&q=80", subItems: [{ title: "Corporate", desc: "Team Building" }] },
-            { title: { en: "Business", ka: "ბიზნესი" }, desc: { en: "Invest", ka: "ინვესტიცია" }, img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80", subItems: [{ title: "Registration", desc: "Company Setup" }] },
-            { title: { en: "Transport", ka: "ტრანსპორტი" }, desc: { en: "Logistics", ka: "ლოჯისტიკა" }, img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=800&q=80", subItems: [{ title: "Chauffeur", desc: "VIP Car" }] }
+            { 
+                title: { en: "Travel Planning", ka: "ტურების დაგეგმვა" }, 
+                desc: { en: "Assistance", ka: "დახმარება" }, 
+                img: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80", 
+                subItems: [{ title: "Tailored Tours", desc: "Custom Itineraries" }, { title: "Gastronomy", desc: "Wine & Food" }] 
+            },
+            { 
+                title: { en: "Transport & Security", ka: "ტრანსპორტი და დაცვა" }, 
+                desc: { en: "Safety", ka: "უსაფრთხოება" }, 
+                img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80", 
+                subItems: [{ title: "Premium Fleet", desc: "Sedans & SUVs" }, { title: "Security", desc: "Personal Guard" }] 
+            },
+            { 
+                title: { en: "MICE & Business", ka: "MICE და ბიზნესი" }, 
+                desc: { en: "Logistics", ka: "ლოჯისტიკა" }, 
+                img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80", 
+                subItems: [{ title: "Conferences", desc: "Event Management" }, { title: "Local Partner", desc: "Facilitation" }] 
+            },
+            { 
+                title: { en: "Medical & Wellness", ka: "სამედიცინო და ველნესი" }, 
+                desc: { en: "Health", ka: "ჯანმრთელობა" }, 
+                img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80", 
+                subItems: [{ title: "Aesthetic", desc: "Hair & Dental" }, { title: "Wellness", desc: "Spa & Recovery" }] 
+            }
         ];
 
         const database = {
             georgia: {
                 accent: "#a84a32",
-                tours: [], blog: [] // Dynamic
+                hero: [ 
+                    { title: {en: "Arrive in Georgia", ka: "ჩამოდით საქართველოში"}, desc: {en: "Discover Sakartvelo", ka: "აღმოაჩინეთ საქართველო"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=1600&q=80", fullText: {en: "Make Georgia your NextStop. We are your all-in-one local partner, curating everything from luxury leisure and extreme adventure to seamless business logistics and medical support.", ka: "გახადეთ საქართველო თქვენი შემდეგი გაჩერება..."} },
+                    { title: {en: "Winter in Gudauri", ka: "ზამთარი გუდაურში"}, desc: {en: "Ski Packages", ka: "სათხილამურო"}, img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?auto=format&fit=crop&w=1600&q=80" } 
+                ],
+                tours: [], blog: [] 
             },
             tbilisi: { 
                 accent: "#2C3E50", 
@@ -572,10 +597,15 @@
         function setLanguage(lang) {
             if(!lang) lang = 'en';
             localStorage.setItem('lang', lang);
-            // Set Text for Language Button
             document.getElementById('langBtn').innerText = lang === 'en' ? 'ENG' : 'GEO'; 
             document.querySelectorAll('[data-key]').forEach(el => el.innerText = translations[lang][el.getAttribute('data-key')] || el.innerText);
             init(); // Re-render to update dynamic texts
+        }
+
+        function openAbout() {
+             const lang = localStorage.getItem('lang') || 'en';
+             const content = `Travel is not just about moving; it is about access. When you decide to make Georgia your NextStop, you need a partner who can open every door.\n\nWe are a full-service agency designed to solve any challenge. Whether you seek the thrill of the mountains, the taste of our ancient wine culture, or a trusted guide for business and medical procedures, we handle the logistics so you can focus on the result.\n\nWe bridge the gap between your needs and the local reality.\nArrive as a guest, operate like a local.`;
+             openModal(lang === 'en' ? "One Country. One Partner." : "ერთი ქვეყანა. ერთი პარტნიორი.", content, "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80");
         }
 
         function init() {
