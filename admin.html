@@ -61,59 +61,12 @@
         .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; cursor: pointer; }
         .nav-item:hover { color: var(--terracotta); }
 
-        /* ADMIN CONTROL STYLES */
-        .admin-controls { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            background: #212F3C; 
-            color: white; 
-            z-index: 1001; 
-            padding: 5px 20px;
-            font-size: 0.8rem;
-            display: none;
-            justify-content: space-between;
-        }
-        .admin-controls button { 
-            background: none; 
-            border: 1px solid rgba(255,255,255,0.3); 
-            color: white; 
-            padding: 4px 10px; 
-            border-radius: 4px; 
-            cursor: pointer;
-        }
-        .admin-controls button:hover { background: rgba(255,255,255,0.1); }
-        
-        .editable-element { position: relative; }
-        .edit-badge {
-            position: absolute; top: -10px; right: -10px; z-index: 5;
-            background: var(--blue); color: white; padding: 2px 6px; border-radius: 3px;
-            font-size: 0.7rem; cursor: pointer; opacity: 0; transition: opacity 0.2s;
-        }
-        .editable-element:hover .edit-badge { opacity: 1; }
-
-        /* WYSIWYG MODAL */
-        #wysiwyg-modal { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.85); z-index: 3000; 
-            display: none; justify-content: center; align-items: center; 
-        }
-        .wysiwyg-content { background: white; padding: 30px; border-radius: 8px; width: 500px; }
-        .wysiwyg-content textarea { width: 100%; min-height: 150px; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; }
-
+        /* PILL LANGUAGE BUTTON */
+        .lang-btn { padding: 6px 16px; border-radius: 20px; background: var(--gray-light); border: 1px solid rgba(0,0,0,0.05); font-size: 0.7rem; font-weight: 700; color: var(--charcoal); cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px; min-width: 50px; display: flex; justify-content: center; }
+        .lang-btn:hover { background: white; border-color: var(--terracotta); color: var(--terracotta); }
 
         /* --- RIBBON --- */
-        .ribbon-container {
-            width: 100%; 
-            padding: 20px 5% 12px; 
-            background: transparent;
-            position: relative;
-            z-index: 1;
-            mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
-        }
-        
+        .ribbon-container { width: 100%; padding: 20px 5% 12px; position: relative; z-index: 1; mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent); }
         .destination-ribbon { display: flex; align-items: center; gap: 15px; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; white-space: nowrap; }
         .ribbon-label { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; color: var(--charcoal); cursor: pointer; padding: 0 5px; letter-spacing: 1px; transition: 0.3s; min-width: 260px; text-align: center; }
         .dest-btn { padding: 8px 22px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; color: #888; background: transparent; transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease; cursor: pointer; white-space: nowrap; border: 1px solid rgba(0,0,0,0.1); text-transform: uppercase; letter-spacing: 0.5px; }
@@ -126,26 +79,22 @@
         
         /* --- SECTIONS & SCROLLERS --- */
         .section { padding: 80px 5%; display: flex; flex-direction: column; justify-content: center; transition: opacity 0.4s; }
-        .card { height: 380px; position: relative; } /* simplified styling for focus */
+        .scroller-track { display: flex; overflow-x: auto; gap: 20px; padding: 10px 5px 30px 5px; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; }
+        .card, .blog-card { flex: 0 0 calc(25% - 15px); height: 380px; position: relative; cursor: pointer; }
+        .card:hover, .blog-card:hover { transform: translateY(-10px); }
+        .card-tag { position: absolute; top: 20px; right: 20px; background: var(--terracotta); color: white; padding: 4px 10px; font-size: 0.6rem; font-weight: bold; text-transform: uppercase; }
         .footer-logo .logo-main { color: #fff; } .footer-logo .logo-sub { color: var(--terracotta); }
     </style>
 </head>
 <body>
 
-    <!-- ADMIN CONTROL BAR (Invisible until logged in) -->
-    <div class="admin-controls" id="adminControlBar">
-        <div style="font-weight:bold; color:var(--green);" id="auth-status">Logged in as: User</div>
-        <button onclick="handleLogout()">Logout</button>
-    </div>
-
     <!-- MAIN WEBSITE HEADER -->
     <header>
         <div class="header-top">
             <div class="header-left">
-                <div class="logo-container editable-element" onclick="window.scrollTo(0,0)" data-type="text" data-field="logo_title">
+                <div class="logo-container" onclick="window.scrollTo(0,0)">
                     <span class="logo-main">NEXT STOP</span>
                     <span class="logo-sub" id="logoSub">GEORGIA</span>
-                    <span class="edit-badge" onclick="openWysiwyg('logo_title', 'Next Stop')">Edit</span>
                 </div>
                 <div class="site-toggle">
                     <div class="toggle-btn active"><span class="dot">●</span> GEORGIA</div>
@@ -171,10 +120,7 @@
 
     <!-- HERO WHEEL -->
     <div class="hero-wheel">
-        <div class="hero-slogan editable-element" onclick="openWysiwyg('slogan', 'Arrive in Georgia, Discover Sakartvelo')" data-type="text" data-field="slogan">
-            Arrive in Georgia, Discover Sakartvelo
-            <span class="edit-badge">Edit</span>
-        </div>
+        <div class="hero-slogan">Arrive in Georgia, Discover Sakartvelo</div>
         <div class="wheel-track" id="heroTrack"></div>
         <div class="progress-container" id="progressContainer"></div>
     </div>
@@ -194,21 +140,48 @@
         <div class="scroller-track" id="travelGrid"></div>
     </section>
 
-    <!-- WYSIWYG MODAL -->
-    <div id="wysiwyg-modal">
-        <div class="wysiwyg-content">
-            <h2>Edit Content</h2>
-            <textarea id="wysiwyg-textarea"></textarea>
-            <div style="text-align:right;">
-                <button onclick="closeWysiwyg()" style="background:#ccc; color:var(--charcoal); padding:8px 15px; margin-right:10px; border:none; border-radius:4px;">Cancel</button>
-                <button onclick="saveWysiwyg()" style="background:var(--green); color:white; padding:8px 15px; border:none; border-radius:4px;">Save Text</button>
+    <!-- SERVICES SECTION -->
+    <section id="services" class="section" style="background-color: #f0f0f0;">
+        <div class="section-header">
+            <div class="section-title">
+                <h2 data-key="section_services_title">Our Services</h2>
+                <p data-key="section_services_desc">Professional logistical support for medical, corporate, and VIP clients.</p>
+            </div>
+            <div class="scroll-nav">
+                <button class="scroll-arrow" onclick="scrollSection('servicesGrid', -1)">&#10094;</button>
+                <button class="scroll-arrow" onclick="scrollSection('servicesGrid', 1)">&#10095;</button>
             </div>
         </div>
-    </div>
+        <div class="scroller-track" id="servicesGrid"></div>
+    </section>
 
-    <!-- FINAL FOOTER (Rest of the site content and modals remain) -->
-    <!-- ... (sections remain the same) ... -->
+    <!-- BLOG SECTION -->
+    <section id="blog" class="section" style="background: white;">
+        <div class="section-header">
+            <div class="section-title">
+                <h2 data-key="section_blog_title">Journal</h2>
+                <p data-key="section_blog_desc">Latest updates, guides, and news from the team.</p>
+            </div>
+            <div class="scroll-nav">
+                <button class="scroll-arrow" onclick="scrollSection('blogTrack', -1)">&#10094;</button>
+                <button class="scroll-arrow" onclick="scrollSection('blogTrack', 1)">&#10095;</button>
+            </div>
+        </div>
+        <div class="scroller-track" id="blogTrack"></div>
+    </section>
 
+    <footer id="footer">
+        <div class="logo-container footer-logo" style="margin: 0 auto 30px auto;">
+            <span class="logo-main">NEXT STOP</span>
+            <span class="logo-sub">GEORGIA</span>
+        </div>
+        <p>Ready for the journey? Make Georgia your NextStop. Adventure, Business, and Health.</p>
+        <br>
+        <div class="footer-social">
+            <a href="https://www.instagram.com/holidays_in_georgia2025/" target="_blank" class="social-btn">Instagram</a>
+            <a href="#" class="social-btn wa-link">WhatsApp</a>
+        </div>
+    </footer>
 
     <!-- MODAL -->
     <div class="modal-overlay" id="detailModal">
@@ -231,45 +204,13 @@
             </div>
         </div>
     </div>
-    
-    <!-- FOOTER (Continued) -->
-    <section id="services" class="section" style="background-color: #f0f0f0;">
-        <div class="section-header">
-            <div class="section-title"><h2 data-key="section_services_title">Our Services</h2><p data-key="section_services_desc">Professional logistical support.</p></div>
-            <div class="scroll-nav"><button class="scroll-arrow" onclick="scrollSection('servicesGrid', -1)">&#10094;</button><button class="scroll-arrow" onclick="scrollSection('servicesGrid', 1)">&#10095;</button></div>
-        </div>
-        <div class="scroller-track" id="servicesGrid"></div>
-    </section>
-
-    <section id="blog" class="section" style="background: white;">
-        <div class="section-header">
-            <div class="section-title"><h2 data-key="section_blog_title">Journal</h2><p data-key="section_blog_desc">Latest updates.</p></div>
-            <div class="scroll-nav"><button class="scroll-arrow" onclick="scrollSection('blogTrack', -1)">&#10094;</button><button class="scroll-arrow" onclick="scrollSection('blogTrack', 1)">&#10095;</button></div>
-        </div>
-        <div class="scroller-track" id="blogTrack"></div>
-    </section>
-
-    <footer id="footer">
-        <div class="logo-container footer-logo" style="margin: 0 auto 30px auto;">
-            <span class="logo-main">NEXT STOP</span>
-            <span class="logo-sub">GEORGIA</span>
-        </div>
-        <p>Ready for the journey? Make Georgia your NextStop. Adventure, Business, and Health.</p>
-        <br>
-        <div class="footer-social">
-            <a href="https://www.instagram.com/holidays_in_georgia2025/" target="_blank" class="social-btn">Instagram</a>
-            <a href="#" class="social-btn wa-link">WhatsApp</a>
-        </div>
-    </footer>
-
 
     <!-- FIREBASE & LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        
-        // --- 🔴 FIREBASE CONFIGURATION (FOR LIVE WEBSITE DATA FETCH) 🔴 ---
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // --- 🔴 FIREBASE CONFIGURATION (LIVE READER) 🔴 ---
         const firebaseConfig = {
             apiKey: "AIzaSyAM-24214oP5GTan935IE1fg6rn5BayUak",
             authDomain: "nextstop-e7017.firebaseapp.com",
@@ -282,137 +223,97 @@
         // --- 🔴 END OF CONFIG 🔴 ---
 
         let db;
-        let auth;
-        let globalContent = {}; // Stores texts and data for dynamic elements
-
         try {
             const app = initializeApp(firebaseConfig);
             db = getFirestore(app);
-            auth = getAuth(app);
+            window.db = db; window.getDocs = getDocs; window.collection = collection;
             if(window.initMain) window.initMain();
-        } catch(e) { 
-            console.error("Firebase Initialization Error:", e);
+        } catch(e) { console.error("Firebase Initialization Error:", e); }
+    </script>
+
+    <script>
+        let currentLang = localStorage.getItem('lang') || 'en';
+        const whatsapp = "995591705710";
+        
+        const translations = {
+            en: { nav_tours: "Tours", nav_services: "Services", nav_blog: "Blog", nav_about: "About", section_travel_title: "Curated Experiences", section_travel_desc: "Explore the distinct regions of the Caucasus through our specialized itineraries.", section_services_title: "Our Services", section_services_desc: "Professional logistical support.", section_blog_title: "Journal", section_blog_desc: "Latest updates.", btn_details: "View Details", btn_read: "Read Article", btn_book: "Book This Now", filter_all: "All" },
+            ka: { nav_tours: "ტურები", nav_services: "სერვისები", nav_blog: "ბლოგი", nav_about: "ჩვენ შესახებ", section_travel_title: "გამორჩეული გამოცდილება", section_travel_desc: "აღმოაჩინეთ კავკასია.", section_services_title: "სერვისები", section_services_desc: "პროფესიონალური ლოჯისტიკა.", section_blog_title: "ჟურნალი", section_blog_desc: "სიახლეები.", btn_details: "დეტალების ნახვა", btn_read: "წაკითხვა", btn_book: "დაჯავშნა", filter_all: "ყველა" }
+        };
+
+        // --- DYNAMIC DATA STRUCTURES ---
+        const commonServices = []; // Will be dynamically loaded
+        const database = { /* Region details now loaded from Firebase content type */
+            georgia: { accent: "#a84a32", tours: [], blog: [] }, tbilisi: { accent: "#212F3C", tours: [], blog: [] }, mtskheta_mtianeti: { accent: "#5D4037", tours: [], blog: [] },
+            kartli: { accent: "#A93226", tours: [], blog: [] }, kakheti: { accent: "#9A7D0A", tours: [], blog: [] }, samtskhe_javakheti: { accent: "#546E7A", tours: [], blog: [] },
+            imereti: { accent: "#2E7D32", tours: [], blog: [] }, samegrelo: { accent: "#00897B", tours: [], blog: [] }, guria: { accent: "#558B2F", tours: [], blog: [] },
+            racha: { accent: "#0277BD", tours: [], blog: [] }, svaneti: { accent: "#0288D1", tours: [], blog: [] }, adjara: { accent: "#1565C0", tours: [], blog: [] }, abkhazeti: { accent: "#00695C", tours: [], blog: [] }
+        };
+        
+        let currentKey = 'georgia';
+        let currentSlide = 0;
+        let allLiveItems = {}; // Global map of all fetched items (by ID)
+
+        // UTILITY: Shuffle
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
         }
 
-        // --- AUTH & ADMIN CONTROLS ---
-        onAuthStateChanged(auth, (user) => {
-            const controlBar = document.getElementById('adminControlBar');
-            if (user) {
-                // User is signed in, show controls and get data
-                controlBar.style.display = 'flex';
-                controlBar.querySelector('#auth-status').innerText = `Logged in as: ${user.email}`;
-            } else {
-                // User is signed out, show login button
-                controlBar.style.display = 'none';
-            }
-        });
+        // UTILITY: Hex to RGB
+        function hexToRgb(hex) {
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? parseInt(result[1], 16)+","+parseInt(result[2], 16)+","+parseInt(result[3], 16) : "0,0,0";
+        }
 
-        window.loginAdmin = () => {
-            const email = prompt("Enter Admin Email:");
-            const pass = prompt("Enter Password:");
-            if (email && pass) {
-                signInWithEmailAndPassword(auth, email, pass).catch(e => alert("Login Failed: " + e.message));
-            }
-        };
-
-        window.handleLogout = () => signOut(auth);
-
-        // --- WYSIWYG EDITING LOGIC ---
-        let currentEditableField = null;
-
-        window.openWysiwyg = (fieldName, currentValue) => {
-            if (!auth.currentUser) return window.loginAdmin();
-            
-            const modal = document.getElementById('wysiwyg-modal');
-            const textarea = document.getElementById('wysiwyg-textarea');
-            
-            currentEditableField = fieldName;
-            
-            // Set current value and show modal
-            textarea.value = currentValue;
-            modal.style.display = 'flex';
-            textarea.focus();
-        };
-
-        window.closeWysiwyg = () => {
-            document.getElementById('wysiwyg-modal').style.display = 'none';
-            currentEditableField = null;
-        };
-
-        window.saveWysiwyg = async () => {
-            const newValue = document.getElementById('wysiwyg-textarea').value;
-            const field = currentEditableField;
-            
-            if (!field) return;
-
-            try {
-                // Assuming all simple global texts are stored under a single 'global' document
-                const docRef = doc(db, "website", "global"); 
-                
-                // Construct payload (using setDoc to update specific fields)
-                await setDoc(docRef, { 
-                    [field]: { en: newValue, ka: "" } // Simplified for one language update
-                }, { merge: true });
-
-                // Update DOM immediately
-                if (field === 'slogan') {
-                    document.querySelector('.hero-slogan').firstChild.nodeValue = newValue;
-                }
-                
-                alert("Text updated successfully!");
-                closeWysiwyg();
-            } catch (e) {
-                alert("Error saving: " + e.message + ". Check your Firebase Rules!");
-            }
-        };
-
-
-        // --- MAIN WEBSITE RENDERING LOGIC ---
-        
+        // FETCH DATA FROM FIREBASE AND MERGE
         window.initMain = async function() {
-            // Setup Firebase connection (already done in module scope)
-            
-            // 1. Fetch Dynamic Global Texts (Slogan, Titles)
-            if (db) {
+            if (window.db) {
                 try {
-                    const globalDoc = await getDoc(doc(db, "website", "global"));
-                    if (globalDoc.exists()) {
-                        globalContent = globalDoc.data();
+                    const querySnapshot = await window.getDocs(window.collection(window.db, "content"));
+                    
+                    // 1. Clear local data structures
+                    Object.keys(database).forEach(key => { database[key].tours = []; database[key].blog = []; });
+                    commonServices.length = 0;
+                    allLiveItems = {};
+
+                    querySnapshot.forEach((doc) => {
+                        const item = doc.data();
+                        const isPublished = item.published !== false;
                         
-                        // Apply texts to DOM
-                        if (globalContent.slogan && globalContent.slogan.en) {
-                            document.querySelector('.hero-slogan').firstChild.nodeValue = globalContent.slogan.en;
+                        if (isPublished) {
+                            if(item.type === 'services' && item.region === 'georgia') {
+                                commonServices.push(item);
+                            } else if (database[item.region]) {
+                                if(item.type === 'tours') database[item.region].tours.push(item);
+                                if(item.type === 'blog') database[item.region].blog.push(item);
+                            }
+                            allLiveItems[doc.id] = item;
                         }
-                    }
+                    });
                 } catch(e) {
-                    console.error("Failed to load global content.", e);
+                    console.error("Failed to fetch Firebase content. Site may be empty.", e);
                 }
             }
             
             init();
         };
 
-        // --- REST OF THE WORKING UI LOGIC (Simplified for WYSIWYG) ---
-        
         function init() {
             currentLang = localStorage.getItem('lang') || 'en';
             
-            // Re-use logic for setting language button and static data-key elements
-            document.getElementById('adminControlBar').style.paddingTop = '70px'; // Push down header content slightly
-            document.querySelectorAll('.editable-element').forEach(el => {
-                const field = el.dataset.field;
-                const value = globalContent[field]?.en || el.innerText;
-                el.firstChild.nodeValue = value;
-            });
+            document.getElementById('langBtn').innerText = currentLang === 'en' ? 'ENG' : 'GEO';
+            document.querySelectorAll('[data-key]').forEach(el => el.innerText = translations[currentLang][el.getAttribute('data-key')] || el.innerText);
             
-            // Manually re-trigger rendering logic
-            renderRibbon(); 
+            renderRibbon();
             loadRegion(currentKey);
+            document.querySelectorAll('.wa-link').forEach(a => { if(!a.classList.contains('modal-btn')) a.href = `https://wa.me/${whatsapp}`; });
         }
 
         function renderRibbon() {
-            // ... (Ribbon rendering logic using database object remains here) ...
-             const ribbon = document.getElementById('destRibbon');
+            const ribbon = document.getElementById('destRibbon');
             const order = ['georgia', 'tbilisi', 'mtskheta_mtianeti', 'kartli', 'kakheti', 'samtskhe_javakheti', 'imereti', 'samegrelo', 'guria', 'racha', 'svaneti', 'adjara', 'abkhazeti'];
             ribbon.innerHTML = '';
             
@@ -453,14 +354,6 @@
             });
         }
 
-
-        // (The rest of the rendering functions, loadRegion, renderHero, renderScroller, etc. 
-        // will use the restored data structures and functions from the previous step)
-        
-        
-        // --- REST OF THE CODE REMAINS AS IN PREVIOUS STABLE VERSION ---
-        
-        
         function loadRegion(key) {
             currentKey = key;
             const data = database[key];
@@ -648,21 +541,43 @@
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 
         window.initMain = async function() {
-            // No need to fetch data here for the WYSIWYG concept login page
-        };
-        // End of index.html code
-
-        window.initMain = async function() {
-            if (db) {
-                // Initialize WYSIWYG editor functions and fetch live data
-                loadStructuredData();
-                
-                // Add the login button listener after DOM is ready
-                document.getElementById('adminLoginButton').addEventListener('click', window.loginAdmin);
+            // This is the function that runs automatically to initialize the site
+            // It replaces the old init()
+            
+            if (window.db) {
+                try {
+                    const querySnapshot = await window.getDocs(window.collection(window.db, "content"));
+                    
+                    // 1. Clear local data structures
+                    Object.keys(database).forEach(key => { database[key].tours = []; database[key].blog = []; });
+                    commonServices.length = 0;
+                    
+                    // 2. Populate data from Firestore
+                    querySnapshot.forEach((doc) => {
+                        const item = doc.data();
+                        const isPublished = item.published !== false;
+                        
+                        if (isPublished) {
+                            if(item.type === 'services' && item.region === 'georgia') {
+                                // Add to services directly
+                                commonServices.push(item);
+                            } else if (database[item.region]) {
+                                // Add to tours/blog under regions
+                                if(item.type === 'tours' || item.type === 'services') database[item.region].tours.push(item);
+                                if(item.type === 'blog') database[item.region].blog.push(item);
+                            }
+                        }
+                    });
+                } catch(e) {
+                    console.error("Failed to fetch Firebase content. Using hardcoded defaults.", e);
+                }
             }
+            
+            init(); // Render the page
         };
-
-        if (window.initMain) window.initMain();
+        
+        // Final call to initMain after all functions are defined
+        window.initMain();
 
     </script>
 </body>
