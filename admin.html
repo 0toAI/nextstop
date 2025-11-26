@@ -47,7 +47,11 @@
         }
 
         .header-left { display: flex; align-items: center; gap: 30px; }
-        .logo-container { display: flex; flex-direction: column; align-items: center; line-height: 0.9; cursor: pointer; width: 260px; flex-shrink: 0; }
+        
+        .logo-container { 
+            display: flex; flex-direction: column; align-items: center; line-height: 0.9; 
+            cursor: pointer; width: 260px; flex-shrink: 0; 
+        }
         .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; }
         .logo-sub { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--terracotta); letter-spacing: 4px; text-transform: uppercase; margin-left: 2px; transition: color 0.5s; white-space: nowrap; }
 
@@ -55,20 +59,55 @@
         .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none; }
         .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default; }
         .toggle-btn.inactive:hover { color: var(--terracotta); }
-        
+        .dot { color: var(--green); font-size: 0.8rem; animation: pulse 2s infinite; }
+
         .nav-right { display: flex; gap: 20px; align-items: center; }
         .nav-links { display: flex; gap: 30px; }
         .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; cursor: pointer; }
         .nav-item:hover { color: var(--terracotta); }
 
         /* PILL LANGUAGE BUTTON */
-        .lang-btn { padding: 6px 16px; border-radius: 20px; background: var(--gray-light); border: 1px solid rgba(0,0,0,0.05); font-size: 0.7rem; font-weight: 700; color: var(--charcoal); cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px; min-width: 50px; display: flex; justify-content: center; }
-        .lang-btn:hover { background: white; border-color: var(--terracotta); color: var(--terracotta); }
+        .lang-btn { 
+            padding: 6px 16px; 
+            border-radius: 20px; 
+            background: var(--gray-light); 
+            border: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.7rem; 
+            font-weight: 700;
+            color: var(--charcoal);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-width: 50px;
+            display: flex;
+            justify-content: center;
+        }
+        .lang-btn:hover { 
+            background: white; 
+            border-color: var(--terracotta);
+            color: var(--terracotta);
+            transform: translateY(-1px);
+        }
 
         /* --- RIBBON --- */
-        .ribbon-container { width: 100%; padding: 20px 5% 12px; position: relative; z-index: 1; mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent); }
+        .ribbon-container {
+            width: 100%; 
+            padding: 20px 5% 12px; 
+            background: transparent;
+            position: relative;
+            z-index: 1;
+            mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+        }
+        
         .destination-ribbon { display: flex; align-items: center; gap: 15px; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; white-space: nowrap; }
+        .destination-ribbon::-webkit-scrollbar { display: none; }
+        
         .ribbon-label { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; color: var(--charcoal); cursor: pointer; padding: 0 5px; letter-spacing: 1px; transition: 0.3s; min-width: 260px; text-align: center; }
+        .ribbon-label:hover { color: var(--terracotta); }
+        .ribbon-separator { color: #ddd; font-size: 1.2rem; font-weight: 300; margin: 0 10px 0 0; }
+
         .dest-btn { padding: 8px 22px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; color: #888; background: transparent; transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease; cursor: pointer; white-space: nowrap; border: 1px solid rgba(0,0,0,0.1); text-transform: uppercase; letter-spacing: 0.5px; }
         .dest-btn:hover { border-color: rgba(var(--btn-rgb), 1); color: rgba(var(--btn-rgb), 1); background: rgba(var(--btn-rgb), 0.20); z-index: 12; position: relative; }
         .dest-btn.active { background: rgba(var(--btn-rgb), 1); color: white; border-color: rgba(var(--btn-rgb), 1); box-shadow: 0 4px 15px rgba(var(--btn-rgb), 0.4); }
@@ -76,14 +115,48 @@
         /* --- HERO WHEEL --- */
         .hero-wheel { height: 90vh; width: 100%; overflow: hidden; margin-top: 160px; background: #000; position: relative; }
         .hero-slogan { position: absolute; top: 40px; width: 100%; text-align: center; font-family: 'Cinzel', serif; color: rgba(255,255,255,0.95); font-size: 1.1rem; letter-spacing: 4px; font-weight: 700; z-index: 10; text-shadow: 0 2px 15px rgba(0,0,0,0.8); pointer-events: none; }
-        
+
         /* --- SECTIONS & SCROLLERS --- */
         .section { padding: 80px 5%; display: flex; flex-direction: column; justify-content: center; transition: opacity 0.4s; }
+        
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 20px; }
+        .section-title h2 { font-size: 2rem; font-family: 'Cinzel', serif; color: var(--charcoal); margin-bottom: 5px; }
+        .section-title p { color: #777; font-size: 0.9rem; }
+        
         .scroller-track { display: flex; overflow-x: auto; gap: 20px; padding: 10px 5px 30px 5px; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; }
-        .card, .blog-card { flex: 0 0 calc(25% - 15px); height: 380px; position: relative; cursor: pointer; }
-        .card:hover, .blog-card:hover { transform: translateY(-10px); }
+        .scroller-track::-webkit-scrollbar { display: none; }
+
+        .card, .blog-card { flex: 0 0 calc(25% - 15px); scroll-snap-align: start; background: white; border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); transition: 0.4s; height: 380px; position: relative; cursor: pointer; }
+        .card:hover, .blog-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .card-bg { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover .card-bg { transform: scale(1.1); }
+        .card-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; color: white; }
+        .card h3 { font-family: 'Cinzel', serif; font-size: 1.3rem; margin-bottom: 8px; color: var(--gold); }
+        .card p { font-size: 0.85rem; opacity: 0.8; font-weight: 300; }
         .card-tag { position: absolute; top: 20px; right: 20px; background: var(--terracotta); color: white; padding: 4px 10px; font-size: 0.6rem; font-weight: bold; text-transform: uppercase; }
+
+        .blog-img-box { height: 200px; overflow: hidden; }
+        .blog-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .blog-content { padding: 25px; }
+        .blog-date { font-size: 0.7rem; color: var(--terracotta); font-weight: 700; text-transform: uppercase; }
+        .blog-title { font-size: 1.1rem; margin: 10px 0; color: var(--charcoal); font-family: 'Cinzel', serif; }
+        .blog-link { font-size: 0.8rem; text-decoration: underline; color: #888; }
+        
+        .scroll-nav { display: flex; gap: 10px; }
+        .scroll-arrow { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #ddd; display: flex; justify-content: center; align-items: center; cursor: pointer; background: white; transition: 0.3s; color: var(--charcoal); }
+        .scroll-arrow:hover { background: var(--terracotta); color: white; border-color: var(--terracotta); }
+
+        /* FOOTER */
+        footer { background: #111; color: #777; padding: 80px 5%; text-align: center; font-size: 0.9rem; border-top: 5px solid var(--terracotta); }
         .footer-logo .logo-main { color: #fff; } .footer-logo .logo-sub { color: var(--terracotta); }
+
+        @media (max-width: 1000px) { 
+            .nav-links { display: none; } header { height: auto; flex-wrap: wrap; padding-bottom: 10px; }
+            .header-left { width: 100%; justify-content: space-between; }
+            .nav-right { position: absolute; top: 15px; right: 5%; }
+            .logo-container { width: auto; } .ribbon-label { min-width: auto; text-align: left; padding-left: 10px; }
+            .card, .blog-card { flex: 0 0 85%; } 
+        }
     </style>
 </head>
 <body>
