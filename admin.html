@@ -582,8 +582,9 @@
                                         <span class="item-status ${item.published ? 'status-published' : 'status-hidden'}">${item.published ? 'LIVE' : 'HIDDEN'}</span>
                                         <span class="item-title">${item.title?.en || 'Untitled'}</span>
                                     `;
-                                    // *** FIX: Attach click handler to select item ***
-                                    listItem.onclick = () => selectItem(loadedItems[item.id]); 
+                                    // *** FIX: Attach click handler to select item using the ID ***
+                                    // We must pass the ID, not the whole object, for reliable click handling
+                                    listItem.onclick = () => selectItem(item); 
                                     subList.appendChild(listItem);
                                 });
                             }
@@ -709,6 +710,14 @@
         // --- CORE EDITOR FUNCTIONS ---
 
         window.selectItem = (data) => {
+            // Remove active class from all items and add it to the clicked one
+            document.querySelectorAll('.list-item').forEach(el => el.classList.remove('active'));
+            // Find the list item that matches the ID and highlight it (using dataset ID property is the cleanest way)
+            const clickedElement = document.querySelector(`.list-item[onclick*="'${data.id}'"]`);
+            if (clickedElement) {
+                clickedElement.classList.add('active');
+            }
+
             currentId = data.id;
             document.getElementById('docId').value = data.id;
             document.getElementById('published').checked = data.published !== false;
@@ -749,6 +758,7 @@
             document.getElementById('published').checked = true;
             toggleFields();
             updatePreview(); 
+            document.querySelectorAll('.list-item').forEach(el => el.classList.remove('active'));
         };
 
         window.toggleFields = () => {
