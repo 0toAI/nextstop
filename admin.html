@@ -96,6 +96,9 @@
         .btn-new { background: var(--green); color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
         
         .status-toast { position: fixed; bottom: 20px; right: 20px; background: var(--charcoal); color: white; padding: 15px 25px; border-radius: 4px; display: none; animation: slideUp 0.3s; z-index: 3000; }
+        @keyframes slideUp { from { transform: translateY(100px); } to { transform: translateY(0); } }
+        
+        .import-btn { background: #3498db; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; margin-left: auto; }
     </style>
 </head>
 <body>
@@ -252,7 +255,7 @@
     <!-- FIREBASE CONFIG -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
@@ -295,6 +298,81 @@
             }
         });
 
+        // --- HARDCODED CONTENT FOR IMPORT ---
+        const hardcodedDatabase = {
+            tbilisi: { 
+                accent: "#212F3C", 
+                tours: [
+                    { title: {en: "Old Town Walk", ka: "ძველი თბილისი"}, desc: {en: "History & Culture", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1580326733551-73e6c16f8517?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Narikala", desc: "Fortress"}] },
+                    { title: {en: "Food Tour", ka: "გასტრო ტური"}, desc: {en: "Taste of Tbilisi", ka: "გემო"}, img: "https://images.unsplash.com/photo-1585671832383-10085d520131?auto=format&fit=crop&w=800&q=80", tag: {en: "Food", ka: "კვება"}, subItems: [{title: "Market", desc: "Tasting"}] },
+                ], 
+                blog: [
+                     { title: {en: "Best Cafes", ka: "საუკეთესო კაფეები"}, date: {en: "Guide", ka: "გზამკვლევი"}, img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80"},
+                ] 
+            },
+            mtskheta_mtianeti: { 
+                accent: "#5D4037", 
+                tours: [
+                    { title: {en: "Jvari & Svetitskhoveli", ka: "ჯვარი და სვეტიცხოველი"}, desc: {en: "UNESCO Sites", ka: "იუნესკო"}, img: "https://images.unsplash.com/photo-1565118531796-763e5082d113?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Jvari", desc: "6th Century"}] },
+                    { title: {en: "Kazbegi Day Trip", ka: "ყაზბეგი"}, desc: {en: "Gergeti Trinity", ka: "გერგეტის სამება"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Jeep Tour", desc: "To Church"}] },
+                ], 
+                blog: [
+                    { title: {en: "Religious History", ka: "რელიგიური ისტორია"}, date: {en: "Culture", ka: "კულტურა"}, img: "https://images.unsplash.com/photo-1565118531796-763e5082d113?auto=format&fit=crop&w=800&q=80" },
+                ] 
+            },
+            // Add other regions here for comprehensive import
+        };
+
+        // --- IMPORT DATA ---
+        window.importHardcodedData = async () => {
+            if(!auth.currentUser) return alert("Please log in first.");
+            if(!confirm("WARNING: This will attempt to upload all pre-designed tours and posts to your Firebase database. Do this only once! Continue?")) return;
+            
+            const allItems = [];
+
+            // 1. Collect regional tours and blogs
+            for (const regionKey in hardcodedDatabase) {
+                const regionData = hardcodedDatabase[regionKey];
+
+                if (regionData.tours) {
+                    regionData.tours.forEach(tour => {
+                        allItems.push({
+                            ...tour,
+                            region: regionKey,
+                            type: 'tours',
+                            published: true // Mark as visible
+                        });
+                    });
+                }
+                if (regionData.blog) {
+                    regionData.blog.forEach(blog => {
+                        allItems.push({
+                            ...blog,
+                            region: regionKey,
+                            type: 'blog',
+                            published: true,
+                            desc: blog.date // Move date to desc for homepage display
+                        });
+                    });
+                }
+            }
+            
+            // 2. Upload all items
+            let successCount = 0;
+            for (const item of allItems) {
+                try {
+                    await addDoc(collection(db, "content"), item);
+                    successCount++;
+                } catch (e) {
+                    console.error("Upload error for item:", item, e);
+                }
+            }
+
+            showToast(`✅ Successfully imported ${successCount} items!`);
+            loadData(); // Refresh list after import
+        };
+
+
         // --- DATA LOADING ---
         let loadedItems = {};
 
@@ -312,8 +390,8 @@
                 
                 snap.forEach(doc => {
                     const item = doc.data();
-                    const id = doc.id;
-                    loadedItems[id] = item;
+                    item.id = doc.id;
+                    loadedItems[item.id] = item;
                     
                     const div = document.createElement('div');
                     div.className = `list-item ${item.published ? 'active' : 'inactive'}`;
@@ -329,7 +407,7 @@
                 });
 
                 if(snap.empty) {
-                    list.innerHTML = '<p style="text-align:center; color:#999;">No content found. Click NEW.</p>';
+                    list.innerHTML = '<p style="text-align:center; color:#999;">No content found. Click NEW or IMPORT.</p>';
                 }
 
             } catch (e) {
@@ -426,7 +504,6 @@
 
             let cardClass = (type === 'blog' ? 'blog-card' : 'card');
             
-            // Check if Image URL is reasonable, otherwise use placeholder
             const finalImg = (img && img.startsWith('http')) ? img : 'https://via.placeholder.com/300x400?text=IMAGE';
 
             let html = '';
