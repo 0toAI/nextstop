@@ -36,7 +36,7 @@
         .admin-content-area { padding: 20px 40px; overflow-y: auto; background: #f9f9f9; flex-grow: 1; }
 
         /* LEFT: LIST (Structured Tree View) */
-        .list-panel { width: 300px; background: white; border-right: 1px solid #ddd; overflow-y: auto; flex-shrink: 0; }
+        .list-panel { width: 300px; background: white; border-right: 1px solid #ddd; overflow-y: auto; padding: 20px 0; flex-shrink: 0; }
         .region-group { padding: 0 10px; }
         .region-title { 
             background: #e0e0e0; padding: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; 
@@ -55,19 +55,16 @@
         .add-new-btn { width: 100%; padding: 8px 0; background: #fafafa; border: 1px dashed #ccc; margin-top: 5px; color: var(--charcoal); font-weight: bold; border-radius: 4px; }
 
         /* EDITOR + PREVIEW CONTAINER */
-        .editor-preview-container { 
-            display: flex; gap: 20px; 
-            max-width: 1200px; 
-        }
+        .editor-preview-container { display: flex; gap: 20px; max-width: 1200px; margin: 0 auto; }
 
         /* CENTER: EDITOR */
         .editor-panel { flex: 2; padding: 30px; background: white; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
         
-        /* RIGHT: PREVIEW (Now occupies the full right space) */
-        .preview-panel { flex: 1; padding: 20px; background: #f0f0f0; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); height: fit-content; position: sticky; top: 20px; }
+        /* RIGHT: PREVIEW */
+        .preview-panel { flex: 1; padding: 20px; background: #f0f0f0; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); height: fit-content; position: sticky; top: 100px; }
         .preview-title { font-family: 'Cinzel', serif; margin-bottom: 15px; color: #777; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px; text-align: center; }
 
-        /* PREVIEW CARD STYLES (Copied from Website) */
+        /* PREVIEW CARD STYLES */
         .preview-card-wrapper { width: 100%; max-width: 320px; pointer-events: none; margin: 0 auto; } 
         .card { background: white; border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); height: 400px; position: relative; margin-bottom: 20px; }
         .card-bg { width: 100%; height: 100%; object-fit: cover; }
@@ -85,8 +82,6 @@
         .blog-title { font-size: 1.2rem; margin: 10px 0; font-family: 'Cinzel', serif; }
         .blog-link { font-size: 0.8rem; text-decoration: underline; color: #888; }
 
-        /* FULL PAGE PREVIEW (Removed section) */
-
         /* FORM ELEMENTS */
         .form-row { display: flex; gap: 20px; margin-bottom: 15px; }
         .form-col { flex: 1; }
@@ -101,6 +96,10 @@
         
         .status-toast { position: fixed; bottom: 20px; right: 20px; background: var(--charcoal); color: white; padding: 15px 25px; border-radius: 4px; display: none; z-index: 3000; }
         .import-btn { background: #3498db; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; margin-left: auto; }
+        
+        /* FILE UPLOAD SPECIFIC STYLES */
+        #upload-status { font-size: 0.8rem; color: #555; margin-top: 5px; }
+        .btn-upload { background: var(--blue); color: white; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -207,8 +206,10 @@
 
                         <div class="form-row">
                             <div class="form-col">
-                                <label>Main Image URL</label>
-                                <input type="text" id="img" oninput="updatePreview()">
+                                <label>Main Image URL / Upload</label>
+                                <input type="text" id="img" oninput="updatePreview()" placeholder="Paste Unsplash URL OR select file below">
+                                <input type="file" id="file-upload" style="margin-top:5px;" onchange="handleFileUpload()">
+                                <p id="upload-status"></p>
                             </div>
                             <div class="form-col">
                                 <label>Tag / Badge (EN/KA)</label>
@@ -251,16 +252,23 @@
                 </div>
             </div>
 
-            <!-- BOTTOM: FULL WEBSITE PREVIEW (REMOVED) -->
+            <!-- BOTTOM: FULL WEBSITE PREVIEW -->
+            <div class="full-page-preview">
+                <h3>Website Live View (Scrollable Test)</h3>
+                <div id="iframe-container">
+                    <iframe id="live-iframe" src="index.html" title="Website Preview"></iframe>
+                </div>
+            </div>
     </div>
 
     <div id="toast" class="status-toast">Saved Successfully</div>
 
-    <!-- FIREBASE CONFIG -->
+    <!-- FIREBASE MODULES -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAM-24214oP5GTan935IE1fg6rn5BayUak",
@@ -275,199 +283,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-
-        // --- HARDCODED CONTENT FOR IMPORT (Full Database Restored) ---
-        const hardcodedDatabase = {
-            tbilisi: { 
-                accent: "#212F3C", 
-                tours: [
-                    { title: {en: "Old Town Walk", ka: "ძველი თბილისი"}, desc: {en: "History & Culture", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1580326733551-73e6c16f8517?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Narikala", desc: "Fortress"}] },
-                    { title: {en: "Food Tour", ka: "გასტრო ტური"}, desc: {en: "Taste of Tbilisi", ka: "გემო"}, img: "https://images.unsplash.com/photo-1585671832383-10085d520131?auto=format&fit=crop&w=800&q=80", tag: {en: "Food", ka: "კვება"}, subItems: [{title: "Market", desc: "Tasting"}] },
-                    { title: {en: "Museums", ka: "მუზეუმები"}, desc: {en: "Art & Treasury", ka: "საგანძური"}, img: "https://images.unsplash.com/photo-1554907984-15263bfd63bd?auto=format&fit=crop&w=800&q=80", tag: {en: "Art", ka: "ხელოვნება"}, subItems: [{title: "National Museum", desc: "Gold"}] },
-                    { title: {en: "Nightlife", ka: "ღამის ცხოვრება"}, desc: {en: "Techno & Bars", ka: "კლუბები"}, img: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?auto=format&fit=crop&w=800&q=80", tag: {en: "Fun", ka: "გართობა"}, subItems: [{title: "Bassiani", desc: "Club"}] }
-                ], 
-                blog: [
-                     { title: {en: "Best Cafes", ka: "საუკეთესო კაფეები"}, date: {en: "Guide", ka: "გზამკვლევი"}, img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" },
-                     { title: {en: "Techno Scene", ka: "ტექნო სცენა"}, date: {en: "Nightlife", ka: "ღამე"}, img: "https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=800&q=80" },
-                     { title: {en: "History Walk", ka: "ისტორიული გასეირნება"}, date: {en: "Culture", ka: "კულტურა"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80" },
-                     { title: {en: "Local Food", ka: "ადგილობრივი კერძები"}, date: {en: "Eat", ka: "ჭამა"}, img: "https://images.unsplash.com/photo-1626075011268-76493d9836f9?auto=format&fit=crop&w=800&q=80" }
-                ] 
-            },
-            mtskheta_mtianeti: { 
-                accent: "#5D4037", 
-                tours: [
-                    { title: {en: "Jvari & Svetitskhoveli", ka: "ჯვარი და სვეტიცხოველი"}, desc: {en: "UNESCO Sites", ka: "იუნესკო"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Jvari", desc: "6th Century"}] },
-                    { title: {en: "Kazbegi Day Trip", ka: "ყაზბეგი"}, desc: {en: "Gergeti Trinity", ka: "გერგეტის სამება"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Jeep Tour", desc: "To Church"}] },
-                    { title: {en: "Gudauri Ski", ka: "გუდაური"}, desc: {en: "Winter Sport", ka: "ზამთრის სპორტი"}, img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?auto=format&fit=crop&w=800&q=80", tag: {en: "Active", ka: "აქტიური"}, subItems: [{title: "Skiing", desc: "Resort"}] },
-                    { title: {en: "Chateau Mukhrani", ka: "შატო მუხრანი"}, desc: {en: "Royal Estate", ka: "სამეფო მამული"}, img: "https://images.unsplash.com/photo-1572571301957-3f2f65733239?auto=format&fit=crop&w=800&q=80", tag: {en: "Wine", ka: "ღვინო"}, subItems: [{title: "Tasting", desc: "Premium Wines"}] }
-                ], 
-                blog: [
-                    { title: {en: "Religious History", ka: "რელიგიური ისტორია"}, date: {en: "Culture", ka: "კულტურა"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Hiking Kazbegi", ka: "ლაშქრობა ყაზბეგში"}, date: {en: "Nature", ka: "ბუნება"}, img: "https://images.unsplash.com/photo-1475598226890-e7f119c74e8a?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Winter Guide", ka: "ზამთრის გზამკვლევი"}, date: {en: "Ski", ka: "თხილამური"}, img: "https://images.unsplash.com/photo-1482867996988-29ec3a0f1aac?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Royal Wine", ka: "სამეფო ღვინო"}, date: {en: "Taste", ka: "გემო"}, img: "https://images.unsplash.com/photo-1516594915697-87b5d4a02968?auto=format&fit=crop&w=800&q=80" }
-                ] 
-            },
-            kartli: { 
-                accent: "#A93226", 
-                tours: [
-                    { title: {en: "Uplistsikhe", ka: "უფლისციხე"}, desc: {en: "Cave Town", ka: "კლდეში ნაკვეთი"}, img: "https://images.unsplash.com/photo-1600742533089-a2e6e3c0b11b?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Caves", desc: "Ancient"}] },
-                    { title: {en: "Gori Museum", ka: "გორის მუზეუმი"}, desc: {en: "Stalin History", ka: "სტალინი"}, img: "https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&w=800&q=80", tag: {en: "Museum", ka: "მუზეუმი"}, subItems: [{title: "Tour", desc: "History"}] },
-                    { title: {en: "Ateni Sioni", ka: "ატენის სიონი"}, desc: {en: "Wine & Church", ka: "ღვინო და ტაძარი"}, img: "https://images.unsplash.com/photo-1516594915697-87b5d4a02968?auto=format&fit=crop&w=800&q=80", tag: {en: "Culture", ka: "კულტურა"}, subItems: [{title: "Tasting", desc: "Chinuri"}] },
-                    { title: {en: "Manglisi", ka: "მანგლისი"}, desc: {en: "Nature & Cathedral", ka: "ბუნება და ტაძარი"}, img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "დასვენება"}, subItems: [{title: "Forest", desc: "Walk"}] }
-                ], 
-                blog: [
-                    { title: {en: "Cave Cities", ka: "კლდის ქალაქები"}, date: {en: "History", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1599592970984-04b28a5e5c64?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Soviet Legacy", ka: "საბჭოთა მემკვიდრეობა"}, date: {en: "Museum", ka: "მუზეუმი"}, img: "https://images.unsplash.com/photo-1550348335-92122b6f9372?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Kartli Wines", ka: "ქართლის ღვინოები"}, date: {en: "Drink", ka: "სასმელი"}, img: "https://images.unsplash.com/photo-1559563362-c667ba5f5480?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Hidden Gems", ka: "დამალული ადგილები"}, date: {en: "Explore", ka: "აღმოჩენა"}, img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80" }
-                ] 
-            },
-            kakheti: { 
-                accent: "#9A7D0A", 
-                tours: [
-                    { title: {en: "Signagi", ka: "სიღნაღი"}, desc: {en: "City of Love", ka: "სიყვარულის ქალაქი"}, img: "https://images.unsplash.com/photo-1600742533089-a2e6e3c0b11b?auto=format&fit=crop&w=800&q=80", tag: {en: "Romantic", ka: "რომანტიკული"}, subItems: [{title: "Bodbe", desc: "Monastery"}] },
-                    { title: {en: "Tsinandali", ka: "წინანდალი"}, desc: {en: "Estate & Wine", ka: "მამული და ღვინო"}, img: "https://images.unsplash.com/photo-1584455390266-0337f26d0794?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Museum", desc: "Tour"}] },
-                    { title: {en: "David Gareja", ka: "დავით გარეჯი"}, desc: {en: "Desert", ka: "უდაბნო"}, img: "https://images.unsplash.com/photo-1572571301957-3f2f65733239?auto=format&fit=crop&w=800&q=80", tag: {en: "Adventure", ka: "თავგადასავალი"}, subItems: [{title: "Caves", desc: "Hike"}] },
-                    { title: {en: "Wine Tunnel", ka: "ღვინის გვირაბი"}, desc: {en: "Khareba", ka: "ხარება"}, img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800&q=80", tag: {en: "Wine", ka: "ღვინო"}, subItems: [{title: "Tasting", desc: "Qvevri"}] }
-                ], 
-                blog: [
-                    { title: {en: "Harvest", ka: "რთველი"}, date: {en: "Autumn", ka: "შემოდგომა"}, img: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Amber Wine", ka: "ქვევრის ღვინო"}, date: {en: "Taste", ka: "გემო"}, img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Tusheti Trip", ka: "თუშეთი"}, date: {en: "Adventure", ka: "თავგადასავალი"}, img: "https://images.unsplash.com/photo-1596306499300-0b7b1689b96d?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Kakhetian Supra", ka: "კახური სუფრა"}, date: {en: "Food", ka: "საკვები"}, img: "https://images.unsplash.com/photo-1603002730629-64df815039c5?auto=format&fit=crop&w=800&q=80" }
-                ] 
-            },
-            samtskhe_javakheti: { 
-                accent: "#546E7A", 
-                tours: [
-                    { title: {en: "Vardzia", ka: "ვარძია"}, desc: {en: "Cave City", ka: "კლდის ქალაქი"}, img: "https://images.unsplash.com/photo-1564052552234-2c585403590a?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Caves", desc: "Explore"}] },
-                    { title: {en: "Rabati", ka: "რაბათი"}, desc: {en: "Castle", ka: "ციხე"}, img: "https://images.unsplash.com/photo-1575276414409-1f621523b43b?auto=format&fit=crop&w=800&q=80", tag: {en: "Culture", ka: "კულტურა"}, subItems: [{title: "Museum", desc: "Tour"}] },
-                    { title: {en: "Borjomi", ka: "ბორჯომი"}, desc: {en: "Park & Water", ka: "პარკი და წყალი"}, img: "https://images.unsplash.com/photo-1597166567079-189725761f37?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "დასვენება"}, subItems: [{title: "Springs", desc: "Taste"}] },
-                    { title: {en: "Paravani", ka: "ფარავანი"}, desc: {en: "Alpine Lake", ka: "ალპური ტბა"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Views", desc: "Drive"}] }
-                ], 
-                blog: [
-                    { title: {en: "Cave History", ka: "მღვიმეთა ისტორია"}, date: {en: "Learn", ka: "სწავლა"}, img: "https://images.unsplash.com/photo-1564052552234-2c585403590a?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Spa & Health", ka: "სპა და ჯანმრთელობა"}, date: {en: "Relax", ka: "რელაქსი"}, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Castles", ka: "ციხესიმაგრეები"}, date: {en: "Explore", ka: "აღმოჩენა"}, img: "https://images.unsplash.com/photo-1595498000689-9a8822411b4a?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Lakes", ka: "ტბები"}, date: {en: "Nature", ka: "ბუნება"}, img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80" }
-                ] 
-            },
-            imereti: { 
-                accent: "#2E7D32", 
-                tours: [
-                    { title: {en: "Prometheus Cave", ka: "პრომეთე"}, desc: {en: "Cave", ka: "მღვიმე"}, img: "https://images.unsplash.com/photo-1629906511379-15a2a7179323?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Boat", desc: "Underground"}] },
-                    { title: {en: "Okatse", ka: "ოკაცე"}, desc: {en: "Canyon", ka: "კანიონი"}, img: "https://images.unsplash.com/photo-1604918363094-587689290516?auto=format&fit=crop&w=800&q=80", tag: {en: "Adventure", ka: "თავგადასავალი"}, subItems: [{title: "Walk", desc: "Skywalk"}] },
-                    { title: {en: "Kutaisi", ka: "ქუთაისი"}, desc: {en: "City Tour", ka: "ქალაქის ტური"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80", tag: {en: "City", ka: "ქალაქი"}, subItems: [{title: "Bagrati", desc: "Cathedral"}] },
-                    { title: {en: "Sataplia", ka: "სათაფლია"}, desc: {en: "Reserve", ka: "ნაკრძალი"}, img: "https://images.unsplash.com/photo-1475598226890-e7f119c74e8a?auto=format&fit=crop&w=800&q=80", tag: {en: "Kids", ka: "ბავშვები"}, subItems: [{title: "Dino", desc: "Footprints"}] }
-                ], 
-                blog: [
-                    { title: {en: "Canyons Guide", ka: "კანიონები"}, date: {en: "Nature", ka: "ბუნება"}, img: "https://images.unsplash.com/photo-1604918363094-587689290516?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Imeretian Food", ka: "იმერული სუფრა"}, date: {en: "Taste", ka: "გემო"}, img: "https://images.unsplash.com/photo-1626075011268-76493d9836f9?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Ancient City", ka: "ძველი ქალაქი"}, date: {en: "History", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Cave Myths", ka: "მღვიმის მითები"}, date: {en: "Story", ka: "ამბავი"}, img: "https://images.unsplash.com/photo-1629906511379-15a2a7179323?auto=format&fit=crop&w=800&q=80" }
-                ] 
-            },
-            samegrelo: { 
-                accent: "#00897B", 
-                tours: [
-                    { title: {en: "Martvili", ka: "მარტვილი"}, desc: {en: "Canyon", ka: "კანიონი"}, img: "https://images.unsplash.com/photo-1604918363094-587689290516?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Boat", desc: "Ride"}] },
-                    { title: {en: "Dadiani", ka: "დადიანები"}, desc: {en: "Palace", ka: "სასახლე"}, img: "https://images.unsplash.com/photo-1580326733551-73e6c16f8517?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Museum", desc: "Visit"}] },
-                    { title: {en: "Tobavarchkhili", ka: "ტობავარჩხილი"}, desc: {en: "Lakes", ka: "ტბები"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Trekking", ka: "ლაშქრობა"}, subItems: [{title: "Hike", desc: "Alpine"}] },
-                    { title: {en: "Kolkheti", ka: "კოლხეთი"}, desc: {en: "Park", ka: "პარკი"}, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f?auto=format&fit=crop&w=800&q=80", tag: {en: "Safari", ka: "საფარი"}, subItems: [{title: "Boat", desc: "Tour"}] }
-                ], 
-                blog: [
-                    { title: {en: "Megrelian Cuisine", ka: "მეგრული სამზარეულო"}, date: {en: "Spicy", ka: "ცხარე"}, img: "https://images.unsplash.com/photo-1573409788406-1a6d54c2866d?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Canyon Boat", ka: "ნავით სეირნობა"}, date: {en: "Fun", ka: "გართობა"}, img: "https://images.unsplash.com/photo-1604918363094-587689290516?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Alpine Lakes", ka: "ალპური ტბები"}, date: {en: "Hike", ka: "ლაშქრობა"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Palace History", ka: "სასახლის ისტორია"}, date: {en: "Culture", ka: "კულტურა"}, img: "https://images.unsplash.com/photo-1580326733551-73e6c16f8517?auto=format&fit=crop&w=800&q=80" }
-                ] 
-            },
-            guria: { 
-                accent: "#558B2F", 
-                tours: [
-                    { title: {en: "Gomis Mta", ka: "გომის მთა"}, desc: {en: "Views", ka: "ხედები"}, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f?auto=format&fit=crop&w=800&q=80", tag: {en: "Sunset", ka: "დაისი"}, subItems: [{title: "Camping", desc: "Night"}] },
-                    { title: {en: "Ureki", ka: "ურეკი"}, desc: {en: "Sand", ka: "ქვიშა"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "დასვენება"}, subItems: [{title: "Beach", desc: "Magnetic"}] },
-                    { title: {en: "Bakhmaro", ka: "ბახმარო"}, desc: {en: "Mountain", ka: "მთა"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Resort", desc: "Air"}] },
-                    { title: {en: "Shekvetili", ka: "შეკვეთილი"}, desc: {en: "Park", ka: "პარკი"}, img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?auto=format&fit=crop&w=800&q=80", tag: {en: "Fun", ka: "გართობა"}, subItems: [{title: "Music", desc: "Park"}] }
-                ], 
-                blog: [
-                    { title: {en: "Cloud Hunting", ka: "ღრუბლებზე ნადირობა"}, date: {en: "Photo", ka: "ფოტო"}, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Tea Culture", ka: "ჩაის კულტურა"}, date: {en: "Drink", ka: "სასმელი"}, img: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Black Sea", ka: "შავი ზღვა"}, date: {en: "Summer", ka: "ზაფხული"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Polyphony", ka: "მრავალხმიანობა"}, date: {en: "Music", ka: "მუსიკა"}, img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80" }
-                ] 
-            },
-            racha: { 
-                accent: "#0277BD", 
-                tours: [
-                    { title: {en: "Shaori", ka: "შაორი"}, desc: {en: "Lake", ka: "ტბა"}, img: "https://images.unsplash.com/photo-1596306499317-849aa5dd3396?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Picnic", desc: "Relax"}] },
-                    { title: {en: "Nikortsminda", ka: "ნიკორწმინდა"}, desc: {en: "Church", ka: "ტაძარი"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80", tag: {en: "Culture", ka: "კულტურა"}, subItems: [{title: "Fresco", desc: "See"}] },
-                    { title: {en: "Shovi", ka: "შოვი"}, desc: {en: "Resort", ka: "კურორტი"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Health", ka: "ჯანმრთელობა"}, subItems: [{title: "Springs", desc: "Drink"}] },
-                    { title: {en: "Khvanchkara", ka: "ხვანჭკარა"}, desc: {en: "Wine", ka: "ღვინო"}, img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800&q=80", tag: {en: "Wine", ka: "ღვინო"}, subItems: [{title: "Tasting", desc: "Red"}] }
-                ], 
-                blog: [
-                    { title: {en: "Georgian Alps", ka: "ქართული ალპები"}, date: {en: "Hike", ka: "ლაშქრობა"}, img: "https://images.unsplash.com/photo-1596306499317-849aa5dd3396?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Famous Wine", ka: "ცნობილი ღვინო"}, date: {en: "Taste", ka: "გემო"}, img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Cool Forests", ka: "გრილი ტყეები"}, date: {en: "Nature", ka: "ბუნება"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Hidden Churches", ka: "დამალული ტაძრები"}, date: {en: "History", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80" }
-                ] 
-            },
-            svaneti: { 
-                accent: "#0288D1", 
-                tours: [
-                    { title: {en: "Ushguli", ka: "უშგული"}, desc: {en: "Jeep", ka: "ჯიპი"}, img: "https://images.unsplash.com/photo-1571258267881-5d6929516187?auto=format&fit=crop&w=800&q=80", tag: {en: "Adventure", ka: "თავგადასავალი"}, subItems: [{title: "Trip", desc: "Off-road"}] },
-                    { title: {en: "Mestia", ka: "მესტია"}, desc: {en: "Museum", ka: "მუზეუმი"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Culture", ka: "კულტურა"}, subItems: [{title: "Visit", desc: "History"}] },
-                    { title: {en: "Chalaadi", ka: "ჭალაადი"}, desc: {en: "Hike", ka: "ლაშქრობა"}, img: "https://images.unsplash.com/photo-1475598226890-e7f119c74e8a?auto=format&fit=crop&w=800&q=80", tag: {en: "Active", ka: "აქტიური"}, subItems: [{title: "Glacier", desc: "Walk"}] },
-                    { title: {en: "Hatsvali", ka: "ჰაწვალი"}, desc: {en: "Ski", ka: "თხილამური"}, img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?auto=format&fit=crop&w=800&q=80", tag: {en: "Views", ka: "ხედები"}, subItems: [{title: "Lift", desc: "Ride"}] }
-                ], 
-                blog: [
-                    { title: {en: "Land of Towers", ka: "კოშკების მხარე"}, date: {en: "History", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1571258267881-5d6929516187?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Gold of Svaneti", ka: "სვანური ოქრო"}, date: {en: "Legend", ka: "ლეგენდა"}, img: "https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Highest Peaks", ka: "უმაღლესი მწვერვალები"}, date: {en: "Nature", ka: "ბუნება"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Svan Food", ka: "კუბდარი"}, date: {en: "Kubdari", ka: "კუბდარი"}, img: "https://images.unsplash.com/photo-1573409788406-1a6d54c2866d?auto=format&fit=crop&w=800&q=80" }
-                ] 
-            },
-            adjara: { 
-                accent: "#0D47A1", 
-                tours: [
-                    { title: {en: "Batumi", ka: "ბათუმი"}, desc: {en: "City", ka: "ქალაქი"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80", tag: {en: "City", ka: "ქალაქი"}, subItems: [{title: "Walk", desc: "Boulevard"}] },
-                    { title: {en: "Botanical", ka: "ბოტანიკური"}, desc: {en: "Garden", ka: "ბაღი"}, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Tour", desc: "Plants"}] },
-                    { title: {en: "Makhuntseti", ka: "მახუნცეთი"}, desc: {en: "Waterfall", ka: "ჩანჩქერი"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Bridge", desc: "Visit"}] },
-                    { title: {en: "Mtirala", ka: "მტირალა"}, desc: {en: "Park", ka: "პარკი"}, img: "https://images.unsplash.com/photo-1597166567079-189725761f37?auto=format&fit=crop&w=800&q=80", tag: {en: "Active", ka: "აქტიური"}, subItems: [{title: "Hike", desc: "Forest"}] }
-                ], 
-                blog: [
-                    { title: {en: "Sea & Sun", ka: "ზღვა და მზე"}, date: {en: "Summer", ka: "ზაფხული"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Adjarian Khachapuri", ka: "აჭარული"}, date: {en: "Food", ka: "კვება"}, img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Batumi Nightlife", ka: "ბათუმის ღამე"}, date: {en: "Fun", ka: "გართობა"}, img: "https://images.unsplash.com/photo-1596306499317-849aa5dd3396?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Nature Escape", ka: "ბუნებაში გაქცევა"}, date: {en: "Green", ka: "მწვანე"}, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f?auto=format&fit=crop&w=800&q=80" }
-                ] 
-            },
-            abkhazeti: { 
-                accent: "#00695C", 
-                tours: [
-                    { title: {en: "Ritsa", ka: "რიწა"}, desc: {en: "Lake", ka: "ტბა"}, img: "https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "View", desc: "Lake"}] },
-                    { title: {en: "New Athos", ka: "ახალი ათონი"}, desc: {en: "Monastery", ka: "მონასტერი"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Cave", desc: "Visit"}] },
-                    { title: {en: "Gagra", ka: "გაგრა"}, desc: {en: "Resort", ka: "კურორტი"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "დასვენება"}, subItems: [{title: "Park", desc: "Walk"}] },
-                    { title: {en: "Pitsunda", ka: "ბიჭვინთა"}, desc: {en: "Pine", ka: "ფიჭვი"}, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Cape", desc: "Forest"}] }
-                ], 
-                blog: [
-                    { title: {en: "Hidden Gem", ka: "ფარული მარგალიტი"}, date: {en: "Discover", ka: "აღმოჩენა"}, img: "https://images.unsplash.com/photo-1565008576549-57569a447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Sacred Sites", ka: "წმინდა ადგილები"}, date: {en: "History", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Black Sea", ka: "შავი ზღვა"}, date: {en: "Water", ka: "წყალი"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Alpine Views", ka: "ალპური ხედები"}, date: {en: "Mountain", ka: "მთა"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80" }
-                ] 
-            },
-        };
-
-        // Services data for easy import
-        const hardcodedServices = [
-            { region: 'georgia', type: 'services', title: { en: "Travel Planning & Assistance", ka: "ტურების დაგეგმვა" }, desc: { en: "From wine and gastronomy tours to leisure and extreme adventure. We curate authentic experiences, ensuring you discover the hidden gems of Sakartvelo without the hassle.", ka: "ჩვენ ვქმნით ავთენტურ გამოცდილებას." }, img: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80", published: true, subItems: [{ title: "Tailored Tours", desc: "Custom Itineraries" }, { title: "Gastronomy", desc: "Wine & Food" }] },
-            { region: 'georgia', type: 'services', title: { en: "Transport & Security", ka: "ტრანსპორტი და დაცვა" }, desc: { en: "Move with confidence. We provide a complete fleet—from premium luxury sedans to rugged expedition vehicles—along with professional security services for your peace of mind.", ka: "იმოგზაურეთ თავდაჯერებულად." }, img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80", published: true, subItems: [{ title: "Premium Fleet", desc: "Sedans & SUVs" }, { title: "Security", desc: "Personal Guard" }] },
-            { region: 'georgia', type: 'services', title: { en: "MICE & Business", ka: "MICE და ბიზნესი" }, desc: { en: "Business without borders. We act as your local logistical backbone, organizing conferences, corporate events, and facilitating local business deals.", ka: "ბიზნესი საზღვრების გარეშე." }, img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80", published: true, subItems: [{ title: "Conferences", desc: "Event Management" }, { title: "Local Partner", desc: "Facilitation" }] },
-            { region: 'georgia', type: 'services', title: { en: "Medical & Wellness", ka: "სამედიცინო და ველნესი" }, desc: { en: "Your health, prioritized. We organize appointments, translation, and support for dental, aesthetic, and general medical procedures with the country's top specialists.", ka: "ჯანმრთელობა პრიორიტეტულია." }, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80", published: true, subItems: [{ title: "Aesthetic", desc: "Hair & Dental" }, { title: "Wellness", desc: "Spa & Recovery" }] }
-        ];
-
+        const storage = getStorage(app);
 
         // --- GLOBAL VARS ---
         let loadedItems = {};
@@ -495,7 +311,7 @@
             }
         });
 
-        // --- DATA LOADING & STRUCTURED LIST ---
+        // --- DATA LOADING & STRUCTURED LIST (REVISED) ---
         window.loadStructuredData = async () => {
             const list = document.getElementById('items-list');
             list.innerHTML = '';
@@ -505,9 +321,7 @@
                 const q = query(collection(db, "content"));
                 const snap = await getDocs(q);
                 
-                list.innerHTML = '';
                 let contentByRegion = {};
-
                 snap.forEach(doc => {
                     const item = doc.data();
                     item.id = doc.id;
@@ -520,7 +334,6 @@
                 });
 
                 const regionDisplayOrder = ['georgia', 'tbilisi', 'mtskheta_mtianeti', 'kartli', 'kakheti', 'samtskhe_javakheti', 'imereti', 'samegrelo', 'guria', 'racha', 'svaneti', 'adjara', 'abkhazeti'];
-
                 const regionNames = {
                     georgia: "HOME / SERVICES", tbilisi: "TBILISI", mtskheta_mtianeti: "MTSKHETA-MTIANETI", kartli: "KARTLI", kakheti: "KAKHETI", samtskhe_javakheti: "SAMTSKHE-JAVAKHETI", imereti: "IMERETI", samegrelo: "SAMEGRELO", guria: "GURIA", racha: "RACHA-LECHKHUMI", svaneti: "SVANETI", adjara: "ADJARA", abkhazeti: "ABKHAZETI"
                 };
@@ -556,66 +369,48 @@
                 list.innerHTML = `<p style="color:red">Error loading: ${e.message}</p>`;
             }
         };
-
-        // --- IMPORT DATA ---
-        window.importHardcodedData = async () => {
-            if(!auth.currentUser) return alert("Please log in first.");
-            if(!confirm("WARNING: This will upload all pre-designed tours and posts to your Firebase database. Do this only once! Continue?")) return;
+        
+        // --- IMAGE UPLOAD LOGIC ---
+        window.handleFileUpload = async () => {
+            const fileInput = document.getElementById('file-upload');
+            const file = fileInput.files[0];
+            const status = document.getElementById('upload-status');
             
-            const allItems = [];
+            if (!file) return;
 
-            const processRegion = (regionKey, data, type) => {
-                if (!data) return;
-                data.forEach(item => {
-                    // Create a unified item structure suitable for the DB
-                    const newItem = {
-                        region: regionKey,
-                        type: type,
-                        published: true,
-                        title: item.title,
-                        img: item.img,
-                        tag: item.tag || {en:'', ka:''},
-                        subItems: item.subItems || [],
-                    };
+            status.innerHTML = 'Uploading... (0%)';
 
-                    if (type === 'blog') {
-                        newItem.date = item.date;
-                        newItem.text = { en: item.text?.en || '', ka: item.text?.ka || '' }; // Add full text placeholder
-                        newItem.desc = item.date; // Use date for short desc on blog list
-                    } else {
-                        newItem.desc = item.desc;
-                        // SubItems are already mapped in tours/services
+            try {
+                // 1. Create a unique file path
+                const fileName = `${Date.now()}-${file.name}`;
+                const storageRef = ref(storage, 'images/' + fileName);
+
+                // 2. Upload
+                const uploadTask = uploadBytes(storageRef, file);
+
+                // 3. Monitor progress (optional, but good UX)
+                uploadTask.on('state_changed', 
+                    (snapshot) => {
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        status.innerHTML = `Uploading... (${Math.round(progress)}%)`;
+                    }, 
+                    (error) => {
+                        status.innerHTML = `❌ Upload failed: ${error.message}`;
+                    }, 
+                    () => {
+                        // 4. Get the public URL after successful upload
+                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                            document.getElementById('img').value = downloadURL;
+                            status.innerHTML = '✅ Upload complete! URL inserted.';
+                            updatePreview();
+                        });
                     }
-                    allItems.push(newItem);
-                });
-            };
+                );
 
-            // Process all regions from the hardcoded structure
-            for (const regionKey in hardcodedDatabase) {
-                const regionData = hardcodedDatabase[regionKey];
-                processRegion(regionKey, regionData.tours, 'tours');
-                processRegion(regionKey, regionData.blog, 'blog');
+            } catch (e) {
+                status.innerHTML = `❌ Critical Upload Error: ${e.message}`;
             }
-            // Process common services (which are currently hardcoded separate from database object)
-            hardcodedServices.forEach(service => {
-                 allItems.push({...service, type: 'services', published: true});
-            });
-
-
-            let successCount = 0;
-            for (const item of allItems) {
-                try {
-                    await addDoc(collection(db, "content"), item);
-                    successCount++;
-                } catch (e) {
-                    console.error("Upload error for item:", item, e);
-                }
-            }
-
-            showToast(`✅ Successfully imported ${successCount} items!`);
-            loadData();
         };
-
 
         // --- CORE EDITOR FUNCTIONS ---
 
@@ -630,7 +425,7 @@
             document.getElementById('title_en').value = data.title?.en || '';
             document.getElementById('title_ka').value = data.title?.ka || '';
             
-            // Smart field mapping: Populates desc fields with desc or date
+            // Smart field mapping
             document.getElementById('desc_en').value = data.desc?.en || data.date?.en || '';
             document.getElementById('desc_ka').value = data.desc?.ka || data.date?.ka || '';
             
@@ -696,7 +491,7 @@
             document.getElementById('subitems-list').appendChild(div);
         };
 
-        // --- LIVE PREVIEW LOGIC ---
+        // --- LIVE PREVIEW LOGIC (Continued) ---
         window.updatePreview = () => {
             const container = document.getElementById('live-preview-container');
             const type = document.getElementById('type').value;
@@ -735,7 +530,7 @@
 
             container.innerHTML = html;
             
-            // Re-load the iframe to show live website data changes
+            // Reload the iframe to show live website data changes
             document.getElementById('live-iframe').src = document.getElementById('live-iframe').src;
         };
 
