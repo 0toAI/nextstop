@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Admin | NextStop</title>
+    <title>Manager | NextStop Georgia</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -51,7 +51,7 @@
         .preview-title { font-family: 'Cinzel', serif; margin-bottom: 20px; color: #777; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px; }
 
         /* PREVIEW CARD STYLES (Copied from Website) */
-        .preview-card-wrapper { width: 100%; max-width: 320px; pointer-events: none; } /* Scale down slightly for fitting */
+        .preview-card-wrapper { width: 100%; max-width: 320px; pointer-events: none; } 
         .card { background: white; border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); height: 400px; position: relative; margin-bottom: 20px; }
         .card-bg { width: 100%; height: 100%; object-fit: cover; }
         .card-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; color: white; }
@@ -96,9 +96,6 @@
         .btn-new { background: var(--green); color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
         
         .status-toast { position: fixed; bottom: 20px; right: 20px; background: var(--charcoal); color: white; padding: 15px 25px; border-radius: 4px; display: none; animation: slideUp 0.3s; z-index: 3000; }
-        @keyframes slideUp { from { transform: translateY(100px); } to { transform: translateY(0); } }
-        
-        .import-btn { background: #3498db; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; margin-left: auto; }
     </style>
 </head>
 <body>
@@ -109,7 +106,7 @@
             <h2>NextStop Manager</h2>
             <input type="email" id="login-email" class="login-input" placeholder="Email">
             <input type="password" id="login-pass" class="login-input" placeholder="Password">
-            <button class="login-btn" onclick="handleLogin()">SECURE LOGIN</button>
+            <button class="login-btn" onclick="handleLogin()">Enter Dashboard</button>
         </div>
     </div>
 
@@ -211,8 +208,8 @@
                     <div class="form-col">
                         <label>Tag / Badge (EN/KA)</label>
                         <div style="display:flex; gap:5px;">
-                            <input type="text" id="tag_en" placeholder="EN" oninput="updatePreview()">
-                            <input type="text" id="tag_ka" placeholder="KA">
+                            <input type="text" id="tag_en" class="col" placeholder="EN" oninput="updatePreview()">
+                            <input type="text" id="tag_ka" class="col" placeholder="KA">
                         </div>
                     </div>
                 </div>
@@ -244,7 +241,7 @@
         <div class="preview-panel">
             <div class="preview-title">Live Website Preview</div>
             <div id="live-preview-container" class="preview-card-wrapper">
-                <!-- Dynamic Card Appears Here -->
+                <p style="text-align:center; color:#999;">Start typing in the editor to see the card preview.</p>
             </div>
         </div>
 
@@ -284,13 +281,13 @@
         };
         window.handleLogout = () => signOut(auth);
 
-        onAuthStateChanged(auth, user => {
+        onAuthStateChanged(auth, (user) => {
             if(user) {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-header').style.display = 'flex';
                 document.getElementById('main-wrapper').style.display = 'flex';
                 loadData();
-                updatePreview(); // Init preview
+                updatePreview(); 
             } else {
                 document.getElementById('login-screen').style.display = 'flex';
                 document.getElementById('main-header').style.display = 'none';
@@ -299,39 +296,52 @@
         });
 
         // --- DATA LOADING ---
-        async function loadData() {
+        let loadedItems = {};
+
+        window.loadData = async () => {
             const list = document.getElementById('items-list');
             list.innerHTML = 'Loading...';
             contentData = [];
             
-            const q = query(collection(db, "content")); // Add orderBy later
-            const snap = await getDocs(q);
-            
-            list.innerHTML = '';
-            snap.forEach(doc => {
-                const d = doc.data();
-                d.id = doc.id;
-                contentData.push(d);
+            try {
+                const q = query(collection(db, "content")); 
+                const snap = await getDocs(q);
                 
-                const div = document.createElement('div');
-                div.className = `list-item ${d.published ? '' : 'inactive'}`;
-                div.onclick = () => selectItem(d);
-                div.innerHTML = `
-                    <span class="item-status ${d.published ? 'status-published' : 'status-hidden'}">
-                        ${d.published ? 'LIVE' : 'HIDDEN'}
-                    </span>
-                    <span class="item-title">${d.title?.en || 'Untitled'}</span>
-                    <div class="item-meta">${d.region.toUpperCase()} • ${d.type.toUpperCase()}</div>
-                `;
-                list.appendChild(div);
-            });
-        }
+                list.innerHTML = ""; 
+                loadedItems = {};
+                
+                snap.forEach(doc => {
+                    const item = doc.data();
+                    const id = doc.id;
+                    loadedItems[id] = item;
+                    
+                    const div = document.createElement('div');
+                    div.className = `list-item ${item.published ? 'active' : 'inactive'}`;
+                    div.onclick = () => selectItem(item);
+                    div.innerHTML = `
+                        <span class="item-status ${item.published ? 'status-published' : 'status-hidden'}">
+                            ${item.published ? 'LIVE' : 'HIDDEN'}
+                        </span>
+                        <span class="item-title">${item.title?.en || 'Untitled'}</span>
+                        <div class="item-meta">${item.region.toUpperCase()} • ${item.type.toUpperCase()}</div>
+                    `;
+                    list.appendChild(div);
+                });
+
+                if(snap.empty) {
+                    list.innerHTML = '<p style="text-align:center; color:#999;">No content found. Click NEW.</p>';
+                }
+
+            } catch (e) {
+                list.innerHTML = `<p style="color:red">Error loading: ${e.message}</p>`;
+            }
+        };
 
         // --- EDITOR LOGIC ---
         window.selectItem = (data) => {
             currentId = data.id;
             document.getElementById('docId').value = data.id;
-            document.getElementById('published').checked = data.published;
+            document.getElementById('published').checked = data.published !== false;
             
             document.getElementById('region').value = data.region;
             document.getElementById('type').value = data.type;
@@ -340,10 +350,8 @@
             document.getElementById('title_ka').value = data.title?.ka || '';
             
             // Smart field mapping
-            const descEn = data.desc?.en || data.date?.en || '';
-            const descKa = data.desc?.ka || data.date?.ka || '';
-            document.getElementById('desc_en').value = descEn;
-            document.getElementById('desc_ka').value = descKa;
+            document.getElementById('desc_en').value = data.desc?.en || data.date?.en || '';
+            document.getElementById('desc_ka').value = data.desc?.ka || data.date?.ka || '';
             
             document.getElementById('img').value = data.img || '';
             document.getElementById('tag_en').value = data.tag?.en || '';
@@ -360,19 +368,18 @@
             }
             
             toggleFields();
-            updatePreview(); // Refresh Preview
-            
-            // Highlight list
-            document.querySelectorAll('.list-item').forEach(el => el.classList.remove('active'));
+            updatePreview(); 
+            window.scrollTo(0, 0); 
         };
 
         window.createNew = () => {
             currentId = null;
+            document.getElementById('docId').value = "";
             document.querySelectorAll('input, textarea').forEach(el => el.value = '');
             document.getElementById('subitems-list').innerHTML = '';
             document.getElementById('published').checked = true;
             toggleFields();
-            updatePreview(); // Reset Preview
+            updatePreview(); 
         };
 
         window.toggleFields = () => {
@@ -417,25 +424,29 @@
             const img = document.getElementById('img').value || 'https://via.placeholder.com/300x400?text=Image';
             const tag = document.getElementById('tag_en').value;
 
+            let cardClass = (type === 'blog' ? 'blog-card' : 'card');
+            
+            // Check if Image URL is reasonable, otherwise use placeholder
+            const finalImg = (img && img.startsWith('http')) ? img : 'https://via.placeholder.com/300x400?text=IMAGE';
+
             let html = '';
 
             if (type === 'blog') {
                 html = `
-                    <div class="blog-card">
-                        <div class="blog-img-box"><img src="${img}"></div>
+                    <div class="${cardClass}">
+                        <div class="blog-img-box"><img src="${finalImg}" onerror="this.src='https://via.placeholder.com/300x200?text=Blog'"></div>
                         <div class="blog-content">
-                            <div class="blog-date">${desc}</div> <!-- Date is in desc field for blog -->
+                            <div class="blog-date">${desc}</div>
                             <h4 class="blog-title">${title}</h4>
                             <span class="blog-link">Read Article &rarr;</span>
                         </div>
                     </div>
                 `;
             } else {
-                // Tour or Service Card
                 const tagHtml = tag ? `<span class="card-tag">${tag}</span>` : '';
                 html = `
-                    <div class="card">
-                        <img src="${img}" class="card-bg">
+                    <div class="${cardClass}">
+                        <img src="${finalImg}" class="card-bg" onerror="this.src='https://via.placeholder.com/300x400?text=Tour'">
                         ${tagHtml}
                         <div class="card-overlay">
                             <h3>${title}</h3>
@@ -450,7 +461,11 @@
 
         // --- SAVE ---
         window.saveCurrent = async () => {
+            if (!auth.currentUser) return alert("Please log in first.");
+            
             const type = document.getElementById('type').value;
+            const id = document.getElementById('docId').value;
+            const status = document.getElementById('toast');
             
             // Collect Sub Items
             let subItems = [];
@@ -473,45 +488,37 @@
             if(type === 'blog') {
                 data.date = { en: document.getElementById('desc_en').value, ka: document.getElementById('desc_ka').value };
                 data.text = { en: document.getElementById('text_en').value, ka: document.getElementById('text_ka').value };
+                delete data.subItems;
+                delete data.desc;
             } else {
                 data.desc = { en: document.getElementById('desc_en').value, ka: document.getElementById('desc_ka').value };
                 data.subItems = subItems;
+                delete data.date;
+                delete data.text;
             }
 
             try {
-                if(currentId) {
-                    await updateDoc(doc(db, "content", currentId), data);
+                if(id) {
+                    await updateDoc(doc(db, "content", id), data);
                 } else {
                     await addDoc(collection(db, "content"), data);
                 }
-                showToast("Saved Successfully!");
-                loadData();
-            } catch(e) { alert(e.message); }
+                showToast(id ? "Updated Successfully!" : "Created Successfully!");
+                createNew();
+                loadData(); 
+            } catch(e) { showToast("Error: " + e.message); }
         };
 
         window.deleteCurrent = async () => {
             if(!currentId) return;
-            if(confirm("Delete this item?")) {
+            if(confirm("Are you sure you want to delete this?")) {
                 await deleteDoc(doc(db, "content", currentId));
                 showToast("Deleted.");
                 createNew();
                 loadData();
             }
         };
-
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.innerText = msg; t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 3000);
-        }
         
-        // --- DATA IMPORT UTILITY ---
-        window.importHardcodedData = async () => {
-            if(!confirm("This will upload all website data to Firebase. Do this only once! Continue?")) return;
-            // (Paste DB import script here if needed in future)
-            alert("Data import function placeholder.");
-        };
-
     </script>
 </body>
 </html>
