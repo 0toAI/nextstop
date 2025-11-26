@@ -3,287 +3,287 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- 1. GLOBAL SEO METADATA -->
-    <title>NextStop Georgia | Premium Travel, Business & Medical Concierge</title>
-    <meta name="description" content="Make Georgia your NextStop. Your local partner for luxury leisure, adventure travel, business logistics (MICE), and medical wellness. Arrive as a guest, operate like a local.">
-    <meta name="keywords" content="Premium travel Georgia, Wine and Gastronomy, MICE Georgia, Medical Tourism Tbilisi, Transport and Security, Adventure Tours, Luxury Vacation, NextStop Georgia">
+    <title>Manager | NextStop Georgia</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 1. DESIGN VARIABLES (DYNAMIC) --- */
-        :root {
-            --bg-warm: #fdfbf7;         
-            --charcoal: #1a1a1a;        
-            --terracotta: #a84a32;      /* Dynamic Accent Color */
-            --gold: #c5a059;            
-            --green: #25D366;           
-            --gray-light: #f4f4f4;
+        :root { 
+            --charcoal: #1a1a1a; 
+            --terracotta: #a84a32; 
+            --gold: #c5a059; 
+            --gray-light: #f4f4f4; 
+            --green: #27ae60; 
+            --red: #c0392b;
+            --blue: #2980b9;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
+        * { box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
+        body { background: var(--gray-light); color: var(--charcoal); margin: 0; padding: 0; min-height: 100vh; }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Open Sans', sans-serif; }
-        html { scroll-behavior: smooth; scroll-padding-top: 220px; }
-        body { color: var(--charcoal); background-color: var(--bg-warm); line-height: 1.6; overflow-x: hidden; transition: background 0.5s; }
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
-        img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        button { cursor: pointer; border: none; outline: none; }
+        /* LOGIN */
+        #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--charcoal); z-index: 2000; display: flex; justify-content: center; align-items: center; }
+        .login-box { background: white; padding: 40px; border-radius: 8px; width: 350px; text-align: center; }
+        .login-input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        .login-btn { background: var(--terracotta); color: white; border: none; padding: 12px; width: 100%; font-weight: bold; cursor: pointer; border-radius: 4px; }
 
-        /* --- 2. HEADER --- */
-        header {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(15px);
-            padding: 0;
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            display: flex; flex-direction: column;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        /* HEADER & LAYOUT */
+        .admin-header { 
+            background: white; padding: 0 40px; height: 70px; border-bottom: 1px solid #ddd; 
+            display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; 
+        }
+        .admin-title { font-family: 'Cinzel', serif; margin: 0; font-size: 1.5rem; color: var(--charcoal); }
+        .admin-body { display: flex; height: calc(100vh - 70px); }
+        .admin-content-area { padding: 20px 40px; overflow-y: auto; background: #f9f9f9; flex-grow: 1; }
+
+        /* LEFT: LIST (Structured Tree View) */
+        .list-panel { width: 300px; background: white; border-right: 1px solid #ddd; overflow-y: auto; padding: 20px 0; flex-shrink: 0; }
+        .region-group { margin-bottom: 10px; padding: 0 10px; }
+        
+        .region-title { 
+            background: #e0e0e0; padding: 10px; font-weight: bold; cursor: pointer; margin-top: 5px; 
+            font-size: 0.85rem; border-radius: 4px; color: var(--charcoal); transition: background 0.2s;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .region-title:hover { background: #d3d3d3; }
+        
+        .toggle-arrow { transition: transform 0.3s; margin-left: 10px; font-size: 0.8rem;}
+        .region-group.expanded .toggle-arrow { transform: rotate(90deg); }
+
+        .sub-list { 
+            list-style: none; padding: 0; margin: 0; 
+            display: none; 
+        }
+        .sub-list-item { 
+            font-weight: bold; padding: 5px 10px; color: #555; 
+            cursor: default; font-size: 0.8rem;
         }
 
-        .header-top { 
-            display: flex; justify-content: space-between; align-items: center; width: 100%; 
-            padding: 15px 5%;
-            border-bottom: 1px solid #e0e0e0; 
-            z-index: 2;
+        .list-item { 
+            padding: 8px 10px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s; 
+            border-left: 4px solid transparent; 
+            margin-left: 10px; 
+            font-size: 0.85rem;
         }
-
-        .header-left { display: flex; align-items: center; gap: 30px; }
+        .list-item:hover { background: #fff5f2; }
+        .list-item.active { background: #fff0eb; border-left-color: var(--terracotta); }
         
-        .logo-container { 
-            display: flex; flex-direction: column; align-items: center; line-height: 0.9; 
-            cursor: pointer; width: 260px; flex-shrink: 0; 
-        }
-        .logo-main { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; }
-        .logo-sub { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--terracotta); letter-spacing: 4px; text-transform: uppercase; margin-left: 2px; transition: color 0.5s; white-space: nowrap; }
+        .item-status { font-size: 0.7rem; font-weight: bold; text-transform: uppercase; float: right; }
+        .status-published { color: var(--green); }
+        .status-hidden { color: var(--red); }
+        .item-title { font-weight: bold; display: block; margin-bottom: 5px; font-size: 0.85rem; }
+        .item-meta { font-size: 0.7rem; color: #888; }
+        .add-new-btn { width: 100%; padding: 8px 0; background: #fafafa; border: 1px dashed #ccc; margin-top: 5px; color: var(--charcoal); font-weight: bold; border-radius: 4px; }
 
-        .site-toggle { display: flex; background: var(--gray-light); padding: 4px; border-radius: 30px; border: 1px solid rgba(0,0,0,0.05); }
-        .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none; }
-        .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default; }
-        .toggle-btn.inactive:hover { color: var(--terracotta); }
-        .dot { color: var(--green); font-size: 0.8rem; animation: pulse 2s infinite; }
+        /* EDITOR + PREVIEW CONTAINER */
+        .editor-preview-container { display: flex; gap: 20px; max-width: 1200px; margin: 0 auto; }
 
-        .nav-right { display: flex; gap: 20px; align-items: center; }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; cursor: pointer; }
-        .nav-item:hover { color: var(--terracotta); }
-
-        /* PILL LANGUAGE BUTTON */
-        .lang-btn { 
-            padding: 6px 16px; 
-            border-radius: 20px; 
-            background: var(--gray-light); 
-            border: 1px solid rgba(0,0,0,0.05);
-            font-size: 0.7rem; 
-            font-weight: 700;
-            color: var(--charcoal);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            min-width: 50px;
-            display: flex;
-            justify-content: center;
-        }
-        .lang-btn:hover { 
-            background: white; 
-            border-color: var(--terracotta);
-            color: var(--terracotta);
-            transform: translateY(-1px);
-        }
-
-        /* --- RIBBON --- */
-        .ribbon-container {
-            width: 100%; 
-            padding: 20px 5% 12px; 
-            background: transparent;
-            position: relative;
-            z-index: 1;
-            mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
-        }
+        /* CENTER: EDITOR */
+        .editor-panel { flex: 2; padding: 30px; background: white; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
         
-        .destination-ribbon { display: flex; align-items: center; gap: 15px; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; white-space: nowrap; }
-        .destination-ribbon::-webkit-scrollbar { display: none; }
+        /* RIGHT: PREVIEW */
+        .preview-panel { flex: 1; padding: 20px; background: #f0f0f0; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); height: fit-content; position: sticky; top: 100px; }
+        .preview-title { font-family: 'Cinzel', serif; margin-bottom: 15px; color: #777; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px; text-align: center; }
+
+        /* PREVIEW CARD STYLES */
+        .preview-card-wrapper { width: 100%; max-width: 320px; pointer-events: none; margin: 0 auto; } 
+        .card { background: white; border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); height: 400px; position: relative; margin-bottom: 20px; }
+        .card-bg { width: 100%; height: 100%; object-fit: cover; }
+        .card-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; color: white; }
+        .card h3 { font-family: 'Cinzel', serif; font-size: 1.4rem; margin: 0 0 8px 0; color: var(--gold); line-height: 1.2; }
+        .card p { font-size: 0.9rem; opacity: 0.8; font-weight: 300; margin: 0; }
+        .card-tag { position: absolute; top: 20px; right: 20px; background: var(--terracotta); color: white; padding: 5px 12px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; border-radius: 2px; }
         
-        .ribbon-label { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; color: var(--charcoal); cursor: pointer; padding: 0 5px; letter-spacing: 1px; transition: 0.3s; min-width: 260px; text-align: center; }
-        .ribbon-label:hover { color: var(--terracotta); }
-        .ribbon-separator { color: #ddd; font-size: 1.2rem; font-weight: 300; margin: 0 10px 0 0; }
-
-        .dest-btn { padding: 8px 22px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; color: #888; background: transparent; transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease; cursor: pointer; white-space: nowrap; border: 1px solid rgba(0,0,0,0.1); text-transform: uppercase; letter-spacing: 0.5px; }
-        .dest-btn:hover { border-color: rgba(var(--btn-rgb), 1); color: rgba(var(--btn-rgb), 1); background: rgba(var(--btn-rgb), 0.20); z-index: 12; position: relative; }
-        .dest-btn.active { background: rgba(var(--btn-rgb), 1); color: white; border-color: rgba(var(--btn-rgb), 1); box-shadow: 0 4px 15px rgba(var(--btn-rgb), 0.4); }
-
-        /* --- HERO WHEEL --- */
-        .hero-wheel { height: 90vh; width: 100%; overflow: hidden; margin-top: 160px; background: #000; position: relative; }
-        .hero-slogan { position: absolute; top: 40px; width: 100%; text-align: center; font-family: 'Cinzel', serif; color: rgba(255,255,255,0.95); font-size: 1.1rem; letter-spacing: 4px; font-weight: 700; z-index: 10; text-shadow: 0 2px 15px rgba(0,0,0,0.8); pointer-events: none; }
-
-        /* --- SECTIONS & SCROLLERS --- */
-        .section { padding: 80px 5%; display: flex; flex-direction: column; justify-content: center; transition: opacity 0.4s; }
-        
-        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 20px; }
-        .section-title h2 { font-size: 2rem; font-family: 'Cinzel', serif; color: var(--charcoal); margin-bottom: 5px; }
-        .section-title p { color: #777; font-size: 0.9rem; }
-        
-        .scroller-track { display: flex; overflow-x: auto; gap: 20px; padding: 10px 5px 30px 5px; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; }
-        .scroller-track::-webkit-scrollbar { display: none; }
-
-        .card, .blog-card { flex: 0 0 calc(25% - 15px); scroll-snap-align: start; background: white; border-radius: 4px; overflow: hidden; box-shadow: var(--shadow); transition: 0.4s; height: 380px; position: relative; cursor: pointer; }
-        .card:hover, .blog-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
-        .card-bg { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .card:hover .card-bg { transform: scale(1.1); }
-        .card-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; color: white; }
-        .card h3 { font-family: 'Cinzel', serif; font-size: 1.3rem; margin-bottom: 8px; color: var(--gold); }
-        .card p { font-size: 0.85rem; opacity: 0.8; font-weight: 300; }
-        .card-tag { position: absolute; top: 20px; right: 20px; background: var(--terracotta); color: white; padding: 4px 10px; font-size: 0.6rem; font-weight: bold; text-transform: uppercase; }
-
-        .blog-img-box { height: 200px; overflow: hidden; }
+        /* Blog Preview Variant */
+        .blog-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); height: auto; }
+        .blog-img-box { height: 200px; width: 100%; }
         .blog-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .blog-content { padding: 25px; }
+        .blog-content { padding: 25px; color: var(--charcoal); }
         .blog-date { font-size: 0.7rem; color: var(--terracotta); font-weight: 700; text-transform: uppercase; }
-        .blog-title { font-size: 1.1rem; margin: 10px 0; color: var(--charcoal); font-family: 'Cinzel', serif; }
+        .blog-title { font-size: 1.2rem; margin: 10px 0; font-family: 'Cinzel', serif; }
         .blog-link { font-size: 0.8rem; text-decoration: underline; color: #888; }
+
+        /* FORM ELEMENTS */
+        .form-row { display: flex; gap: 20px; margin-bottom: 15px; }
+        .form-col { flex: 1; }
+        label { display: block; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; color: #999; margin-bottom: 5px; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.95rem; }
+        textarea { resize: vertical; min-height: 60px; }
         
-        .scroll-nav { display: flex; gap: 10px; }
-        .scroll-arrow { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #ddd; display: flex; justify-content: center; align-items: center; cursor: pointer; background: white; transition: 0.3s; color: var(--charcoal); }
-        .scroll-arrow:hover { background: var(--terracotta); color: white; border-color: var(--terracotta); }
+        .toggle-wrapper { display: flex; align-items: center; gap: 10px; background: #f0f0f0; padding: 10px; border-radius: 4px; margin-bottom: 20px; }
+        
+        .action-bar { display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
+        .btn-primary { background: var(--terracotta); color: white; border: none; padding: 12px 30px; font-weight: bold; border-radius: 4px; cursor: pointer; }
+        
+        .status-toast { position: fixed; bottom: 20px; right: 20px; background: var(--charcoal); color: white; padding: 15px 25px; border-radius: 4px; display: none; z-index: 3000; }
+        .import-btn { background: #3498db; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; margin-left: auto; }
 
-        /* FOOTER */
-        footer { background: #111; color: #777; padding: 80px 5%; text-align: center; font-size: 0.9rem; border-top: 5px solid var(--terracotta); }
-        .footer-logo .logo-main { color: #fff; } .footer-logo .logo-sub { color: var(--terracotta); }
-
-        @media (max-width: 1000px) { 
-            .nav-links { display: none; } header { height: auto; flex-wrap: wrap; padding-bottom: 10px; }
-            .header-left { width: 100%; justify-content: space-between; }
-            .nav-right { position: absolute; top: 15px; right: 5%; }
-            .logo-container { width: auto; } .ribbon-label { min-width: auto; text-align: left; padding-left: 10px; }
-            .card, .blog-card { flex: 0 0 85%; } 
-        }
+        /* FILE UPLOAD SPECIFIC STYLES */
+        #upload-status { font-size: 0.8rem; color: #555; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-    <!-- MAIN WEBSITE HEADER -->
-    <header>
-        <div class="header-top">
-            <div class="header-left">
-                <div class="logo-container" onclick="window.scrollTo(0,0)">
-                    <span class="logo-main">NEXT STOP</span>
-                    <span class="logo-sub" id="logoSub">GEORGIA</span>
-                </div>
-                <div class="site-toggle">
-                    <div class="toggle-btn active"><span class="dot">●</span> GEORGIA</div>
-                    <a href="https://nextstop.com.ge" class="toggle-btn inactive">WORLD</a>
-                </div>
-            </div>
-            <div class="nav-right">
-                <nav class="nav-links">
-                    <a href="#travel" class="nav-item" data-key="nav_tours">Tours</a>
-                    <a href="#services" id="servicesLink" class="nav-item" data-key="nav_services">Services</a>
-                    <a href="#blog" class="nav-item" data-key="nav_blog">Blog</a>
-                    <a onclick="openAbout()" class="nav-item" data-key="nav_about">About</a>
-                </nav>
-                <button class="lang-btn" id="langBtn" onclick="toggleLang()">ENG</button>
-            </div>
+    <!-- LOGIN -->
+    <div id="login-screen">
+        <div class="login-box">
+            <h2>NextStop Manager</h2>
+            <input type="email" id="login-email" class="login-input" placeholder="Email">
+            <input type="password" id="login-pass" class="login-input" placeholder="Password">
+            <button class="login-btn" onclick="handleLogin()">Enter Dashboard</button>
         </div>
+    </div>
 
-        <!-- ROW 2: REGIONAL RIBBON -->
-        <div class="ribbon-container">
-            <div class="destination-ribbon" id="destRibbon"></div>
+    <!-- HEADER -->
+    <header class="admin-header" style="display:none;" id="main-header">
+        <h1 class="admin-title">Control Panel</h1>
+        <div style="display:flex; gap:10px;">
+            <button class="import-btn" onclick="importHardcodedData()">⚠ IMPORT WEBSITE DATA</button>
+            <button onclick="handleLogout()" style="background:none; border:none; cursor:pointer; text-decoration:underline;">Logout</button>
         </div>
     </header>
 
-    <!-- HERO WHEEL -->
-    <div class="hero-wheel">
-        <div class="hero-slogan">Arrive in Georgia, Discover Sakartvelo</div>
-        <div class="wheel-track" id="heroTrack"></div>
-        <div class="progress-container" id="progressContainer"></div>
-    </div>
-
-    <!-- TRAVEL SECTION -->
-    <section id="travel" class="section">
-        <div class="section-header">
-            <div class="section-title">
-                <h2 data-key="section_travel_title">Curated Experiences</h2>
-                <p data-key="section_travel_desc">Explore the distinct regions of the Caucasus through our specialized itineraries.</p>
+    <!-- MAIN LAYOUT -->
+    <div class="admin-body" style="display:none;" id="main-wrapper">
+        
+        <!-- LEFT: LIST (Structured Tree View) -->
+        <div class="list-panel">
+            <div style="padding: 10px;">
+                <button class="btn-new" onclick="createNew()" style="width:100%; margin-bottom:10px;">+ CREATE NEW ITEM</button>
             </div>
-            <div class="scroll-nav">
-                <button class="scroll-arrow" onclick="scrollSection('travelGrid', -1)">&#10094;</button>
-                <button class="scroll-arrow" onclick="scrollSection('travelGrid', 1)">&#10095;</button>
+            <div id="items-list">
+                <!-- JS Populates Structured List -->
             </div>
         </div>
-        <div class="scroller-track" id="travelGrid"></div>
-    </section>
 
-    <!-- SERVICES SECTION -->
-    <section id="services" class="section" style="background-color: #f0f0f0;">
-        <div class="section-header">
-            <div class="section-title">
-                <h2 data-key="section_services_title">Our Services</h2>
-                <p data-key="section_services_desc">Professional logistical support for medical, corporate, and VIP clients.</p>
-            </div>
-            <div class="scroll-nav">
-                <button class="scroll-arrow" onclick="scrollSection('servicesGrid', -1)">&#10094;</button>
-                <button class="scroll-arrow" onclick="scrollSection('servicesGrid', 1)">&#10095;</button>
-            </div>
-        </div>
-        <div class="scroller-track" id="servicesGrid"></div>
-    </section>
-
-    <!-- BLOG SECTION -->
-    <section id="blog" class="section" style="background: white;">
-        <div class="section-header">
-            <div class="section-title">
-                <h2 data-key="section_blog_title">Journal</h2>
-                <p data-key="section_blog_desc">Latest updates, guides, and news from the team.</p>
-            </div>
-            <div class="scroll-nav">
-                <button class="scroll-arrow" onclick="scrollSection('blogTrack', -1)">&#10094;</button>
-                <button class="scroll-arrow" onclick="scrollSection('blogTrack', 1)">&#10095;</button>
-            </div>
-        </div>
-        <div class="scroller-track" id="blogTrack"></div>
-    </section>
-
-    <footer id="footer">
-        <div class="logo-container footer-logo" style="margin: 0 auto 30px auto;">
-            <span class="logo-main">NEXT STOP</span>
-            <span class="logo-sub">GEORGIA</span>
-        </div>
-        <p>Ready for the journey? Make Georgia your NextStop. Adventure, Business, and Health.</p>
-        <br>
-        <div class="footer-social">
-            <a href="https://www.instagram.com/holidays_in_georgia2025/" target="_blank" class="social-btn">Instagram</a>
-            <a href="#" class="social-btn wa-link">WhatsApp</a>
-        </div>
-    </footer>
-
-    <!-- MODAL -->
-    <div class="modal-overlay" id="detailModal">
-        <div class="modal-content">
-            <div class="modal-close" onclick="closeModal()">×</div>
-            <img src="" class="modal-header-img" id="modalImg">
+        <!-- RIGHT SIDE (Editor + Preview) -->
+        <div class="admin-content-area">
             
-            <!-- LIST VIEW -->
-            <div class="modal-body" id="modalListView">
-                <h2 class="modal-title" id="modalTitle">Title</h2>
-                <div class="modal-list" id="modalList"></div>
-            </div>
+            <div class="editor-preview-container">
+                
+                <!-- CENTER: EDITOR -->
+                <div class="editor-panel">
+                    <div class="editor-card">
+                        <input type="hidden" id="docId">
+                        
+                        <!-- PUBLISH TOGGLE -->
+                        <div class="toggle-wrapper">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="published" checked onchange="updatePreview()">
+                                <span class="slider"></span>
+                            </label>
+                            <span style="font-weight:bold; font-size:0.9rem;">PUBLISHED (Visible on Website)</span>
+                        </div>
 
-            <!-- DETAIL VIEW -->
-            <div class="modal-body detail-view" id="modalDetailView">
-                <div class="detail-back" onclick="showList()">← Back to Options</div>
-                <h2 class="modal-title" id="detailTitle">Sub Title</h2>
-                <div class="modal-text" id="detailText">Details here...</div>
-                <a href="#" class="modal-btn wa-link" id="detailBtn">Book via WhatsApp</a>
+                        <!-- MAIN DETAILS -->
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label>Region / Category</label>
+                                <select id="region" onchange="updatePreview()">
+                                    <option value="georgia">Home (Sakartvelo)</option>
+                                    <option value="tbilisi">Tbilisi</option>
+                                    <option value="mtskheta_mtianeti">Mtskheta-Mtianeti</option>
+                                    <option value="kartli">Kartli</option>
+                                    <option value="kakheti">Kakheti</option>
+                                    <option value="samtskhe_javakheti">Samtskhe-Javakheti</option>
+                                    <option value="imereti">Imereti</option>
+                                    <option value="samegrelo">Samegrelo</option>
+                                    <option value="guria">Guria</option>
+                                    <option value="racha">Racha</option>
+                                    <option value="svaneti">Svaneti</option>
+                                    <option value="adjara">Adjara</option>
+                                    <option value="abkhazeti">Abkhazeti</option>
+                                </select>
+                            </div>
+                            <div class="form-col">
+                                <label>Content Type</label>
+                                <select id="type" onchange="toggleFields(); updatePreview()">
+                                    <option value="tours">Tour Package</option>
+                                    <option value="blog">Journal Post</option>
+                                    <option value="services">Service</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label>Title (English)</label>
+                                <input type="text" id="title_en" oninput="updatePreview()">
+                            </div>
+                            <div class="form-col">
+                                <label>Title (Georgian)</label>
+                                <input type="text" id="title_ka">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label id="lbl_desc_en">Short Description (English)</label>
+                                <textarea id="desc_en" oninput="updatePreview()"></textarea>
+                            </div>
+                            <div class="form-col">
+                                <label id="lbl_desc_ka">Short Description (Georgian)</label>
+                                <textarea id="desc_ka"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label>Main Image URL / Upload</label>
+                                <input type="text" id="img" oninput="updatePreview()" placeholder="Paste Unsplash URL OR select file below">
+                                <input type="file" id="file-upload" style="margin-top:5px;" onchange="handleFileUpload()">
+                                <p id="upload-status"></p>
+                            </div>
+                            <div class="form-col">
+                                <label>Tag / Badge (EN/KA)</label>
+                                <div style="display:flex; gap:5px;">
+                                    <input type="text" id="tag_en" class="col" placeholder="EN" oninput="updatePreview()">
+                                    <input type="text" id="tag_ka" class="col" placeholder="KA">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DYNAMIC SUB-ITEMS (ITINERARY) -->
+                        <div id="subitems-section" class="sub-items-container">
+                            <label style="margin-bottom:10px; display:block; color:#333;">ITINERARY / DETAILS</label>
+                            <div id="subitems-list"></div>
+                            <button type="button" class="add-btn" onclick="addSubItem()">+ Add Row</button>
+                        </div>
+
+                        <!-- BLOG TEXT AREA (Only for Blog) -->
+                        <div id="blog-section" style="display:none;">
+                            <label>Full Article Text (English)</label>
+                            <textarea id="text_en" style="height:150px; margin-bottom:10px;"></textarea>
+                            <label>Full Article Text (Georgian)</label>
+                            <textarea id="text_ka" style="height:150px;"></textarea>
+                        </div>
+
+                        <div class="action-bar">
+                            <button class="btn-danger" onclick="deleteCurrent()">Delete Item</button>
+                            <button class="btn-primary" onclick="saveCurrent()">SAVE CHANGES</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- RIGHT: PREVIEW -->
+                <div class="preview-panel">
+                    <div class="preview-title">Live Card Preview</div>
+                    <div id="live-preview-container" class="preview-card-wrapper">
+                        <p style="text-align:center; color:#999;">Start typing in the editor to see the card preview.</p>
+                    </div>
+                </div>
             </div>
-        </div>
     </div>
 
-    <!-- FIREBASE & LOGIC -->
+    <div id="toast" class="status-toast">Saved Successfully"></div>
+
+    <!-- FIREBASE MODULES -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-        // --- 🔴 FIREBASE CONFIGURATION (LIVE READER) 🔴 ---
         const firebaseConfig = {
             apiKey: "AIzaSyAM-24214oP5GTan935IE1fg6rn5BayUak",
             authDomain: "nextstop-e7017.firebaseapp.com",
@@ -293,360 +293,606 @@
             appId: "1:530843130880:web:53569b8204f7989e7e0ce5",
             measurementId: "G-JLM2Z6XSWB"
         };
-        // --- 🔴 END OF CONFIG 🔴 ---
 
-        let db;
-        try {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            window.db = db; window.getDocs = getDocs; window.collection = collection;
-            if(window.initMain) window.initMain();
-        } catch(e) { console.error("Firebase Initialization Error:", e); }
-    </script>
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const storage = getStorage(app);
 
-    <script>
-        let currentLang = localStorage.getItem('lang') || 'en';
-        const whatsapp = "995591705710";
-        
-        const translations = {
-            en: { nav_tours: "Tours", nav_services: "Services", nav_blog: "Blog", nav_about: "About", section_travel_title: "Curated Experiences", section_travel_desc: "Explore the distinct regions of the Caucasus through our specialized itineraries.", section_services_title: "Our Services", section_services_desc: "Professional logistical support.", section_blog_title: "Journal", section_blog_desc: "Latest updates.", btn_details: "View Details", btn_read: "Read Article", btn_book: "Book This Now", filter_all: "All" },
-            ka: { nav_tours: "ტურები", nav_services: "სერვისები", nav_blog: "ბლოგი", nav_about: "ჩვენ შესახებ", section_travel_title: "გამორჩეული გამოცდილება", section_travel_desc: "აღმოაჩინეთ კავკასია.", section_services_title: "სერვისები", section_services_desc: "პროფესიონალური ლოჯისტიკა.", section_blog_title: "ჟურნალი", section_blog_desc: "სიახლეები.", btn_details: "დეტალების ნახვა", btn_read: "წაკითხვა", btn_book: "დაჯავშნა", filter_all: "ყველა" }
-        };
-
-        // --- DYNAMIC DATA STRUCTURES ---
-        const commonServices = []; // Will be dynamically loaded
-        const database = { /* Region details now loaded from Firebase content type */
-            georgia: { accent: "#a84a32", tours: [], blog: [] }, tbilisi: { accent: "#212F3C", tours: [], blog: [] }, mtskheta_mtianeti: { accent: "#5D4037", tours: [], blog: [] },
-            kartli: { accent: "#A93226", tours: [], blog: [] }, kakheti: { accent: "#9A7D0A", tours: [], blog: [] }, samtskhe_javakheti: { accent: "#546E7A", tours: [], blog: [] },
-            imereti: { accent: "#2E7D32", tours: [], blog: [] }, samegrelo: { accent: "#00897B", tours: [], blog: [] }, guria: { accent: "#558B2F", tours: [], blog: [] },
-            racha: { accent: "#0277BD", tours: [], blog: [] }, svaneti: { accent: "#0288D1", tours: [], blog: [] }, adjara: { accent: "#1565C0", tours: [], blog: [] }, abkhazeti: { accent: "#00695C", tours: [], blog: [] }
-        };
-        
-        let currentKey = 'georgia';
-        let currentSlide = 0;
-        let allLiveItems = {}; // Global map of all fetched items (by ID)
-
-        // UTILITY: Shuffle
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+        // --- HARDCODED CONTENT FOR IMPORT (Full Database Restored) ---
+        const hardcodedDatabase = {
+            tbilisi: { 
+                accent: "#212F3C", 
+                tours: [
+                    { title: {en: "Old Town Walk", ka: "ძველი თბილისი"}, desc: {en: "History & Culture", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1580326733551-73e6c16f8517?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Narikala", desc: "Fortress"}] },
+                    { title: {en: "Food Tour", ka: "გასტრო ტური"}, desc: {en: "Taste of Tbilisi", ka: "გემო"}, img: "https://images.unsplash.com/photo-1585671832383-10085d520131?auto=format&fit=crop&w=800&q=80", tag: {en: "Food", ka: "კვება"}, subItems: [{title: "Market", desc: "Tasting"}] },
+                    { title: {en: "Museums", ka: "მუზეუმები"}, desc: {en: "Art & Treasury", ka: "საგანძური"}, img: "https://images.unsplash.com/photo-1554907984-15263bfd63bd?auto=format&fit=crop&w=800&q=80", tag: {en: "Art", ka: "ხელოვნება"}, subItems: [{title: "National Museum", desc: "Gold"}] },
+                    { title: {en: "Nightlife", ka: "ღამის ცხოვრება"}, desc: {en: "Techno & Bars", ka: "კლუბები"}, img: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?auto=format&fit=crop&w=800&q=80", tag: {en: "Fun", ka: "გართობა"}, subItems: [{title: "Bassiani", desc: "Club"}] }
+                ], 
+                blog: [
+                     { title: {en: "Best Cafes", ka: "საუკეთესო კაფეები"}, date: {en: "Guide", ka: "გზამკვლევი"}, img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" },
+                     { title: {en: "Techno Scene", ka: "ტექნო სცენა"}, date: {en: "Nightlife", ka: "ღამე"}, img: "https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?auto=format&fit=crop&w=800&q=80" },
+                     { title: {en: "History Walk", ka: "ისტორიული გასეირნება"}, date: {en: "Culture", ka: "კულტურა"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80" },
+                     { title: {en: "Local Food", ka: "ადგილობრივი კერძები"}, date: {en: "Eat", ka: "ჭამა"}, img: "https://images.unsplash.com/photo-1626075011268-76493d9836f9?auto=format&fit=crop&w=800&q=80" }
+                ] 
+            },
+            mtskheta_mtianeti: { 
+                accent: "#5D4037", 
+                tours: [
+                    { title: {en: "Jvari & Svetitskhoveli", ka: "ჯვარი და სვეტიცხოველი"}, desc: {en: "UNESCO Sites", ka: "იუნესკო"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Narikala", desc: "Fortress"}] },
+                    { title: {en: "Kazbegi Day Trip", ka: "ყაზბეგი"}, desc: {en: "Gergeti Trinity", ka: "გერგეტის სამება"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Jeep Tour", desc: "To Church"}] },
+                    { title: {en: "Gudauri Ski", ka: "გუდაური"}, desc: {en: "Winter Sport", ka: "ზამთრის სპორტი"}, img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?auto=format&fit=crop&w=800&q=80", tag: {en: "Active", ka: "აქტიური"}, subItems: [{title: "Skiing", desc: "Resort"}] },
+                    { title: {en: "Chateau Mukhrani", ka: "შატო მუხრანი"}, desc: {en: "Royal Estate", ka: "სამეფო მამული"}, img: "https://images.unsplash.com/photo-1572571301957-3f2f65733239?auto=format&fit=crop&w=800&q=80", tag: {en: "Wine", ka: "ღვინო"}, subItems: [{title: "Tasting", desc: "Premium Wines"}] }
+                ], 
+                blog: [
+                    { title: {en: "Religious History", ka: "რელიგიური ისტორია"}, date: {en: "Culture", ka: "კულტურა"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Hiking Kazbegi", ka: "ლაშქრობა ყაზბეგში"}, date: {en: "Nature", ka: "ბუნება"}, img: "https://images.unsplash.com/photo-1475598226890-e7f119c74e8a?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Winter Guide", ka: "ზამთრის გზამკვლევი"}, date: {en: "Ski", ka: "თხილამური"}, img: "https://images.unsplash.com/photo-1482867996988-29ec3a0f1aac?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Royal Wine", ka: "სამეფო ღვინო"}, date: {en: "Taste", ka: "გემო"}, img: "https://images.unsplash.com/photo-1516594915697-87b5d4a02968?auto=format&fit=crop&w=800&q=80" }
+                ] 
+            },
+            kartli: { 
+                accent: "#A93226", 
+                tours: [
+                    { title: {en: "Uplistsikhe", ka: "უფლისციხე"}, desc: {en: "Cave Town", ka: "კლდეში ნაკვეთი"}, img: "https://images.unsplash.com/photo-1600742533089-a2e6e3c0b11b?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Narikala", desc: "Fortress"}] },
+                    { title: {en: "Gori Museum", ka: "გორის მუზეუმი"}, desc: {en: "Stalin History", ka: "სტალინი"}, img: "https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&w=800&q=80", tag: {en: "Museum", ka: "მუზეუმი"}, subItems: [{title: "Tour", desc: "History"}] },
+                    { title: {en: "Ateni Sioni", ka: "ატენის სიონი"}, desc: {en: "Wine & Church", ka: "ღვინო და ტაძარი"}, img: "https://images.unsplash.com/photo-1516594915697-87b5d4a02968?auto=format&fit=crop&w=800&q=80", tag: {en: "Culture", ka: "კულტურა"}, subItems: [{title: "Tasting", desc: "Chinuri"}] },
+                    { title: {en: "Manglisi", ka: "მანგლისი"}, desc: {en: "Nature & Cathedral", ka: "ბუნება და ტაძარი"}, img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "დასვენება"}, subItems: [{title: "Forest", desc: "Walk"}] }
+                ], 
+                blog: [
+                    { title: {en: "Cave Cities", ka: "კლდის ქალაქები"}, date: {en: "History", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1599592970984-04b28a5e5c64?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Soviet Legacy", ka: "მუზეუმი"}, date: {en: "Museum", ka: "მუზეუმი"}, img: "https://images.unsplash.com/photo-1550348335-92122b6f9372?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Kartli Wines", ka: "ქართლის ღვინოები"}, date: {en: "Drink", ka: "სასმელი"}, img: "https://images.unsplash.com/photo-1559563362-c667ba5f5480?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Hidden Gems", ka: "დამალული ადგილები"}, date: {en: "Explore", ka: "აღმოჩენა"}, img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80" }
+                ] 
+            },
+            kakheti: { 
+                accent: "#9A7D0A", 
+                tours: [
+                    { title: {en: "Signagi", ka: "სიღნაღი"}, desc: {en: "City of Love", ka: "სიყვარულის ქალაქი"}, img: "https://images.unsplash.com/photo-1600742533089-a2e6e3c0b11b?auto=format&fit=crop&w=800&q=80", tag: {en: "Romantic", ka: "რომანტიკული"}, subItems: [{title: "Bodbe", desc: "Monastery"}] },
+                    { title: {en: "Tsinandali", ka: "წინანდალი"}, desc: {en: "Estate & Wine", ka: "მამული და ღვინო"}, img: "https://images.unsplash.com/photo-1584455390266-0337f26d0794?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Museum", desc: "Tour"}] },
+                    { title: {en: "David Gareja", ka: "დავით გარეჯი"}, desc: {en: "Desert", ka: "უდაბნო"}, img: "https://images.unsplash.com/photo-1572571301957-3f2f65733239?auto=format&fit=crop&w=800&q=80", tag: {en: "Adventure", ka: "თავგადასავალი"}, subItems: [{title: "Caves", desc: "Hike"}] },
+                    { title: {en: "Wine Tunnel", ka: "ღვინის გვირაბი"}, desc: {en: "Khareba", ka: "ხარება"}, img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800&q=80", tag: {en: "Wine", ka: "ღვინო"}, subItems: [{title: "Tasting", desc: "Qvevri"}] }
+                ], 
+                blog: [
+                    { title: {en: "Harvest", ka: "რთველი"}, date: {en: "Autumn", ka: "შემოდგომა"}, img: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Amber Wine", ka: "ქვევრის ღვინო"}, date: {en: "Taste", ka: "გემო"}, img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Tusheti Trip", ka: "თუშეთი"}, date: {en: "Adventure", ka: "თავგადასავალი"}, img: "https://images.unsplash.com/photo-1596306499300-0b7b1689b96d?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Kakhetian Supra", ka: "კახური სუფრა"}, date: {en: "Food", ka: "საკვები"}, img: "https://images.unsplash.com/photo-1603002730629-64df815039c5?auto=format&fit=crop&w=800&q=80" }
+                ] 
+            },
+            samtskhe_javakheti: { 
+                accent: "#546E7A", 
+                tours: [
+                    { title: {en: "Vardzia", ka: "ვარძია"}, desc: {en: "Cave City", ka: "კლდის ქალაქი"}, img: "https://images.unsplash.com/photo-1564052552234-2c585403590a?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Narikala", desc: "Fortress"}] },
+                    { title: {en: "Rabati", ka: "რაბათი"}, desc: {en: "Castle", ka: "ციხე"}, img: "https://images.unsplash.com/photo-1575276414409-1f621523b43b?auto=format&fit=crop&w=800&q=80", tag: {en: "Culture", ka: "კულტურა"}, subItems: [{title: "Museum", desc: "Tour"}] },
+                    { title: {en: "Borjomi", ka: "ბორჯომი"}, desc: {en: "Park & Water", ka: "პარკი და წყალი"}, img: "https://images.unsplash.com/photo-1597166567079-189725761f37?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "დასვენება"}, subItems: [{title: "Springs", desc: "Taste"}] },
+                    { title: {en: "Paravani", ka: "ფარავანი"}, desc: {en: "Alpine Lake", ka: "ალპური ტბა"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Views", desc: "Drive"}] }
+                ], 
+                blog: [
+                    { title: {en: "Cave History", ka: "მღვიმეთა ისტორია"}, date: {en: "Learn", ka: "სწავლა"}, img: "https://images.unsplash.com/photo-1564052552234-2c585403590a?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Spa & Health", ka: "სპა და ჯანმრთელობა"}, date: {en: "Relax", ka: "რელაქსი"}, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Castles", ka: "ციხესიმაგრეები"}, date: {en: "Explore", ka: "აღმოჩენა"}, img: "https://images.unsplash.com/photo-1595498000689-9a8822411b4a?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Lakes", ka: "ტბები"}, date: {en: "Nature", ka: "ბუნება"}, img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80" }
+                ] 
+            },
+            imereti: { 
+                accent: "#2E7D32", 
+                tours: [
+                    { title: {en: "Prometheus Cave", ka: "პრომეთე"}, desc: {en: "Cave", ka: "მღვიმე"}, img: "https://images.unsplash.com/photo-1629906511379-15a2a7179323?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Narikala", desc: "Fortress"}] },
+                    { title: {en: "Okatse", ka: "ოკაცე"}, desc: {en: "Canyon", ka: "კანიონი"}, img: "https://images.unsplash.com/photo-1604918363094-587689290516?auto=format&fit=crop&w=800&q=80", tag: {en: "Adventure", ka: "თავგადასავალი"}, subItems: [{title: "Walk", desc: "Skywalk"}] },
+                    { title: {en: "Kutaisi", ka: "ქუთაისი"}, desc: {en: "City Tour", ka: "ქალაქის ტური"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80", tag: {en: "City", ka: "ქალაქი"}, subItems: [{title: "Bagrati", desc: "Cathedral"}] },
+                    { title: {en: "Sataplia", ka: "სათაფლია"}, desc: {en: "Reserve", ka: "ნაკრძალი"}, img: "https://images.unsplash.com/photo-1475598226890-e7f119c74e8a?auto=format&fit=crop&w=800&q=80", tag: {en: "Kids", ka: "ბავშვები"}, subItems: [{title: "Dino", desc: "Footprints"}] }
+                ], 
+                blog: [
+                    { title: {en: "Canyons Guide", ka: "კანიონები"}, date: {en: "Nature", ka: "ბუნება"}, img: "https://images.unsplash.com/photo-1604918363094-587689290516?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Imeretian Food", ka: "იმერული სუფრა"}, date: {en: "Taste", ka: "გემო"}, img: "https://images.unsplash.com/photo-1626075011268-76493d9836f9?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Ancient City", ka: "ძველი ქალაქი"}, date: {en: "History", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Cave Myths", ka: "მღვიმის მითები"}, date: {en: "Story", ka: "ამბავი"}, img: "https://images.unsplash.com/photo-1629906511379-15a2a7179323?auto=format&fit=crop&w=800&q=80" }
+                ] 
+            },
+            samegrelo: { 
+                accent: "#00897B", 
+                tours: [
+                    { title: {en: "Martvili", ka: "მარტვილი"}, desc: {en: "Canyon", ka: "კანიონი"}, img: "https://images.unsplash.com/photo-1604918363094-587689290516?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Boat", desc: "Ride"}] },
+                    { title: {en: "Dadiani", ka: "დადიანები"}, desc: {en: "Palace", ka: "სასახლე"}, img: "https://images.unsplash.com/photo-1580326733551-73e6c16f8517?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Museum", desc: "Visit"}] },
+                    { title: {en: "Tobavarchkhili", ka: "ტობავარჩხილი"}, desc: {en: "Lakes", ka: "ტბები"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Trekking", ka: "ლაშქრობა"}, subItems: [{title: "Hike", desc: "Alpine"}] },
+                    { title: {en: "Kolkheti", ka: "კოლხეთი"}, desc: {en: "Park", ka: "პარკი"}, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f?auto=format&fit=crop&w=800&q=80", tag: {en: "Safari", ka: "საფარი"}, subItems: [{title: "Boat", desc: "Tour"}] }
+                ], 
+                blog: [
+                    { title: {en: "Megrelian Cuisine", ka: "მეგრული სამზარეულო"}, date: {en: "Spicy", ka: "ცხარე"}, img: "https://images.unsplash.com/photo-1573409788406-1a6d54c2866d?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Canyon Boat", ka: "ნავით სეირნობა"}, date: {en: "Fun", ka: "გართობა"}, img: "https://images.unsplash.com/photo-1604918363094-587689290516?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Alpine Lakes", ka: "ალპური ტბები"}, date: {en: "Hike", ka: "ლაშქრობა"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Palace History", ka: "სასახლის ისტორია"}, date: {en: "Culture", ka: "კულტურა"}, img: "https://images.unsplash.com/photo-1580326733551-73e6c16f8517?auto=format&fit=crop&w=800&q=80" }
+                ] 
+            },
+            guria: { 
+                accent: "#558B2F", 
+                tours: [
+                    { title: {en: "Gomis Mta", ka: "გომის მთა"}, desc: {en: "Views", ka: "ხედები"}, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f?auto=format&fit=crop&w=800&q=80", tag: {en: "Sunset", ka: "დაისი"}, subItems: [{title: "Camping", desc: "Night"}] },
+                    { title: {en: "Ureki", ka: "ურეკი"}, desc: {en: "Sand", ka: "ქვიშა"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "დასვენება"}, subItems: [{title: "Beach", desc: "Magnetic"}] },
+                    { title: {en: "Bakhmaro", ka: "ბახმარო"}, desc: {en: "Mountain", ka: "მთა"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Resort", desc: "Air"}] },
+                    { title: {en: "Shekvetili", ka: "შეკვეთილი"}, desc: {en: "Park", ka: "პარკი"}, img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?auto=format&fit=crop&w=800&q=80", tag: {en: "Fun", ka: "გართობა"}, subItems: [{title: "Music", desc: "Park"}] }
+                ], 
+                blog: [
+                    { title: {en: "Cloud Hunting", ka: "ღრუბლებზე ნადირობა"}, date: {en: "Photo", ka: "ფოტო"}, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Tea Culture", ka: "ჩაის კულტურა"}, date: {en: "Drink", ka: "სასმელი"}, img: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Black Sea", ka: "შავი ზღვა"}, date: {en: "Summer", ka: "ზაფხული"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Polyphony", ka: "მრავალხმიანობა"}, date: {en: "Music", ka: "მუსიკა"}, img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80" }
+                ] 
+            },
+            racha: { 
+                accent: "#0277BD", 
+                tours: [
+                    { title: {en: "Shaori", ka: "შაორი"}, desc: {en: "Lake", ka: "ტბა"}, img: "https://images.unsplash.com/photo-1596306499317-849aa5dd3396?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Picnic", desc: "Relax"}] },
+                    { title: {en: "Nikortsminda", ka: "ნიკორწმინდა"}, desc: {en: "Church", ka: "ტაძარი"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80", tag: {en: "Culture", ka: "კულტურა"}, subItems: [{title: "Fresco", desc: "See"}] },
+                    { title: {en: "Shovi", ka: "შოვი"}, desc: {en: "Resort", ka: "კურორტი"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Health", ka: "ჯანმრთელობა"}, subItems: [{title: "Springs", desc: "Drink"}] },
+                    { title: {en: "Khvanchkara", ka: "ხვანჭკარა"}, desc: {en: "Wine", ka: "ღვინო"}, img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800&q=80", tag: {en: "Wine", ka: "ღვინო"}, subItems: [{title: "Tasting", desc: "Red"}] }
+                ], 
+                blog: [
+                    { title: {en: "Georgian Alps", ka: "ქართული ალპები"}, date: {en: "Hike", ka: "ლაშქრობა"}, img: "https://images.unsplash.com/photo-1596306499317-849aa5dd3396?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Famous Wine", ka: "ცნობილი ღვინო"}, date: {en: "Taste", ka: "გემო"}, img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Cool Forests", ka: "გრილი ტყეები"}, date: {en: "Nature", ka: "ბუნება"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Hidden Churches", ka: "დამალული ტაძრები"}, date: {en: "History", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80" }
+                ] 
+            },
+            svaneti: { 
+                accent: "#0288D1", 
+                tours: [
+                    { title: {en: "Ushguli", ka: "უშგული"}, desc: {en: "Jeep", ka: "ჯიპი"}, img: "https://images.unsplash.com/photo-1571258267881-5d6929516187?auto=format&fit=crop&w=800&q=80", tag: {en: "Adventure", ka: "თავგადასავალი"}, subItems: [{title: "Narikala", desc: "Fortress"}] },
+                    { title: {en: "Mestia", ka: "მესტია"}, desc: {en: "Museum", ka: "მუზეუმი"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Culture", ka: "კულტურა"}, subItems: [{title: "Visit", desc: "History"}] },
+                    { title: {en: "Chalaadi", ka: "ჭალაადი"}, desc: {en: "Hike", ka: "ლაშქრობა"}, img: "https://images.unsplash.com/photo-1475598226890-e7f119c74e8a?auto=format&fit=crop&w=800&q=80", tag: {en: "Active", ka: "აქტიური"}, subItems: [{title: "Glacier", desc: "Walk"}] },
+                    { title: {en: "Hatsvali", ka: "ჰაწვალი"}, desc: {en: "Ski", ka: "თხილამური"}, img: "https://images.unsplash.com/photo-1551524559-8af4e6624178?auto=format&fit=crop&w=800&q=80", tag: {en: "Views", ka: "ხედები"}, subItems: [{title: "Lift", desc: "Ride"}] }
+                ], 
+                blog: [
+                    { title: {en: "Land of Towers", ka: "კოშკების მხარე"}, date: {en: "History", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1571258267881-5d6929516187?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Gold of Svaneti", ka: "სვანური ოქრო"}, date: {en: "Legend", ka: "ლეგენდა"}, img: "https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Highest Peaks", ka: "უმაღლესი მწვერვალები"}, date: {en: "Nature", ka: "ბუნება"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Svan Food", ka: "კუბდარი"}, date: {en: "Kubdari", ka: "კუბდარი"}, img: "https://images.unsplash.com/photo-1573409788406-1a6d54c2866d?auto=format&fit=crop&w=800&q=80" }
+                ] 
+            },
+            adjara: { 
+                accent: "#0D47A1", 
+                tours: [
+                    { title: {en: "Batumi", ka: "ბათუმი"}, desc: {en: "City", ka: "ქალაქი"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80", tag: {en: "City", ka: "ქალაქი"}, subItems: [{title: "Walk", desc: "Boulevard"}] },
+                    { title: {en: "Botanical", ka: "ბოტანიკური"}, desc: {en: "Garden", ka: "ბაღი"}, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Tour", desc: "Plants"}] },
+                    { title: {en: "Makhuntseti", ka: "მახუნცეთი"}, desc: {en: "Waterfall", ka: "ჩანჩქერი"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Bridge", desc: "Visit"}] },
+                    { title: {en: "Mtirala", ka: "მტირალა"}, desc: {en: "Park", ka: "პარკი"}, img: "https://images.unsplash.com/photo-1597166567079-189725761f37?auto=format&fit=crop&w=800&q=80", tag: {en: "Active", ka: "აქტიური"}, subItems: [{title: "Hike", desc: "Forest"}] }
+                ], 
+                blog: [
+                    { title: {en: "Sea & Sun", ka: "ზღვა და მზე"}, date: {en: "Summer", ka: "ზაფხული"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Adjarian Khachapuri", ka: "აჭარული"}, date: {en: "Food", ka: "კვება"}, img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Batumi Nightlife", ka: "ბათუმის ღამე"}, date: {en: "Fun", ka: "გართობა"}, img: "https://images.unsplash.com/photo-1596306499317-849aa5dd3396?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Nature Escape", ka: "ბუნებაში გაქცევა"}, date: {en: "Green", ka: "მწვანე"}, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f?auto=format&fit=crop&w=800&q=80" }
+                ] 
+            },
+            abkhazeti: { 
+                accent: "#00695C", 
+                tours: [
+                    { title: {en: "Ritsa", ka: "რიწა"}, desc: {en: "Lake", ka: "ტბა"}, img: "https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "View", desc: "Lake"}] },
+                    { title: {en: "New Athos", ka: "ახალი ათონი"}, desc: {en: "Monastery", ka: "მონასტერი"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80", tag: {en: "History", ka: "ისტორია"}, subItems: [{title: "Cave", desc: "Visit"}] },
+                    { title: {en: "Gagra", ka: "გაგრა"}, desc: {en: "Resort", ka: "კურორტი"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80", tag: {en: "Relax", ka: "დასვენება"}, subItems: [{title: "Park", desc: "Walk"}] },
+                    { title: {en: "Pitsunda", ka: "ბიჭვინთა"}, desc: {en: "Pine", ka: "ფიჭვი"}, img: "https://images.unsplash.com/photo-1590418606746-018840f9cd0f?auto=format&fit=crop&w=800&q=80", tag: {en: "Nature", ka: "ბუნება"}, subItems: [{title: "Cape", desc: "Forest"}] }
+                ], 
+                blog: [
+                    { title: {en: "Hidden Gem", ka: "ფარული მარგალიტი"}, date: {en: "Discover", ka: "აღმოჩენა"}, img: "https://images.unsplash.com/photo-1565008576549-57569a49371d?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Sacred Sites", ka: "წმინდა ადგილები"}, date: {en: "History", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1565118531796-763e082d113?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Black Sea", ka: "შავი ზღვა"}, date: {en: "Water", ka: "წყალი"}, img: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Alpine Views", ka: "ალპური ხედები"}, date: {en: "Mountain", ka: "მთა"}, img: "https://images.unsplash.com/photo-1536599018102-9f80336b083a?auto=format&fit=crop&w=800&q=80" }
+                ] 
             }
-            return array;
-        }
+        };
 
-        // UTILITY: Hex to RGB
-        function hexToRgb(hex) {
-            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ? parseInt(result[1], 16)+","+parseInt(result[2], 16)+","+parseInt(result[3], 16) : "0,0,0";
-        }
+        const hardcodedServices = [
+            { region: 'georgia', type: 'services', title: { en: "Travel Planning & Assistance", ka: "ტურების დაგეგმვა" }, desc: { en: "From wine and gastronomy tours to leisure and extreme adventure.", ka: "ჩვენ ვქმნით ავთენტურ გამოცდილებას." }, img: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80", published: true },
+            { region: 'georgia', type: 'services', title: { en: "Transport & Security", ka: "ტრანსპორტი და დაცვა" }, desc: { en: "Move with confidence. We provide a complete fleet along with professional security.", ka: "იმოგზაურეთ თავდაჯერებულად." }, img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80", published: true },
+            { region: 'georgia', type: 'services', title: { en: "MICE & Business", ka: "MICE და ბიზნესი" }, desc: { en: "Business without borders. We act as your local logistical backbone, organizing conferences.", ka: "ბიზნესი საზღვრების გარეშე." }, img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80", published: true },
+            { region: 'georgia', type: 'services', title: { en: "Medical & Wellness", ka: "სამედიცინო და ველნესი" }, desc: { en: "Your health, prioritized. We organize appointments, translation, and support for medical procedures.", ka: "ჯანმრთელობა პრიორიტეტულია." }, img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80", published: true },
+        ];
 
-        // FETCH DATA FROM FIREBASE AND MERGE
-        window.initMain = async function() {
-            if (window.db) {
-                try {
-                    const querySnapshot = await window.getDocs(window.collection(window.db, "content"));
+
+        // --- GLOBAL VARS ---
+        let loadedItems = {};
+        let currentId = null;
+
+        // --- AUTH ---
+        window.handleLogin = () => {
+            const e = document.getElementById('login-email').value;
+            const p = document.getElementById('login-pass').value;
+            signInWithEmailAndPassword(auth, e, p).catch(err => alert("Login Error: " + err.message));
+        };
+        window.handleLogout = () => signOut(auth);
+
+        onAuthStateChanged(auth, (user) => {
+            if(user) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-header').style.display = 'flex';
+                document.querySelector('.admin-body').style.display = 'flex';
+                loadStructuredData();
+                updatePreview(); 
+            } else {
+                document.getElementById('login-screen').style.display = 'flex';
+                document.getElementById('main-header').style.display = 'none';
+                document.querySelector('.admin-body').style.display = 'none';
+            }
+        });
+
+        // --- DATA LOADING & STRUCTURED LIST (FIXED CLICK) ---
+        window.loadStructuredData = async () => {
+            const list = document.getElementById('items-list');
+            list.innerHTML = '';
+            loadedItems = {};
+            
+            try {
+                const q = query(collection(db, "content"));
+                const snap = await getDocs(q);
+                
+                let contentByRegion = {};
+                snap.forEach(doc => {
+                    const item = doc.data();
+                    item.id = doc.id;
+                    loadedItems[item.id] = item;
                     
-                    // 1. Clear local data structures
-                    Object.keys(database).forEach(key => { database[key].tours = []; database[key].blog = []; });
-                    commonServices.length = 0;
-                    allLiveItems = {};
+                    if (!contentByRegion[item.region]) {
+                        contentByRegion[item.region] = {};
+                    }
+                    if (!contentByRegion[item.region][item.type]) {
+                         contentByRegion[item.region][item.type] = [];
+                    }
+                    contentByRegion[item.region][item.type].push(item);
+                });
 
-                    querySnapshot.forEach((doc) => {
-                        const item = doc.data();
-                        const isPublished = item.published !== false;
+                const regionDisplayOrder = ['georgia', 'tbilisi', 'mtskheta_mtianeti', 'kartli', 'kakheti', 'samtskhe_javakheti', 'imereti', 'samegrelo', 'guria', 'racha', 'svaneti', 'adjara', 'abkhazeti'];
+                const typeNames = { tours: "Tours", services: "Services", blog: "Journal" };
+                const regionNames = {
+                    georgia: "HOME / SERVICES", tbilisi: "TBILISI", mtskheta_mtianeti: "MTSKHETA-MTIANETI", kartli: "KARTLI", kakheti: "KAKHETI", samtskhe_javakheti: "SAMTSKHE-JAVAKHETI", imereti: "IMERETI", samegrelo: "SAMEGRELO", guria: "GURIA", racha: "RACHA-LECHKHUMI", svaneti: "SVANETI", adjara: "ADJARA", abkhazeti: "ABKHAZETI"
+                };
+
+                // Render Structured List
+                list.innerHTML = `<div style="padding: 0 10px;"><button class="btn-new" onclick="createNew()" style="width:100%; margin-bottom:10px;">+ CREATE NEW ITEM</button></div>`;
+                
+                regionDisplayOrder.forEach(regionKey => {
+                    const regionContent = contentByRegion[regionKey];
+                    let totalItemsInRegion = 0;
+                    if (regionContent) {
+                        Object.keys(regionContent).forEach(typeKey => totalItemsInRegion += regionContent[typeKey].length);
+                    }
+
+                    if (totalItemsInRegion > 0) {
+                        const groupDiv = document.createElement('div');
+                        groupDiv.className = 'region-group';
+                        groupDiv.innerHTML = `<div class="region-title" onclick="toggleRegionList(this)">
+                            ${regionNames[regionKey] || regionKey.toUpperCase()} [${totalItemsInRegion}] <span class="toggle-arrow">▶</span>
+                        </div>`;
+
+                        const subList = document.createElement('ul');
+                        subList.className = 'sub-list';
+                        subList.style.display = 'none';
                         
-                        if (isPublished) {
-                            if(item.type === 'services' && item.region === 'georgia') {
-                                commonServices.push(item);
-                            } else if (database[item.region]) {
-                                if(item.type === 'tours' || item.type === 'services') database[item.region].tours.push(item);
-                                if(item.type === 'blog') database[item.region].blog.push(item);
+                        for (const typeKey in typeNames) {
+                            const items = regionContent ? regionContent[typeKey] || [] : [];
+                            if (items.length > 0) {
+                                subList.innerHTML += `<li class="sub-list-item" style="color:${typeKey === 'tours' ? 'var(--terracotta)' : typeKey === 'blog' ? 'var(--blue)' : 'var(--green)'};">
+                                    ${typeNames[typeKey]} [${items.length}]
+                                </li>`;
+                                items.forEach(item => {
+                                    const listItem = document.createElement('div');
+                                    listItem.className = `list-item ${item.id === currentId ? 'active' : ''}`;
+                                    listItem.innerHTML = `
+                                        <span class="item-status ${item.published ? 'status-published' : 'status-hidden'}">${item.published ? 'LIVE' : 'HIDDEN'}</span>
+                                        <span class="item-title">${item.title?.en || 'Untitled'}</span>
+                                    `;
+                                    listItem.onclick = () => selectItem(item.id); 
+                                    subList.appendChild(listItem);
+                                });
                             }
-                            allLiveItems[doc.id] = item;
                         }
-                    });
-                } catch(e) {
-                    console.error("Failed to fetch Firebase content. Site may be empty.", e);
+                        
+                        groupDiv.appendChild(subList);
+                        list.appendChild(groupDiv);
+                    }
+                });
+
+                if(snap.empty) {
+                    list.innerHTML += '<p style="padding:20px; text-align:center; color:#999;">No content found. Click NEW or IMPORT.</p>';
                 }
+
+            } catch (e) {
+                list.innerHTML = `<p style="color:red; padding:20px;">Error loading: ${e.message}</p>`;
             }
+        };
+        
+        window.toggleRegionList = (element) => {
+            const group = element.closest('.region-group');
+            const list = group.querySelector('.sub-list');
+            const arrow = group.querySelector('.toggle-arrow');
             
-            init();
+            if (list.style.display === 'none' || list.style.display === '') {
+                list.style.display = 'block';
+                arrow.style.transform = 'rotate(90deg)';
+            } else {
+                list.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+            }
         };
 
-        function init() {
-            currentLang = localStorage.getItem('lang') || 'en';
+        // --- IMAGE UPLOAD LOGIC ---
+        window.handleFileUpload = async () => {
+            const fileInput = document.getElementById('file-upload');
+            const file = fileInput.files[0];
+            const status = document.getElementById('upload-status');
             
-            document.getElementById('langBtn').innerText = currentLang === 'en' ? 'ENG' : 'GEO';
-            document.querySelectorAll('[data-key]').forEach(el => el.innerText = translations[currentLang][el.getAttribute('data-key')] || el.innerText);
-            
-            renderRibbon();
-            loadRegion(currentKey);
-            document.querySelectorAll('.wa-link').forEach(a => { if(!a.classList.contains('modal-btn')) a.href = `https://wa.me/${whatsapp}`; });
-        }
+            if (!file) return;
 
-        function renderRibbon() {
-            const ribbon = document.getElementById('destRibbon');
-            const order = ['georgia', 'tbilisi', 'mtskheta_mtianeti', 'kartli', 'kakheti', 'samtskhe_javakheti', 'imereti', 'samegrelo', 'guria', 'racha', 'svaneti', 'adjara', 'abkhazeti'];
-            ribbon.innerHTML = '';
+            status.innerHTML = 'Uploading... (0%)';
+
+            try {
+                const fileName = `${Date.now()}-${file.name}`;
+                const storageRef = ref(storage, 'images/' + fileName);
+                const uploadTask = uploadBytes(storageRef, file);
+
+                uploadTask.on('state_changed', 
+                    (snapshot) => {
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        status.innerHTML = `Uploading... (${Math.round(progress)}%)`;
+                    }, 
+                    (error) => {
+                        status.innerHTML = `❌ Upload failed: ${error.message}`;
+                    }, 
+                    () => {
+                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                            document.getElementById('img').value = downloadURL;
+                            status.innerHTML = '✅ Upload complete! URL inserted.';
+                            updatePreview();
+                        });
+                    }
+                );
+
+            } catch (e) {
+                status.innerHTML = `❌ Critical Upload Error: ${e.message}`;
+            }
+        };
+
+        // --- IMPORT DATA ---
+        window.importHardcodedData = async () => {
+            if(!auth.currentUser) return alert("Please log in first.");
+            if(!confirm("WARNING: This will upload ALL pre-designed tours, services, and blogs to Firebase. Do this only once! Continue?")) return;
             
-            const labels = {
-                georgia: { en: "SAKARTVELO", ka: "საქართველო" }, tbilisi: { en: "TBILISI", ka: "თბილისი" }, mtskheta_mtianeti: { en: "MTSKHETA-MTIANETI", ka: "მცხეთა-მთიანეთი" },
-                kakheti: { en: "KAKHETI", ka: "კახეთი" }, kartli: { en: "KARTLI", ka: "ქართლი" }, samtskhe_javakheti: { en: "SAMTSKHE-JAVAKHETI", ka: "სამცხე-ჯავახეთი" },
-                racha: { en: "RACHA-LECHKHUMI", ka: "რაჭა-ლეჩხუმი" }, svaneti: { en: "SVANETI", ka: "სვანეთი" }, imereti: { en: "IMERETI", ka: "იმერეთი" },
-                guria: { en: "GURIA", ka: "გურია" }, samegrelo: { en: "SAMEGRELO", ka: "სამეგრელო" }, adjara: { en: "ADJARA", ka: "აჭარა" }, abkhazeti: { en: "ABKHAZETI", ka: "აფხაზეთი" }
+            const allItems = [];
+
+            const processRegion = (regionKey, data, type) => {
+                if (!data) return;
+                data.forEach(item => {
+                    const newItem = {
+                        region: regionKey,
+                        type: type,
+                        published: true,
+                        title: item.title,
+                        img: item.img,
+                        tag: item.tag || {en:'', ka:''},
+                        subItems: item.subItems || [],
+                        desc: item.desc || item.date || '',
+                        date: item.date || item.desc || '',
+                        text: item.text || {en:'', ka:''}
+                    };
+                    allItems.push(newItem);
+                });
             };
             
-            const lang = localStorage.getItem('lang') || 'en';
-
-            order.forEach(key => {
-                if (key === 'georgia') {
-                    const label = document.createElement('div');
-                    label.className = 'ribbon-label';
-                    label.innerText = labels[key][lang];
-                    label.onclick = () => loadRegion(key);
-                    
-                    const sep = document.createElement('span');
-                    sep.className = 'ribbon-separator';
-                    sep.innerText = "|";
-                    
-                    ribbon.appendChild(label);
-                    ribbon.appendChild(sep);
-                } else {
-                    const btn = document.createElement('button');
-                    btn.className = `dest-btn ${key === currentKey ? 'active' : ''}`;
-                    
-                    const colorHex = database[key].accent || '#ccc';
-                    btn.style.setProperty('--btn-rgb', hexToRgb(colorHex));
-                    
-                    btn.innerText = labels[key][lang];
-                    btn.onclick = () => loadRegion(key);
-                    
-                    ribbon.appendChild(btn);
-                }
+            for (const regionKey in hardcodedDatabase) {
+                const regionData = hardcodedDatabase[regionKey];
+                processRegion(regionKey, regionData.tours, 'tours');
+                processRegion(regionKey, regionData.blog, 'blog');
+            }
+            
+            hardcodedServices.forEach(service => {
+                 allItems.push({...service, type: 'services', region: 'georgia', published: true, tag: {en: 'Service', ka: 'სერვისი'}});
             });
-        }
 
-        function loadRegion(key) {
-            currentKey = key;
-            const data = database[key];
-            
-            if(data.accent) {
-                document.documentElement.style.setProperty('--terracotta', data.accent);
-                document.querySelector('.logo-sub').style.color = data.accent;
-                document.querySelector('.logo-sub').innerText = key === 'georgia' ? 'GEORGIA' : key.toUpperCase().replace('_', '-');
-            }
-            
-            renderRibbon(); 
 
-            // 1. Hero Logic
-            let heroItems = database.georgia.tours.slice(0, 10); // Display 10 random items from all regions on homepage
-            shuffle(heroItems);
-            renderHero(heroItems);
-
-            // 2. Tours Logic
-            let toursItems = data.tours || [];
-            if (key === 'georgia') {
-                Object.keys(database).forEach(region => {
-                    if (region !== 'georgia' && database[region].tours) {
-                        toursItems.push(...database[region].tours);
-                    }
-                });
-                toursItems.push(...commonServices);
-                shuffle(toursItems);
-            }
-            renderScroller('travelGrid', toursItems, 'card');
-
-            // 3. Services Logic (Show only on Home)
-            const servicesSection = document.getElementById('services');
-            const servicesLink = document.getElementById('servicesLink');
-            
-            if (key === 'georgia') {
-                servicesSection.style.display = 'flex';
-                renderScroller('servicesGrid', commonServices, 'card');
-                servicesLink.href = "#services";
-                servicesLink.removeAttribute('onclick');
-            } else {
-                servicesSection.style.display = 'none';
-                servicesLink.href = "javascript:void(0)";
-                servicesLink.setAttribute('onclick', 'openServicesModal()');
-            }
-
-            // 4. Blog Logic
-            let blogItems = data.blog || [];
-            if (key === 'georgia') {
-                Object.keys(database).forEach(region => {
-                    if (region !== 'georgia' && database[region].blog) {
-                         blogItems.push(...database[region].blog);
-                    }
-                });
-                shuffle(blogItems);
-            }
-            renderScroller('blogTrack', blogItems, 'blog');
-        }
-
-        function renderHero(slides) {
-            const track = document.getElementById('heroTrack');
-            const progContainer = document.getElementById('progressContainer');
-            track.innerHTML = '';
-            progContainer.innerHTML = '';
-            const lang = localStorage.getItem('lang') || 'en';
-            
-            slides.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.className = 'hero-slide';
-                if(index === 0) div.classList.add('active');
-                
-                const title = typeof item.title === 'object' ? item.title[lang] : item.title;
-                let desc = "";
-                let btnText = translations[lang].btn_details;
-                
-                if (item.date) { 
-                    desc = item.date[lang];
-                    btnText = translations[lang].btn_read;
-                } else { 
-                    desc = typeof item.desc === 'object' ? item.desc[lang] : item.desc;
-                }
-                
-                const subContent = item.subItems ? item.subItems : (item.text ? item.text[lang] : '');
-
-                const img = document.createElement('img');
-                img.src = item.img;
-                img.className = 'slide-bg';
-                
-                const contentDiv = document.createElement('div');
-                contentDiv.className = 'slide-content';
-                
-                const h2 = document.createElement('h2');
-                h2.className = 'slide-title';
-                h2.innerText = title;
-                
-                const p = document.createElement('p');
-                p.className = 'slide-desc';
-                p.innerText = desc;
-                
-                const btn = document.createElement('button');
-                btn.className = 'slide-btn';
-                btn.innerText = btnText;
-                btn.onclick = () => openModal(title, subContent, item.img);
-                
-                contentDiv.appendChild(h2);
-                contentDiv.appendChild(p);
-                contentDiv.appendChild(btn);
-                
-                div.appendChild(img);
-                div.appendChild(contentDiv);
-                track.appendChild(div);
-
-                const bar = document.createElement('div');
-                bar.className = 'progress-bar';
-                bar.innerHTML = `<div class="progress-fill" id="bar-${index}"></div>`;
-                progContainer.appendChild(bar);
-            });
-            
-            currentSlide = 0;
-        }
-
-        function renderScroller(id, items, type) {
-            const track = document.getElementById(id);
-            track.innerHTML = '';
-            const lang = localStorage.getItem('lang') || 'en';
-            
-            items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = type === 'blog' ? 'blog-card' : 'card';
-                
-                const title = item.title[lang];
-                const subContent = item.subItems ? item.subItems : (item.text ? item.text[lang] : '');
-                card.onclick = () => openModal(title, subContent, item.img);
-
-                if (type === 'blog') {
-                     card.innerHTML = `<div class="blog-img-box"><img src="${item.img}"></div><div class="blog-content"><div class="blog-date">${item.date[lang]}</div><h4 class="blog-title">${title}</h4><span class="blog-link">${translations[lang].btn_read}</span></div>`;
-                } else {
-                     const desc = item.desc[lang];
-                     const tag = item.tag ? item.tag[lang] : '';
-                     card.innerHTML = `<img src="${item.img}" class="card-bg"><div class="card-overlay">${tag ? `<span class="card-tag">${tag}</span>` : ''}<h3>${title}</h3><p>${desc}</p></div>`;
-                }
-                track.appendChild(card);
-            });
-        }
-
-        function scrollSection(id, dir) {
-            const container = document.getElementById(id);
-            const scrollAmount = 300;
-            container.scrollBy({ left: dir * scrollAmount, behavior: 'smooth' });
-        }
-
-        function startStoryMode() {} 
-        function showSlide(index) {} 
-        function manualSlide(dir) {} 
-
-        const modal = document.getElementById('detailModal'); const modalImg = document.getElementById('modalImg'); const modalTitle = document.getElementById('modalTitle'); const modalListView = document.getElementById('modalListView'); const modalList = document.getElementById('modalList'); const modalDetailView = document.getElementById('modalDetailView'); const detailTitle = document.getElementById('detailTitle'); const detailText = document.getElementById('detailText'); const detailBtn = document.getElementById('detailBtn');
-
-        function openModal(title, content, img) {
-            const lang = localStorage.getItem('lang') || 'en';
-            modalImg.src = img;
-            
-            if (typeof content === 'string') {
-                 modalTitle.innerText = title;
-                 modalList.innerHTML = `<div class="modal-text">${content}</div><a href="https://wa.me/${whatsapp}" class="modal-btn wa-link">${translations[lang].btn_book}</a>`;
-                 document.getElementById('modalListView').style.display = 'block'; modalDetailView.style.display = 'none';
-            } else if (Array.isArray(content)) {
-                modalTitle.innerText = title; modalList.innerHTML = '';
-                content.forEach(sub => {
-                    const item = document.createElement('div'); item.className = 'modal-item';
-                    item.onclick = () => showDetail(sub, title);
-                    item.innerHTML = `<div><div class="modal-item-title">${sub.title}</div><div class="modal-item-desc">${sub.desc}</div></div><div class="modal-item-arrow">&rarr;</div>`;
-                    modalList.appendChild(item);
-                });
-                document.getElementById('modalListView').style.display = 'block'; modalDetailView.style.display = 'none';
-            }
-            modal.classList.add('active');
-        }
-        function showDetail(subItem, parentTitle) {
-            const lang = localStorage.getItem('lang') || 'en';
-            document.getElementById('modalListView').style.display = 'none'; modalDetailView.style.display = 'block';
-            detailTitle.innerText = subItem.title; detailText.innerText = subItem.details || subItem.desc;
-            detailBtn.innerText = translations[lang].btn_book;
-            detailBtn.href = `https://wa.me/${whatsapp}?text=I am interested in ${parentTitle}: ${subItem.title}`;
-        }
-        function showList() { document.getElementById('modalListView').style.display = 'block'; modalDetailView.style.display = 'none'; }
-        function closeModal() { modal.classList.remove('active'); }
-        modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
-
-        window.initMain = async function() {
-            if (window.db) {
+            let successCount = 0;
+            for (const item of allItems) {
                 try {
-                    const querySnapshot = await window.getDocs(window.collection(window.db, "content"));
-                    
-                    Object.keys(database).forEach(key => { database[key].tours = []; database[key].blog = []; });
-                    commonServices.length = 0;
-                    allLiveItems = {};
-
-                    querySnapshot.forEach((doc) => {
-                        const item = doc.data();
-                        const isPublished = item.published !== false;
-                        
-                        if (isPublished) {
-                            if(item.type === 'services' && item.region === 'georgia') {
-                                commonServices.push(item);
-                            } else if (database[item.region]) {
-                                if(item.type === 'tours' || item.type === 'services') database[item.region].tours.push(item);
-                                if(item.type === 'blog') database[item.region].blog.push(item);
-                            }
-                            allLiveItems[doc.id] = item;
-                        }
-                    });
-                } catch(e) {
-                    console.error("Failed to fetch Firebase content. Using hardcoded defaults.", e);
+                    await addDoc(collection(db, "content"), item);
+                    successCount++;
+                } catch (e) {
+                    console.error("Upload error for item:", item, e);
                 }
             }
+
+            showToast(`✅ Successfully imported ${successCount} items!`);
+            loadStructuredData(); 
+        };
+
+
+        // --- CORE EDITOR FUNCTIONS ---
+
+        window.selectItem = (id) => {
+            const data = loadedItems[id];
+            if (!data) return;
+
+            // 1. Remove active class from all items and add it to the clicked one
+            document.querySelectorAll('.list-item').forEach(el => el.classList.remove('active'));
+            const clickedElement = document.querySelector(`.list-item[onclick*="'${data.id}'"]`);
+            if (clickedElement) {
+                clickedElement.classList.add('active');
+            }
             
-            init(); 
+            // 2. Load data into the form fields
+            currentId = data.id;
+            document.getElementById('docId').value = data.id;
+            document.getElementById('published').checked = data.published !== false;
+            
+            document.getElementById('region').value = data.region;
+            document.getElementById('type').value = data.type;
+            
+            document.getElementById('title_en').value = data.title?.en || '';
+            document.getElementById('title_ka').value = data.title?.ka || '';
+            
+            document.getElementById('desc_en').value = data.desc?.en || data.date?.en || '';
+            document.getElementById('desc_ka').value = data.desc?.ka || data.date?.ka || '';
+            
+            document.getElementById('img').value = data.img || '';
+            document.getElementById('tag_en').value = data.tag?.en || '';
+            document.getElementById('tag_ka').value = data.tag?.ka || '';
+            
+            document.getElementById('text_en').value = data.text?.en || '';
+            document.getElementById('text_ka').value = data.text?.ka || '';
+
+            // 3. Sub Items
+            const container = document.getElementById('subitems-list');
+            container.innerHTML = '';
+            if(data.subItems && Array.isArray(data.subItems)) {
+                data.subItems.forEach(sub => addSubItem(sub.title, sub.desc));
+            }
+            
+            toggleFields();
+            updatePreview(); 
+            window.scrollTo(0, 0); 
+        };
+
+        window.createNew = () => {
+            currentId = null;
+            document.getElementById('docId').value = "";
+            document.querySelectorAll('input, textarea').forEach(el => el.value = '');
+            document.getElementById('subitems-list').innerHTML = '';
+            document.getElementById('published').checked = true;
+            toggleFields();
+            updatePreview(); 
+            document.querySelectorAll('.list-item').forEach(el => el.classList.remove('active'));
+        };
+
+        window.toggleFields = () => {
+            const type = document.getElementById('type').value;
+            const subSec = document.getElementById('subitems-section');
+            const blogSec = document.getElementById('blog-section');
+            const lblEn = document.getElementById('lbl_desc_en');
+            const lblKa = document.getElementById('lbl_desc_ka');
+
+            if(type === 'blog') {
+                subSec.style.display = 'none';
+                blogSec.style.display = 'block';
+                lblEn.innerText = "Date (English)";
+                lblKa.innerText = "Date (Georgian)";
+            } else {
+                subSec.style.display = 'block';
+                blogSec.style.display = 'none';
+                lblEn.innerText = "Short Description (English)";
+                lblKa.innerText = "Short Description (Georgian)";
+            }
+        };
+
+        window.addSubItem = (t = '', d = '') => {
+            const div = document.createElement('div');
+            div.className = 'sub-item-row';
+            div.innerHTML = `
+                <div style="flex:1">
+                    <input type="text" placeholder="Title (e.g., Day 1)" class="sub-title" value="${t}" style="margin-bottom:5px">
+                    <textarea placeholder="Details..." class="sub-desc" style="height:60px">${d}</textarea>
+                </div>
+                <button class="remove-btn" onclick="this.parentElement.remove()">×</button>
+            `;
+            document.getElementById('subitems-list').appendChild(div);
+        };
+
+        // --- LIVE PREVIEW LOGIC (Continued) ---
+        window.updatePreview = () => {
+            const container = document.getElementById('live-preview-container');
+            const type = document.getElementById('type').value;
+            const title = document.getElementById('title_en').value || 'Tour Title';
+            const desc = document.getElementById('desc_en').value || 'Description goes here...';
+            const img = document.getElementById('img').value || 'https://via.placeholder.com/300x400?text=Image';
+            const tag = document.getElementById('tag_en').value;
+            
+            const finalImg = (img && img.startsWith('http')) ? img : 'https://via.placeholder.com/300x400?text=IMAGE';
+            let html = '';
+
+            if (type === 'blog') {
+                html = `
+                    <div class="blog-card">
+                        <div class="blog-img-box"><img src="${finalImg}" onerror="this.src='https://via.placeholder.com/300x200?text=Blog'"></div>
+                        <div class="blog-content">
+                            <div class="blog-date">${desc}</div>
+                            <h4 class="blog-title">${title}</h4>
+                            <span class="blog-link">Read Article &rarr;</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                const tagHtml = tag ? `<span class="card-tag" style="background:var(--terracotta);">${tag}</span>` : '';
+                html = `
+                    <div class="card">
+                        <img src="${finalImg}" class="card-bg" onerror="this.src='https://via.placeholder.com/300x400?text=Tour'">
+                        ${tagHtml}
+                        <div class="card-overlay">
+                            <h3>${title}</h3>
+                            <p>${desc}</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        };
+
+
+        // --- SAVE/UPDATE LOGIC ---
+        window.saveCurrent = async () => {
+            if (!auth.currentUser) return alert("Please log in first.");
+            
+            const type = document.getElementById('type').value;
+            const id = document.getElementById('docId').value;
+            const status = document.getElementById('toast');
+            
+            let subItems = [];
+            document.querySelectorAll('.sub-item-row').forEach(row => {
+                subItems.push({
+                    title: row.querySelector('.sub-title').value,
+                    desc: row.querySelector('.sub-desc').value
+                });
+            });
+
+            const data = {
+                region: document.getElementById('region').value,
+                type: type,
+                published: document.getElementById('published').checked,
+                title: { en: document.getElementById('title_en').value, ka: document.getElementById('title_ka').value },
+                img: document.getElementById('img').value,
+                tag: { en: document.getElementById('tag_en').value, ka: document.getElementById('tag_ka').value }
+            };
+
+            if(type === 'blog') {
+                data.date = { en: document.getElementById('desc_en').value, ka: document.getElementById('desc_ka').value };
+                data.text = { en: document.getElementById('text_en').value, ka: document.getElementById('text_ka').value };
+                delete data.subItems; delete data.desc;
+            } else {
+                data.desc = { en: document.getElementById('desc_en').value, ka: document.getElementById('desc_ka').value };
+                data.subItems = subItems;
+                delete data.date; delete data.text;
+            }
+
+            try {
+                if(id) {
+                    await updateDoc(doc(db, "content", id), data);
+                } else {
+                    await addDoc(collection(db, "content"), data);
+                }
+                showToast(id ? "Updated Successfully!" : "Created Successfully!");
+                createNew();
+                loadStructuredData(); 
+            } catch(e) { alert(e.message); }
+        };
+
+        window.deleteCurrent = async () => {
+            if(!currentId) return;
+            if(confirm("Are you sure you want to delete this?")) {
+                await deleteDoc(doc(db, "content", currentId));
+                showToast("Deleted.");
+                createNew();
+                loadStructuredData();
+            }
         };
         
-        window.initMain();
-
     </script>
 </body>
 </html>
