@@ -287,7 +287,7 @@
                             if(item.type === 'services' && item.region === 'georgia') {
                                 commonServices.push(item);
                             } else if (database[item.region]) {
-                                if(item.type === 'tours') database[item.region].tours.push(item);
+                                if(item.type === 'tours' || item.type === 'services') database[item.region].tours.push(item);
                                 if(item.type === 'blog') database[item.region].blog.push(item);
                             }
                             allLiveItems[doc.id] = item;
@@ -367,10 +367,11 @@
             renderRibbon(); 
 
             // 1. Hero Logic
-            let heroItems = database.georgia.hero;
+            let heroItems = database.georgia.tours.slice(0, 10); // Display 10 random items from all regions on homepage
+            shuffle(heroItems);
             renderHero(heroItems);
 
-            // 2. Tours Logic (Always Scroller, uses specific region data)
+            // 2. Tours Logic
             let toursItems = data.tours || [];
             if (key === 'georgia') {
                 Object.keys(database).forEach(region => {
@@ -541,31 +542,26 @@
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 
         window.initMain = async function() {
-            // This is the function that runs automatically to initialize the site
-            // It replaces the old init()
-            
             if (window.db) {
                 try {
                     const querySnapshot = await window.getDocs(window.collection(window.db, "content"));
                     
-                    // 1. Clear local data structures
                     Object.keys(database).forEach(key => { database[key].tours = []; database[key].blog = []; });
                     commonServices.length = 0;
-                    
-                    // 2. Populate data from Firestore
+                    allLiveItems = {};
+
                     querySnapshot.forEach((doc) => {
                         const item = doc.data();
                         const isPublished = item.published !== false;
                         
                         if (isPublished) {
                             if(item.type === 'services' && item.region === 'georgia') {
-                                // Add to services directly
                                 commonServices.push(item);
                             } else if (database[item.region]) {
-                                // Add to tours/blog under regions
                                 if(item.type === 'tours' || item.type === 'services') database[item.region].tours.push(item);
                                 if(item.type === 'blog') database[item.region].blog.push(item);
                             }
+                            allLiveItems[doc.id] = item;
                         }
                     });
                 } catch(e) {
@@ -573,10 +569,9 @@
                 }
             }
             
-            init(); // Render the page
+            init(); 
         };
         
-        // Final call to initMain after all functions are defined
         window.initMain();
 
     </script>
