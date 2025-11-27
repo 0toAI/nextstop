@@ -64,7 +64,7 @@
             padding: 4px; 
             border-radius: 30px; 
             border: 1px solid rgba(0,0,0,0.05);
-            min-width: 170px; /* Sized based on GEORGIA + WORLD content */
+            min-width: 170px; 
         }
         .toggle-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 6px; color: #999; text-decoration: none; }
         .toggle-btn.active { background: white; color: var(--charcoal); box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: default; }
@@ -358,7 +358,7 @@
                 ], 
                 blog: [
                     { title: {en: "Cave Cities", ka: "კლდის ქალაქები"}, date: {en: "History", ka: "ისტორია"}, img: "https://images.unsplash.com/photo-1599592970984-04b28a5e5c64?auto=format&fit=crop&w=800&q=80" },
-                    { title: {en: "Soviet Legacy", ka: "მუზეუმი"}, date: {en: "Museum", ka: "მუზეუმი"}, img: "https://images.unsplash.com/photo-1550348335-92122b6f9372?auto=format&fit=crop&w=800&q=80" },
+                    { title: {en: "Soviet Legacy", ka: "საბჭოთა მემკვიდრეობა"}, date: {en: "Museum", ka: "მუზეუმი"}, img: "https://images.unsplash.com/photo-1550348335-92122b6f9372?auto=format&fit=crop&w=800&q=80" },
                     { title: {en: "Kartli Wines", ka: "ქართლის ღვინოები"}, date: {en: "Drink", ka: "სასმელი"}, img: "https://images.unsplash.com/photo-1559563362-c667ba5f5480?auto=format&fit=crop&w=800&q=80" },
                     { title: {en: "Hidden Gems", ka: "დამალული ადგილები"}, date: {en: "Explore", ka: "აღმოჩენა"}, img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80" }
                 ] 
@@ -522,8 +522,9 @@
 
         auth.onAuthStateChanged(async (user) => {
             if(user) {
-                document.getElementById('authCard').classList.add('hidden');
-                document.getElementById('dashboard').classList.remove('hidden');
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('authCard').classList.add('hidden'); // New design
+                document.getElementById('dashboard').classList.remove('hidden'); // New design
                 document.getElementById('signedInEmail').textContent = user.email;
 
                 // Check authorization status before proceeding (WP Admin style)
@@ -603,6 +604,7 @@
                                         <span class="item-status ${item.published ? 'status-published' : 'status-hidden'}">${item.published ? 'LIVE' : 'HIDDEN'}</span>
                                         <span class="item-title">${item.title?.en || 'Untitled'}</span>
                                     `;
+                                    // FIX: Pass the ID to selectItem, which then fetches from loadedItems[id]
                                     listItem.onclick = () => selectItem(item.id); 
                                     subList.appendChild(listItem);
                                 });
@@ -639,15 +641,16 @@
 
         // --- IMAGE UPLOAD LOGIC ---
         window.handleFileUpload = async () => {
-            const f = document.getElementById('imageFile').files[0];
+            const fileInput = document.getElementById('imageFile');
+            const file = fileInput.files[0];
             const status = document.getElementById('uploadProgress');
             
-            if (!f) return;
+            if (!file) return;
 
-            status.innerHTML = 'Uploading... (0%)';
+            status.textContent = 'Uploading... (0%)';
 
             try {
-                const fileName = `${Date.now()}-${f.name}`;
+                const fileName = `${Date.now()}-${file.name}`;
                 const storageRef = storage.ref().child(`images/${currentEntity}/` + fileName);
                 const task = storageRef.put(f);
 
@@ -661,9 +664,8 @@
                     }, 
                     async () => {
                         const url = await task.snapshot.ref.getDownloadURL();
-                        uploadedImageUrl = url;
-                        status.textContent = 'Uploaded ✓';
                         document.getElementById('img').value = url;
+                        status.textContent = 'Uploaded ✓';
                         updatePreview();
                     }
                 );
@@ -691,13 +693,11 @@
                         price: item.price || null,
                         category: item.tag || {en:'', ka:''},
                         images: item.img ? [item.img] : [],
-                        // Merging specific fields for this new simple structure
                     };
                     allItems.push(newItem);
                 });
             };
             
-            // Process data structures (using the defined structure in the prompt)
             for (const regionKey in hardcodedDatabase) {
                 const regionData = hardcodedDatabase[regionKey];
                 processRegion(regionKey, regionData.tours, 'tours');
@@ -773,24 +773,37 @@
              ui.saveBtn.classList.add('hidden');
              ui.updateBtn.classList.remove('hidden');
              document.getElementById('deleteBtn').classList.remove('hidden');
-             ui.resetBtn.classList.remove('hidden');
+             document.getElementById('resetBtn').classList.remove('hidden');
         };
 
         window.createNew = () => {
-            currentId = null;
+            editingId = null;
             document.getElementById('docId').value = "";
-            document.querySelectorAll('input, textarea').forEach(el => el.value = '');
+            document.getElementById('title').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('price').value = '';
+            document.getElementById('category').value = '';
             document.getElementById('published').value = 'true';
+            document.getElementById('imageFile').value = '';
+
+            ui.editorTitle.textContent = `Add New ${capitalize(currentEntity)}`;
             ui.updateBtn.classList.add('hidden');
-            ui.deleteBtn.classList.add('hidden');
+            document.getElementById('deleteBtn').classList.add('hidden');
             ui.saveBtn.classList.remove('hidden');
 
-            // Reset UI states
             toggleFields(currentEntity);
             updatePreview(); 
             document.querySelectorAll('.list-item').forEach(el => el.classList.remove('active'));
         };
 
+        window.toggleFields = (entity) => {
+             const isTour = entity === 'tours';
+             const priceEl = document.getElementById('price').parentElement;
+             if (priceEl) priceEl.style.display = isTour ? '' : 'none';
+             // Since the new template is simpler, complex fields like text_ka are removed, keeping only Title/Desc/Price/Cat/Image
+        };
+
+        window.addSubItem = (t = '', d = '') => { /* Placeholder for future itinerary editor */ };
 
         // --- LIVE PREVIEW LOGIC ---
         window.updatePreview = () => {
@@ -814,6 +827,73 @@
                 </div>
             `;
             container.innerHTML = html;
+        };
+
+
+        // --- SAVE/UPDATE LOGIC ---
+        window.saveCurrent = async () => {
+            if (!auth.currentUser) return showToast("Please log in first.", true);
+            
+            const data = {
+                ...gatherFormData(),
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                // Use English fields for demonstration in this structure
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                published: document.getElementById('published').value === 'true',
+            };
+
+            try {
+                if(editingId) {
+                    await db.collection(currentEntity).doc(editingId).update(data);
+                    showToast("Updated Successfully!");
+                } else {
+                    await db.collection(currentEntity).add(data);
+                    showToast("Created Successfully!");
+                }
+                
+                resetForm();
+                loadList(true); 
+            } catch(e) { showToast("Error: " + e.message, true); }
+        };
+        
+        // --- Admin Management ---
+        document.getElementById('addAdminBtn').onclick = async () => {
+             const email = document.getElementById('newAdminEmail').value.trim();
+             if (!email) { showToast('Email required.', true); return; }
+             try {
+                 await db.collection('admins').add({ email, addedAt: firebase.firestore.FieldValue.serverTimestamp() });
+                 showToast(`Admin added: ${email}`);
+                 document.getElementById('newAdminEmail').value = '';
+             } catch (e) { showToast('Error adding admin: ' + e.message, true); }
+        };
+
+        window.deleteVisible = async () => {
+             if (!confirm('Are you absolutely sure you want to delete ALL visible items? This cannot be undone.')) return;
+             const snap = lastSnapshot;
+             if (!snap) return showToast('No items to delete.', true);
+             const batch = db.batch();
+             snap.forEach(doc=> batch.delete(doc.ref));
+             try {
+                 await batch.commit();
+                 showToast(`Successfully deleted ${snap.size} items.`);
+                 loadList(true);
+             } catch (e) {
+                 showToast('Error deleting items: ' + e.message, true);
+             }
+        };
+
+        window.handleDelete = async () => {
+            if (!editingId) return;
+            if (!confirm('Are you sure you want to delete this item?')) return;
+            try {
+                await db.collection(currentEntity).doc(editingId).delete();
+                showToast('Deleted successfully!');
+                resetForm();
+                loadList(true);
+            } catch (e) {
+                showToast('Error: ' + e.message, true);
+            }
         };
         
     </script>
