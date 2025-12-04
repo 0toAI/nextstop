@@ -66,21 +66,6 @@
         .nav-item { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--charcoal); letter-spacing: 1px; cursor: pointer; }
         .nav-item:hover { color: var(--terracotta); }
 
-        /* Mobile Menu Button */
-        .mobile-menu-btn { display: none; font-size: 1.5rem; cursor: pointer; color: var(--charcoal); }
-        
-        /* Mobile Menu Overlay */
-        .mobile-menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: rgba(255,255,255,0.98); backdrop-filter: blur(10px);
-            z-index: 1500; display: none; flex-direction: column;
-            justify-content: center; align-items: center; gap: 40px;
-            opacity: 0; transition: opacity 0.3s;
-        }
-        .mobile-menu-overlay.active { display: flex; opacity: 1; }
-        .mobile-nav-item { font-size: 1.5rem; font-family: 'Cinzel', serif; color: var(--charcoal); font-weight: 700; }
-        .mobile-close { position: absolute; top: 30px; right: 30px; font-size: 2rem; cursor: pointer; }
-
         .lang-btn { 
             padding: 6px 16px; 
             border-radius: 20px; 
@@ -264,33 +249,15 @@
         .footer-logo .logo-main { color: #fff; }
         .footer-logo .logo-sub { color: var(--terracotta); }
 
-        /* --- MOBILE OPTIMIZATION --- */
         @media (max-width: 1000px) {
             .nav-links { display: none; } 
-            .mobile-menu-btn { display: block; }
-            header { height: auto; flex-wrap: wrap; padding: 10px 0; }
-            .header-left { width: 100%; justify-content: space-between; padding-right: 5%; }
-            .nav-right { display: flex; align-items: center; gap: 15px; }
+            header { height: auto; flex-wrap: wrap; padding-bottom: 10px; }
+            .header-left { width: 100%; justify-content: space-between; }
+            .nav-right { position: absolute; top: 15px; right: 5%; }
             .logo-container { width: auto; }
-            
-            /* Smaller Hero */
-            .hero-wheel { height: 65vh; margin-top: 130px; }
-            .slide-title { font-size: 2.2rem; }
-            .slide-desc { font-size: 1rem; }
-            .hero-slogan { font-size: 0.8rem; top: 20px; }
-
-            /* Ribbon Mobile */
-            .ribbon-label { min-width: auto; text-align: left; padding-left: 10px; font-size: 0.8rem; }
-            .ribbon-container { padding: 20px 5% 10px; }
-
-            /* Cards Swipeable */
-            .card, .blog-card { flex: 0 0 85%; height: 340px; } 
-            .scroll-nav { display: none; } /* Hide arrows on mobile */
-            
-            .section { padding: 50px 5%; }
-            .section-title h2 { font-size: 1.5rem; }
+            .ribbon-label { min-width: auto; text-align: left; padding-left: 10px; }
+            .card, .blog-card { flex: 0 0 85%; } 
         }
-        
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -306,44 +273,27 @@
                     <span class="logo-main">NEXT STOP</span>
                     <span class="logo-sub" id="logoSub">GEORGIA</span>
                 </div>
-                <div class="nav-right">
-                    <button class="lang-btn" id="langBtn" onclick="toggleLang()">ENG</button>
-                    <div class="mobile-menu-btn" onclick="toggleMenu()">☰</div>
+                <div class="site-toggle">
+                    <div class="toggle-btn active"><span class="dot">●</span> GEORGIA</div>
+                    <a href="https://nextstop.com.ge" class="toggle-btn inactive">WORLD</a>
                 </div>
             </div>
-            
-            <div class="nav-right" style="display: none;"> <nav class="nav-links">
+            <div class="nav-right">
+                <nav class="nav-links">
                     <a href="#travel" class="nav-item" data-key="nav_tours">Tours</a>
                     <a href="#services" id="servicesLink" class="nav-item" data-key="nav_services">Services</a>
                     <a href="#transport" class="nav-item" data-key="nav_transport">Transport</a>
                     <a href="#blog" class="nav-item" data-key="nav_blog">Blog</a>
                     <a onclick="openAbout()" class="nav-item" data-key="nav_about">About</a>
                 </nav>
+                <button class="lang-btn" id="langBtn" onclick="toggleLang()">ENG</button>
             </div>
-             <style>
-                 @media(min-width: 1001px) { 
-                     .nav-right:last-child { display: flex !important; } 
-                     .header-left .nav-right { display: none; }
-                 }
-                 @media(max-width: 1000px) {
-                     .nav-right:last-child { display: none !important; }
-                 }
-            </style>
         </div>
 
         <div class="ribbon-container">
             <div class="destination-ribbon" id="destRibbon"></div>
         </div>
     </header>
-
-    <div class="mobile-menu-overlay" id="mobileMenu">
-        <div class="mobile-close" onclick="toggleMenu()">×</div>
-        <a href="#travel" class="mobile-nav-item" onclick="toggleMenu()">Tours</a>
-        <a href="#services" class="mobile-nav-item" onclick="toggleMenu()">Services</a>
-        <a href="#transport" class="mobile-nav-item" onclick="toggleMenu()">Transport</a>
-        <a href="#blog" class="mobile-nav-item" onclick="toggleMenu()">Blog</a>
-        <a onclick="toggleMenu(); openAbout()" class="mobile-nav-item">About</a>
-    </div>
 
     <div class="hero-wheel">
         <div class="hero-slogan">Arrive in Georgia, Discover Sakartvelo</div>
@@ -471,15 +421,6 @@
         let currentLang = localStorage.getItem('lang') || 'en';
         const whatsapp = "995591705710";
         
-        function toggleMenu() {
-            const menu = document.getElementById('mobileMenu');
-            if(menu.classList.contains('active')) {
-                menu.classList.remove('active');
-            } else {
-                menu.classList.add('active');
-            }
-        }
-
         // --- CMS CONTENT CONTROL ---
         const cms_hero = [
             { 
@@ -531,7 +472,7 @@
             }
         ];
 
-        // --- UPDATED SERVICES SECTION (Your Request) ---
+        // --- UPDATED SERVICES SECTION ---
         const cms_services = [
             { 
                 title: { en: "Trip Planning", ka: "ტურების დაგეგმვა" }, 
@@ -617,7 +558,7 @@
             }
         };
 
-        // REGIONAL DATABASE (FULL CONTENT RESTORED)
+        // REGIONAL DATABASE (FULL CONTENT)
         const database = {
             georgia: { accent: "#a84a32" }, 
             tbilisi: { 
